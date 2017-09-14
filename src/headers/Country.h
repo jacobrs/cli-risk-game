@@ -14,12 +14,11 @@ public:
                           // using traditional dynamic arrays
   string name;
   Player* owner;
-  Country* neighbours;
+  Country **neighbours;
 
   Country();
-  ~Country();
   Country(string);
-  void addNeighbour(Country);
+  void addNeighbour(Country*);
 
 };
 

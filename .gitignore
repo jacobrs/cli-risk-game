@@ -34,3 +34,6 @@
 # Visual Studio files
 .vscode
 *.dSYM
+
+# Mac files
+.DS_Store

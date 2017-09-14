@@ -12,26 +12,27 @@ Country::Country(){
   Country::Country("");
 }
 
-void Country::addNeighbour(Country newNeighbour){
+void Country::addNeighbour(Country* newNeighbour){
+  
+  bool alreadyNeighbours = false;
+
   // Create a new array of size current + 1
-  Country *newCountries = new Country[++numberOfNeighbours];
+  Country **newNeighbours = new Country*[++numberOfNeighbours];
   // and populate it with the old neighbours
   for(int i = 0; i < numberOfNeighbours - 1; i++){
-    newCountries[i] = neighbours[i];
+    newNeighbours[i] = neighbours[i];
+    if(neighbours[i]->name == newNeighbour->name)
+      alreadyNeighbours = true;
   }
-  // add the new neighbour to the list
-  newCountries[numberOfNeighbours - 1] = newNeighbour;
-  
-  // and overwrite the old neighbours with the new
-  if(numberOfNeighbours > 0)
-    delete [] neighbours;
-  
-  neighbours = newCountries;
-}
 
-Country::~Country(){
-  // Must delete the pointers to neighbours
-  // in order to avoid memory leaks
-  if(numberOfNeighbours > 0)
-    delete [] neighbours;
+  // add the new neighbour to the list if not already neighbours
+  if(!alreadyNeighbours){
+    newNeighbours[numberOfNeighbours - 1] = newNeighbour;
+    // and make sure that the new neighbour knows its a neighbour    
+    neighbours = newNeighbours;
+    newNeighbour->addNeighbour(this);
+  }else{
+    numberOfNeighbours--;
+  }
+
 }
