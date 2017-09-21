@@ -21,8 +21,10 @@ void Country::addNeighbour(Country* newNeighbour){
   // and populate it with the old neighbours
   for(int i = 0; i < numberOfNeighbours - 1; i++){
     newNeighbours[i] = neighbours[i];
-    if(neighbours[i]->name == newNeighbour->name)
+    if(neighbours[i]->name == newNeighbour->name){
       alreadyNeighbours = true;
+      break;
+    }
   }
 
   // add the new neighbour to the list if not already neighbours
