@@ -1,7 +1,9 @@
 #include "../headers/MapLoader.h"
-#include <iostream>
+#include <stdio.h>
 #include <fstream>
 #include <string>
+
+using namespace std;
 
 MapLoader::MapLoader(const char* filePath){ /*File path is location of the game map to be imported*/
   mapPath = filePath;
@@ -16,6 +18,7 @@ bool MapLoader::importMap(){
 		[Territories]
 		name, IGNORE, IGNORE, continent, neighbours...
 	*/
+	string path(mapPath);
 	int continentsNumber, territoryNumber;
 	string mapLine = "";
 	bool readingContinents = false;
@@ -23,12 +26,17 @@ bool MapLoader::importMap(){
 	
 	ifstream mapFile;
 	mapFile.open(mapPath, std::ifstream::in);
-	while(!mapFile.eof)
-	{
-		getline(mapFile,mapLine);
-		cout << mapLine;
+	if(mapFile.is_open()){
+		while(!mapFile.eof())
+		{
+			getline(mapFile, mapLine);
+			printf(mapLine.c_str());
+		}
+		mapFile.close();
+		return true;
 	}
-	mapFile.close();
-	system ("pause");
-	return false;
+	else{
+		cout << "File: \"" << path.c_str() << "\" NOT FOUND.";
+		return false;
+	}
 }

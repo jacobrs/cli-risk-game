@@ -3,6 +3,7 @@
 #include "headers/Country.h"
 #include "headers/Continent.h"
 #include "headers/GameMap.h"
+#include "headers/MapLoader.h"
 
 using namespace std;
 
@@ -51,4 +52,8 @@ int main(int args, char** argv){
     printf("%s\n", map.continents[i]->name.c_str());
   }
 
+  printf("\nMapLoader: \n");
+
+  MapLoader* mapLoader = new MapLoader("src/map/World.map");
+  mapLoader->importMap();
 }

@@ -1,7 +1,6 @@
 #ifndef MAPLOADER_H
 #define MAPLOADER_H
 
-#include <iostream>
 #include <fstream>
 #include <string>
 
