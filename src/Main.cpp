@@ -2,6 +2,11 @@
 #include "headers/Country.h"
 #include "headers/Continent.h"
 #include "headers/GameMap.h"
+#include "headers/Die.h"
+#include <stdio.h>
+#include <iostream>
+#include <stdlib.h>
+#include <time.h>
 
 using namespace std;
 
@@ -49,5 +54,25 @@ int main(int args, char** argv){
   for(int i = 0; i < map.numberOfContinents; i ++){
     printf("%s\n", map.continents[i]->name.c_str());
   }
+  srand (time(NULL));
+  Die die1 = Die();
+  die1.rollDie();
 
+  Die die2 = Die();
+  die2.rollDie();
+
+  Die die3 = Die();
+  die3.rollDie();
+
+  printf("\ndie 1 rolls %d", die1.dieSide, "\n");
+  printf("\ndie 2 rolls %d", die2.dieSide, "\n");
+  printf("\ndie 3 rolls %d", die3.dieSide, "\n");
+
+  die1.rollDie();
+  die2.rollDie();
+  die3.rollDie();
+
+  printf("\ndie 1 rolls again %d", die1.dieSide, "\n");
+  printf("\ndie 2 rolls again %d", die2.dieSide, "\n");
+  printf("\ndie 3 rolls again %d", die3.dieSide, "\n");
 }
