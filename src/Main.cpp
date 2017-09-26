@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "headers/Player.h"
 #include "headers/Country.h"
 #include "headers/Continent.h"

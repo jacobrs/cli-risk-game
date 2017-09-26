@@ -1,15 +1,17 @@
 #ifndef MAPLOADER_H
 #define MAPLOADER_H
 
+#include <iostream>
+#include <fstream>
 #include <string>
 
 using namespace std;
 
 class MapLoader{
 public:
-  string mapPath;
+  const char* mapPath;
 
-  MapLoader(string);
+  MapLoader(const char*);
   bool importMap();
 };
 
