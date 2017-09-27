@@ -10,7 +10,8 @@
 using namespace std;
 
 MapLoader::MapLoader(const char* filePath){ /*File path is location of the game map to be imported*/
-  mapPath = filePath;
+	mapPath = filePath;
+	isValid = true;
 }
 
 static ifstream mapFile;
@@ -44,22 +45,41 @@ void MapLoader::importMap(){
 			}
 
 			if(readingCountries && mapLine.compare("")){
-				printf("%s\n", mapLine.c_str());
+				//importCountry(mapLine);
 			}
 			else if(readingContinents && !readingCountries && mapLine.compare("")){
-				printf("%s\n", mapLine.c_str());
+				importContinent(mapLine);
 			}
 		}
-		
-		if(!readingContinents){
-			printf("MAP FILE INVALID: DOES NOT CONTAIN CONTINENTS SECTION.");
+
+		if(!readingContinents || !mapContinents.size()){
+			isValid = false;
+			printf("MAP FILE INVALID: DOES NOT CONTAIN CONTINENTS.\n");
 		}
-		if(!readingCountries){
-			printf("MAP FILE INVALID: DOES NOT CONTAIN COUNTRIES SECTION.");
+		if(!readingCountries || !mapCountries.size()){
+			isValid = false;
+			printf("MAP FILE INVALID: DOES NOT CONTAIN COUNTRIES.\n");
 		}
 		mapFile.close();
 	}
 	else{
 		printf("File: \"%s\" NOT FOUND.\n", mapPath);
 	}
+}
+
+void MapLoader::importContinent(string continentString){
+	try{
+		string continentName = continentString.substr(0, continentString.find("=")).c_str();
+		int continentBonus = atoi(continentString.substr(continentString.find("=")+1, continentString.size()).c_str());
+		const Continent* newContinent = new Continent(continentName.c_str(), continentBonus);
+		mapContinents.push_back(*newContinent);
+	}
+	catch(...){
+		isValid = false;
+		printf("ERROR OCCURED WHILE READING CONTINENTS, CHECK .map FILE\n");
+	}
+}
+
+void MapLoader::importCountry(string countryString){
+	
 }

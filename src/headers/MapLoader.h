@@ -13,12 +13,15 @@ using namespace std;
 
 class MapLoader{
 public:
+  bool isValid;
   const char* mapPath;
 	vector<Continent> mapContinents;
 	vector<Country> mapCountries;
   
   MapLoader(const char*);
   void importMap();
+  void importContinent(string);
+  void importCountry(string);
 };
 
 #endif
