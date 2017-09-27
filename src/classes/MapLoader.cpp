@@ -15,7 +15,7 @@ MapLoader::MapLoader(const char* filePath){ /*File path is location of the game 
 
 static ifstream mapFile;
 
-bool MapLoader::importMap(){ 
+void MapLoader::importMap(){ 
 	/*Returns false if map is invalid (not in the standard .map format)
 		Map format: 
 		[Continents]
@@ -26,36 +26,40 @@ bool MapLoader::importMap(){
 	*/
 	string path(mapPath);
 	string mapLine = "";
-	bool readingContinents = false;
-	bool readingCountries = false;
+	bool readingContinents = false; //bool to keep track when entering continents section
+	bool readingCountries = false; //bool to keep track when entering countries section
 	
-	mapFile.open(mapPath, std::ifstream::in);
+	mapFile.open(mapPath, std::ifstream::in);//open file stream
+
 	if(mapFile.is_open()){ //check stream is open
-		while(!mapFile.eof()) //while end of file is not reached
-		{
+		while(!mapFile.eof()){ //while end of file is not reached
 			getline(mapFile, mapLine); //get next line from map file
 			if(!mapLine.compare("[Continents]")){ //if entering continents section of map file
 				readingContinents = true;
 				continue;
 			}
-			else if(!mapLine.compare("[Territories]")){ //if entering continents section of map file
-				readingContinents = false;
+			else if(!mapLine.compare("[Territories]")){ //if entering country section of map file
 				readingCountries = true;
 				continue;
 			}
 
-			if(readingContinents && mapLine.compare("")){
+			if(readingCountries && mapLine.compare("")){
 				printf("%s\n", mapLine.c_str());
 			}
-			else if(readingCountries && mapLine.compare("")){
-				printf("%s\n", mapLine.c_str());				
+			else if(readingContinents && !readingCountries && mapLine.compare("")){
+				printf("%s\n", mapLine.c_str());
 			}
 		}
+		
+		if(!readingContinents){
+			printf("MAP FILE INVALID: DOES NOT CONTAIN CONTINENTS SECTION.");
+		}
+		if(!readingCountries){
+			printf("MAP FILE INVALID: DOES NOT CONTAIN COUNTRIES SECTION.");
+		}
 		mapFile.close();
-		return true;
 	}
 	else{
 		printf("File: \"%s\" NOT FOUND.\n", mapPath);
-		return false;
 	}
 }

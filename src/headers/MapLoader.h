@@ -18,7 +18,7 @@ public:
 	vector<Country> mapCountries;
   
   MapLoader(const char*);
-  bool importMap();
+  void importMap();
 };
 
 #endif
