@@ -7,6 +7,10 @@ using namespace std;
 
 int main(int args, char** argv){
 
+    string s = "bob,yoy,abc,def";
+    printf("%i\n", s.find(",", 1));
+    printf("%s\n", s.substr(4, 3).c_str());
+
     printf("\n\nEXPECTING FILE NOT FOUND:\n");
     MapLoader* fileNotFound = new MapLoader("src/map/BEEPBEEP.map");
     fileNotFound->importMap();

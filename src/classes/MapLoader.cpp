@@ -6,6 +6,7 @@
 #include <fstream>
 #include <string.h>
 #include <vector>
+#include <sstream>
 
 using namespace std;
 
@@ -45,7 +46,7 @@ void MapLoader::importMap(){
 			}
 
 			if(readingCountries && strlen(mapLine.c_str())>1){ //check if there was territories section and line is not empty
-				//importCountry(mapLine);
+				importCountry(mapLine);
 			}
 			else if(readingContinents && !readingCountries && strlen(mapLine.c_str())>1){ //check if there was continents section and line is not empty
 				importContinent(mapLine);
@@ -54,16 +55,16 @@ void MapLoader::importMap(){
 
 		if(!readingContinents || !mapContinents.size()){
 			isValid = false;
-			printf("MAP FILE INVALID: DOES NOT CONTAIN CONTINENTS.\n");
+			printf("\nMAP FILE INVALID: DOES NOT CONTAIN CONTINENTS.\n");
 		}
 		if(!readingCountries || !mapCountries.size()){
 			isValid = false;
-			printf("MAP FILE INVALID: DOES NOT CONTAIN COUNTRIES.\n");
+			printf("\nMAP FILE INVALID: DOES NOT CONTAIN COUNTRIES.\n");
 		}
 		mapFile.close();
 	}
 	else{
-		printf("File: \"%s\" NOT FOUND.\n", mapPath);
+		printf("\nFile: \"%s\" NOT FOUND.\n", mapPath);
 	}
 }
 
@@ -76,10 +77,24 @@ void MapLoader::importContinent(string continentString){
 	}
 	catch(...){
 		isValid = false;
-		printf("ERROR OCCURED WHILE READING CONTINENTS, CHECK .map FILE\n");
+		printf("\nERROR OCCURED WHILE READING CONTINENTS, CHECK .map FILE\n");
 	}
 }
 
 void MapLoader::importCountry(string countryString){
-	
+	std::istringstream ss(countryString);
+	string countryName = "";
+	string bitmapA, bitmapB;
+	getline(ss, countryName, ','); //get name before first comma
+	printf("\n%s::::::: ", countryName.c_str());
+	const Country* newCountry = new Country(countryName.c_str());
+	getline(ss, bitmapA, ',');
+	getline(ss, bitmapB, ',');
+
+	string neighbour;
+	while(ss >> neighbour){
+		newCountry->addNeighbour(neighbour.c_str());
+		printf("|%s", neighbour.c_str());
+		neighbour="";
+	}
 }
