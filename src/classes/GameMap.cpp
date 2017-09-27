@@ -1,4 +1,7 @@
 #include "../headers/GameMap.h"
+#include <algorithm>
+#include <vector>
+#include <string>
 
 using namespace std;
 
@@ -29,5 +32,38 @@ void GameMap::addContinent(Continent* newContinent){
   }else{
     numberOfContinents--;
   }
+
+}
+
+bool GameMap::isValidMap(){
+
+  string RED = "\x1b[31m";
+  string GREEN = "\x1b[32m";
+  string DEFAULT = "\x1b[0m";
+
+  // check that the map is a connected graph
+
+  // continents are connected subgraphs
+
+  // each country belongs to one and only one continent
+  // gather every country in every continent and while doing that, search for duplicates
+
+  printf("Checking if each country belongs to one and only one continent ");
+
+  vector<string> allCountries;
+  for(int i = 0; i < numberOfContinents; i++){
+    for(int j = 0; j < continents[i]->numberOfCountries; j++){
+      if(find(allCountries.begin(), allCountries.end(), continents[i]->countries[j]->name) != allCountries.end()){
+        printf("%s FAILED %s\n", RED.c_str(), DEFAULT.c_str());
+        return false;
+      }else{
+        allCountries.push_back(continents[i]->countries[j]->name);
+      }
+    }
+  }
+
+  printf("%s PASSED %s\n", GREEN.c_str(), DEFAULT.c_str());
+
+  return true;
 
 }
