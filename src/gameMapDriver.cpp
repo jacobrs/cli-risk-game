@@ -14,12 +14,17 @@ int main(int args, char** argv){
   Country* venezuela = new Country("Venezuela");
   Country* brazil = new Country("Brazil");
   Country* argentina = new Country("Argentina");
+  Country* chile = new Country("Chile");
 
   usa->addNeighbour(canada);
   usa->addNeighbour(mexico);
 
   brazil->addNeighbour(argentina);
+  brazil->addNeighbour(chile);
   brazil->addNeighbour(venezuela);
+
+  chile->addNeighbour(venezuela);
+  chile->addNeighbour(argentina);
 
   // link continents together
   venezuela->addNeighbour(mexico);
@@ -41,6 +46,15 @@ int main(int args, char** argv){
 
   map.isValidMap();
 
-  northAmerica->addCountry(brazil);
+  delete chile;
+  delete usa;
+  delete canada;
+  delete mexico;
+  delete venezuela;
+  delete brazil;
+  delete argentina;
+
+  delete northAmerica;
+  delete southAmerica;
 
 }
