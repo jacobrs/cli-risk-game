@@ -1,13 +1,19 @@
 #include "../headers/MapLoader.h"
+#include "../headers/Continent.h"
+#include "../headers/Country.h"
+
 #include <stdio.h>
 #include <fstream>
 #include <string>
+#include <vector>
 
 using namespace std;
 
 MapLoader::MapLoader(const char* filePath){ /*File path is location of the game map to be imported*/
   mapPath = filePath;
 }
+
+static ifstream mapFile;
 
 bool MapLoader::importMap(){ 
 	/*Returns false if map is invalid (not in the standard .map format)
@@ -19,21 +25,31 @@ bool MapLoader::importMap(){
 		name, IGNORE, IGNORE, continent, neighbours...
 	*/
 	string path(mapPath);
-	int continentsNumber, territoryNumber;
 	string mapLine = "";
 	bool readingContinents = false;
-	bool readingTerritories = false;
+	bool readingCountries = false;
 	
-	static ifstream mapFile;
 	mapFile.open(mapPath, std::ifstream::in);
-	if(mapFile.is_open()){
-		while(!mapFile.eof())
+	if(mapFile.is_open()){ //check stream is open
+		while(!mapFile.eof()) //while end of file is not reached
 		{
-			getline(mapFile, mapLine);
-			if(!mapLine.compare("[Continents]")){
-				printf("CONTINENTING\n");
+			getline(mapFile, mapLine); //get next line from map file
+			if(!mapLine.compare("[Continents]")){ //if entering continents section of map file
+				readingContinents = true;
+				continue;
 			}
-			printf("%s\n", mapLine.c_str());
+			else if(!mapLine.compare("[Territories]")){ //if entering continents section of map file
+				readingContinents = false;
+				readingCountries = true;
+				continue;
+			}
+
+			if(readingContinents && mapLine.compare("")){
+				printf("%s\n", mapLine.c_str());
+			}
+			else if(readingCountries && mapLine.compare("")){
+				printf("%s\n", mapLine.c_str());				
+			}
 		}
 		mapFile.close();
 		return true;
