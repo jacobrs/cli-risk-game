@@ -19,7 +19,7 @@ DiceRolling::DiceRolling(){
     DiceRolling::DiceRolling(1);
 }
 
-DiceRolling::rollDice(){
+void DiceRolling::rollDice(){
     for(int i = 0; i < number; i++){
         dice[i]->rollDie();
         total += dice[i]->dieSide;

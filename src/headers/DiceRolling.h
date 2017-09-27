@@ -16,7 +16,7 @@ public:
 
     DiceRolling();
     DiceRolling(int);
-    rollDice();
+    void rollDice();
 };
 
 #endif
