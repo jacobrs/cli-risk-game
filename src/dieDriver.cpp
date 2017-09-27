@@ -61,8 +61,8 @@ int main(int args, char** argv){
       diceSet1->total = 0;
       diceSet2->total = 0;
 
-      cout<< "\nPress any character followed by enter to roll again, \n
-              type exit and press enter to terminate the program: ";
+      cout<< "\nPress any character followed by enter to roll again, \n"
+      << "type exit and press enter to terminate the program: ";
       cin>> user_exit;
       user_exit == "exit"? rollDice = false: rollDice = true;    
     }
