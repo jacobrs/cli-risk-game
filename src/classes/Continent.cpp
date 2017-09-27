@@ -8,10 +8,6 @@ Continent::Continent(string continentName, int bonusValue){
   numberOfCountries = 0;
 }
 
-Continent::Continent(){
-  Continent::Continent("", 0);
-}
-
 void Continent::addCountry(Country* newCountry){
   
   bool alreadyElement = false;

@@ -8,10 +8,6 @@ Country::Country(string countryName){
   numberOfNeighbours = 0;
 }
 
-Country::Country(){
-  Country::Country("");
-}
-
 void Country::addNeighbour(Country* newNeighbour){
   
   bool alreadyNeighbours = false;

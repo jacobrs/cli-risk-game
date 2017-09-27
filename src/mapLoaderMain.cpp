@@ -7,10 +7,6 @@ using namespace std;
 
 int main(int args, char** argv){
 
-    // Instantiation of game object goes here.
-
-    // temporary testing code
-
     printf("\n\nEXPECTING FILE NOT FOUND:\n");
     MapLoader* fileNotFound = new MapLoader("src/map/BEEPBEEP.map");
     fileNotFound->importMap();
