@@ -9,7 +9,7 @@ using namespace std;
 class MapLoader{
 public:
   const char* mapPath;
-
+  
   MapLoader(const char*);
   bool importMap();
 };

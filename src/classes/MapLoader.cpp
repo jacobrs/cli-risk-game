@@ -24,19 +24,22 @@ bool MapLoader::importMap(){
 	bool readingContinents = false;
 	bool readingTerritories = false;
 	
-	ifstream mapFile;
+	static ifstream mapFile;
 	mapFile.open(mapPath, std::ifstream::in);
 	if(mapFile.is_open()){
 		while(!mapFile.eof())
 		{
 			getline(mapFile, mapLine);
-			printf(mapLine.c_str());
+			if(!mapLine.compare("[Continents]")){
+				printf("CONTINENTING\n");
+			}
+			printf("%s\n", mapLine.c_str());
 		}
 		mapFile.close();
 		return true;
 	}
 	else{
-		cout << "File: \"" << path.c_str() << "\" NOT FOUND.";
+		printf("File: \"%s\" NOT FOUND.\n", mapPath);
 		return false;
 	}
 }
