@@ -1,7 +1,6 @@
 #ifndef DIE_H
 #define DIE_H
 
-#include "Die.h"
 #include <string>
 
 using namespace std;

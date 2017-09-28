@@ -13,8 +13,6 @@ int main(int args, char** argv){
   
   bool rollDice = true;
   string user_exit = "";
-  string player1Input = "";
-  string player2Input = "";
   int player1NumberOfDice = 0;
   int player2NumberOfDice = 0;
   int numberOfAttempts = 0;
