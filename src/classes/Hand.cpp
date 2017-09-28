@@ -1,9 +1,6 @@
 #include "../headers/Hand.h"
 
 Hand::Hand(){
-    this -> inHandArt;
-    this -> inHandCav;
-    this -> inHandInf;
     handSize = 0;
 }
 
