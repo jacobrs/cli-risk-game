@@ -27,3 +27,6 @@ void DiceRolling::rollDice(){
         valuesRolled[dice[i]->dieSide - 1]++;
     }
 }
+DiceRolling::~DiceRolling(){
+    delete[] dice;
+}
