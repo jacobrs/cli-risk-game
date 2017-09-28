@@ -15,6 +15,7 @@ int main(int args, char** argv){
   Country* brazil = new Country("Brazil");
   Country* argentina = new Country("Argentina");
   Country* chile = new Country("Chile");
+  Country* cuba = new Country("Cuba");
 
   usa->addNeighbour(canada);
   usa->addNeighbour(mexico);
@@ -41,20 +42,28 @@ int main(int args, char** argv){
   map.addContinent(northAmerica);
   map.addContinent(southAmerica);
 
-  printf("Testing while chile is not connected\n===========================\n");
+  printf("Testing while chile is not connected [SHOULD FAIL]\n===========================\n");
 
   map.isValidMap();
   printf("\n");
 
-  printf("Adding chile's neighbours and retesting\n===========================\n");
+  printf("Testing while chile is not connected and cuba is [SHOULD FAIL]\n===========================\n");
+  
+  cuba->addNeighbour(mexico);
+
+  map.isValidMap();
+  printf("\n");
+
+  printf("Adding chile's neighbours and adding cuba to south america and retesting [SHOULD PASS]\n===========================\n");
   brazil->addNeighbour(chile);
   chile->addNeighbour(venezuela);
   chile->addNeighbour(argentina);
+  southAmerica->addCountry(cuba);
 
   map.isValidMap();
   printf("\n");
 
-  printf("Adding chile to north america and retesting\n===========================\n");
+  printf("Adding chile to north america and retesting [SHOULD FAIL]\n===========================\n");
   northAmerica->addCountry(chile);
 
   map.isValidMap();

@@ -59,9 +59,10 @@ bool GameMap::isValidMap(){
   // each country belongs to one and only one continent
   // gather every country in every continent and while doing that, search for duplicates
 
-  printf("Checking if each country belongs to one and only one continent ");
+  printf("Checking if each country belongs to only one continent ");
 
   vector<string> allCountries;
+  map<string, int> countryCounter;
   for(int i = 0; i < numberOfContinents; i++){
     for(int j = 0; j < continents[i]->numberOfCountries; j++){
       if(find(allCountries.begin(), allCountries.end(), continents[i]->countries[j]->name) != allCountries.end()){
@@ -69,6 +70,7 @@ bool GameMap::isValidMap(){
         return false;
       }else{
         allCountries.push_back(continents[i]->countries[j]->name);
+        countryCounter.insert(pair<string, int>(continents[i]->countries[j]->name, 1));
       }
     }
   }
@@ -89,6 +91,12 @@ bool GameMap::isValidMap(){
   while(!pending.empty()){
     Country* current = pending.front();
     pending.pop();
+
+    map<string,int>::iterator it = countryCounter.find(current->name);
+    if (it == countryCounter.end()){
+      printf("%s FAILED %s\n", RED.c_str(), DEFAULT.c_str());
+      return false;
+    }
 
     for(int i = 0; i < current->numberOfNeighbours; i++) {
       if(!(find(visited.begin(), visited.end(), current->neighbours[i]) != visited.end())){
