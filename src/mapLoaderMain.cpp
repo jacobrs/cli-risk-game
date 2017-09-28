@@ -40,4 +40,26 @@ int main(int args, char** argv){
             printf("\t%s",  mapLoader->mapCountries[i]->neighbours[j]->name.c_str());
         }
     }
+
+    printf("\n\nEXPECTING CORRECT FILE PATH AND FILE FORMAT:\n");
+    MapLoader* khorasLoader = new MapLoader("src/map/Khoras.map");
+    khorasLoader->importMap();
+
+    printf("List all continents and their bonus value and countries:\n");
+    for(unsigned i = 0; i < khorasLoader->mapContinents.size(); i++){
+        Continent* tempCon = khorasLoader->mapContinents[i];
+        printf("\n%s", tempCon->name.c_str());
+        printf("\t%i", tempCon->bonus);
+        for(unsigned j = 0; j < tempCon->numberOfCountries; j++){
+            printf("\t%s", tempCon->countries[j]->name.c_str());
+        }
+    }
+    
+    printf("List all countries and their neighbours:\n");
+    for(unsigned i = 0; i < khorasLoader->mapCountries.size(); i++){
+        printf("\n%s", khorasLoader->mapCountries[i]->name.c_str());
+        for(unsigned j = 0; j < khorasLoader->mapCountries[i]->numberOfNeighbours; j++){
+            printf("\t%s",  khorasLoader->mapCountries[i]->neighbours[j]->name.c_str());
+        }
+    }
 }
