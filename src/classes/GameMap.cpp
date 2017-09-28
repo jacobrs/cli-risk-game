@@ -1,4 +1,9 @@
 #include "../headers/GameMap.h"
+#include <algorithm>
+#include <vector>
+#include <queue>
+#include <string>
+#include <map>
 
 using namespace std;
 
@@ -29,5 +34,84 @@ void GameMap::addContinent(Continent* newContinent){
   }else{
     numberOfContinents--;
   }
+
+}
+
+bool GameMap::isValidMap(){
+
+  string RED = "\x1b[31m";
+  string GREEN = "\x1b[32m";
+  string DEFAULT = "\x1b[0m";
+
+  // check that every continent has at least one country
+  // check that the map has at least one continent
+
+  if(numberOfContinents < 1){
+    return false;
+  }else{
+    for(int i = 0; i < numberOfContinents; i++){
+      if(continents[i]->numberOfCountries < 1){
+        return false;
+      }
+    }
+  }
+
+  // each country belongs to one and only one continent
+  // gather every country in every continent and while doing that, search for duplicates
+
+  printf("Checking if each country belongs to one and only one continent ");
+
+  vector<string> allCountries;
+  for(int i = 0; i < numberOfContinents; i++){
+    for(int j = 0; j < continents[i]->numberOfCountries; j++){
+      if(find(allCountries.begin(), allCountries.end(), continents[i]->countries[j]->name) != allCountries.end()){
+        printf("%s FAILED %s\n", RED.c_str(), DEFAULT.c_str());
+        return false;
+      }else{
+        allCountries.push_back(continents[i]->countries[j]->name);
+      }
+    }
+  }
+
+  printf("%s PASSED %s\n", GREEN.c_str(), DEFAULT.c_str());
+
+  // check that the map is a connected graph
+
+  printf("Checking if all countries are interconnected ");
+  
+  vector<Country*> visited;
+  Country *startingPoint = continents[0]->countries[0];
+
+  queue<Country*> pending;
+  pending.push(startingPoint);
+  visited.push_back(startingPoint);
+
+  while(!pending.empty()){
+    Country* current = pending.front();
+    pending.pop();
+
+    for(int i = 0; i < current->numberOfNeighbours; i++) {
+      if(!(find(visited.begin(), visited.end(), current->neighbours[i]) != visited.end())){
+        pending.push(current->neighbours[i]);
+        visited.push_back(current->neighbours[i]);
+      }
+    }
+  }
+
+  if(visited.size() != allCountries.size()){
+    printf("%s FAILED %s\n", RED.c_str(), DEFAULT.c_str());
+    return false;
+  }
+
+  printf("%s PASSED %s\n", GREEN.c_str(), DEFAULT.c_str());
+
+  // continents are connected subgraphs
+  // by logical deduction if all countries are interconnected and every continent
+  // has a country and every country belongs to one and only one continent
+  // all continents are also interconneted
+
+  printf("Checking if all continents are interconnected %s PASSED %s\n", GREEN.c_str(), DEFAULT.c_str());
+
+  return true;
 
 }

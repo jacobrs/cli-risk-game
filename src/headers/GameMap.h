@@ -15,6 +15,7 @@ public:
 
   GameMap();
   void addContinent(Continent*);
+  bool isValidMap();
 
 };
 
