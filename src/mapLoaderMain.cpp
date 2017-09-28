@@ -7,10 +7,6 @@ using namespace std;
 
 int main(int args, char** argv){
 
-    string s = "bob,yoy,abc,def";
-    printf("%i\n", s.find(",", 1));
-    printf("%s\n", s.substr(4, 3).c_str());
-
     printf("\n\nEXPECTING FILE NOT FOUND:\n");
     MapLoader* fileNotFound = new MapLoader("src/map/BEEPBEEP.map");
     fileNotFound->importMap();
@@ -27,9 +23,21 @@ int main(int args, char** argv){
     MapLoader* mapLoader = new MapLoader("src/map/World.map");
     mapLoader->importMap();
 
-    printf("List all continents and their bonus value:\n");
+    printf("List all continents and their bonus value and countries:\n");
     for(unsigned i = 0; i < mapLoader->mapContinents.size(); i++){
-        printf("%s, ", mapLoader->mapContinents[i].name.c_str());
-        printf("%i\n", mapLoader->mapContinents[i].bonus);
+        Continent* tempCon = mapLoader->mapContinents[i];
+        printf("\n%s", tempCon->name.c_str());
+        printf("\t%i", tempCon->bonus);
+        for(unsigned j = 0; j < tempCon->numberOfCountries; j++){
+            printf("\t%s", tempCon->countries[j]->name.c_str());
+        }
+    }
+    
+    printf("List all countries and their neighbours:\n");
+    for(unsigned i = 0; i < mapLoader->mapCountries.size(); i++){
+        printf("\n%s", mapLoader->mapCountries[i]->name.c_str());
+        for(unsigned j = 0; j < mapLoader->mapCountries[i]->numberOfNeighbours; j++){
+            printf("\t%s",  mapLoader->mapCountries[i]->neighbours[j]->name.c_str());
+        }
     }
 }

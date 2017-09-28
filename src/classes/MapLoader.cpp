@@ -18,18 +18,11 @@ MapLoader::MapLoader(const char* filePath){ /*File path is location of the game 
 static ifstream mapFile;
 
 void MapLoader::importMap(){ 
-	/*Returns false if map is invalid (not in the standard .map format)
-		Map format: 
-		[Continents]
-		continent=capture points
-
-		[Territories]
-		name, IGNORE, IGNORE, continent, neighbours...
-	*/
 	string path(mapPath);
 	string mapLine = "";
 	bool readingContinents = false; //bool to keep track when entering continents section
 	bool readingCountries = false; //bool to keep track when entering countries section
+	bool readingNeighbours = false; 
 	
 	mapFile.open(mapPath, std::ifstream::in);//open file stream
 
@@ -55,16 +48,34 @@ void MapLoader::importMap(){
 
 		if(!readingContinents || !mapContinents.size()){
 			isValid = false;
-			printf("\nMAP FILE INVALID: DOES NOT CONTAIN CONTINENTS.\n");
+			printf("MAP FILE INVALID: DOES NOT CONTAIN CONTINENTS.\n");
 		}
 		if(!readingCountries || !mapCountries.size()){
 			isValid = false;
-			printf("\nMAP FILE INVALID: DOES NOT CONTAIN COUNTRIES.\n");
+			printf("MAP FILE INVALID: DOES NOT CONTAIN COUNTRIES.\n");
 		}
 		mapFile.close();
 	}
 	else{
-		printf("\nFile: \"%s\" NOT FOUND.\n", mapPath);
+		printf("File: \"%s\" NOT FOUND.\n", mapPath);
+		return;
+	}
+
+	mapFile.open(mapPath, std::ifstream::in);//reopen file stream to import neighbours
+
+	if(mapFile.is_open()){ //check stream is open
+		while(!mapFile.eof()){ //while end of file is not reached
+			getline(mapFile, mapLine); //get next line from map file
+			if(mapLine.find("[Territories]") != string::npos){ //if entering country section of map file
+				readingNeighbours = true;
+				continue;
+			}
+
+			if(readingNeighbours && strlen(mapLine.c_str())>1){ //check if there was territories section and line is not empty
+				importNeighbours(mapLine);
+			}
+		}
+		mapFile.close();
 	}
 }
 
@@ -72,8 +83,8 @@ void MapLoader::importContinent(string continentString){
 	try{
 		string continentName = continentString.substr(0, continentString.find("=")).c_str();
 		int continentBonus = stoi(continentString.substr(continentString.find("=")+1, continentString.size()).c_str());
-		const Continent* newContinent = new Continent(continentName.c_str(), continentBonus);
-		mapContinents.push_back(*newContinent);
+		Continent* newContinent = new Continent(continentName.c_str(), continentBonus);
+		mapContinents.push_back(newContinent);
 	}
 	catch(...){
 		isValid = false;
@@ -83,18 +94,46 @@ void MapLoader::importContinent(string continentString){
 
 void MapLoader::importCountry(string countryString){
 	std::istringstream ss(countryString);
-	string countryName = "";
+	string countryName;
+	string continentName;
 	string bitmapA, bitmapB;
 	getline(ss, countryName, ','); //get name before first comma
-	printf("\n%s::::::: ", countryName.c_str());
-	const Country* newCountry = new Country(countryName.c_str());
-	getline(ss, bitmapA, ',');
-	getline(ss, bitmapB, ',');
+	getline(ss, bitmapA, ','); // bitmap locations
+	getline(ss, bitmapB, ','); // bitmap locations
+	getline(ss, continentName, ',');
+	Country* newCountry = new Country(countryName.c_str());
+	mapCountries.push_back(newCountry);
+	for(unsigned i = 0; i < mapContinents.size(); i++){
+		if(mapContinents[i]->name.find(continentName) != string::npos){ // this country is part of this continent
+			mapContinents[i]->addCountry(newCountry);
+		}
+	}
+}
 
-	string neighbour;
-	while(ss >> neighbour){
-		newCountry->addNeighbour(neighbour.c_str());
-		printf("|%s", neighbour.c_str());
-		neighbour="";
+void MapLoader::importNeighbours(string countryString){
+	std::istringstream ss(countryString);
+	string countryName;
+	string neighbourName;
+	string continentName;
+	string bitmapA, bitmapB;
+	getline(ss, countryName, ','); //get name before first comma
+	getline(ss, bitmapA, ','); // bitmap locations
+	getline(ss, bitmapB, ','); // bitmap locations
+	getline(ss, continentName, ',');
+
+	unsigned countryIndex = 0;
+	for(; countryIndex < mapCountries.size(); countryIndex++){ // find country index
+		if(mapCountries[countryIndex]->name.find(countryName) != string::npos){ 
+			break;
+		}
+	}
+
+	while(!ss.eof()){ // add all neighbours
+		getline(ss, neighbourName, ','); //get neighbour name
+		for(unsigned i = 0; i < mapCountries.size(); i++){
+			if(mapCountries[i]->name.find(neighbourName) != string::npos){
+				mapCountries[countryIndex]->addNeighbour(mapCountries[i]);
+			}
+		}
 	}
 }
