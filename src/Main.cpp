@@ -3,12 +3,9 @@
 #include "headers/Country.h"
 #include "headers/Continent.h"
 #include "headers/GameMap.h"
-<<<<<<< HEAD
 #include "headers/MapLoader.h"
-=======
 #include "headers/Die.h"
 #include <stdio.h>
->>>>>>> f98829760d87c9719b2b507030c48ba19c48cc18
 
 using namespace std;
 

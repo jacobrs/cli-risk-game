@@ -108,7 +108,7 @@ void MapLoader::importCountry(string countryString){
 	Country* newCountry = new Country(countryName.c_str());
 	mapCountries.push_back(newCountry);
 	for(unsigned i = 0; i < mapContinents.size(); i++){
-		if(mapContinents[i]->name.find(continentName) != string::npos){ // this country is part of this continent
+		if(mapContinents[i]->name.find(continentName) != string::npos && mapContinents[i]->name.length() == continentName.length()){ // this country is part of this continent
 			mapContinents[i]->addCountry(newCountry);
 		}
 	}
@@ -127,17 +127,25 @@ void MapLoader::importNeighbours(string countryString){
 
 	unsigned countryIndex = 0;
 	for(; countryIndex < mapCountries.size(); countryIndex++){ // find country index
-		if(mapCountries[countryIndex]->name.find(countryName) != string::npos){ 
+		if(mapCountries[countryIndex]->name.find(countryName) != string::npos && mapCountries[countryIndex]->name.length() == countryName.length()){ 
 			break;
 		}
 	}
-
+	printf("\n\t%s|||", mapCountries[countryIndex]->name.c_str());
 	while(!ss.eof()){ // add all neighbours
 		getline(ss, neighbourName, ','); //get neighbour name
 		for(unsigned i = 0; i < mapCountries.size(); i++){
-			if(mapCountries[i]->name.find(neighbourName) != string::npos){
+			if(mapCountries[i]->name.find(neighbourName) != string::npos && mapCountries[i]->name.length() == neighbourName.length()){
 				mapCountries[countryIndex]->addNeighbour(mapCountries[i]);
+				printf("%s@",mapCountries[i]->name.c_str());
 			}
+		}
+	}
+	getline(ss, neighbourName); //last neighbour
+	for(unsigned i = 0; i < mapCountries.size(); i++){
+		if(mapCountries[i]->name.find(neighbourName) != string::npos && mapCountries[i]->name.length() == neighbourName.length()){
+			mapCountries[countryIndex]->addNeighbour(mapCountries[i]);
+			printf("%s@",mapCountries[i]->name.c_str());
 		}
 	}
 }

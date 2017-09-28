@@ -22,10 +22,12 @@ int main(int args, char** argv){
     printf("\n\nEXPECTING CORRECT FILE PATH AND FILE FORMAT:\n");
     MapLoader* mapLoader = new MapLoader("src/map/World.map");
     mapLoader->importMap();
+    GameMap* world = new GameMap();
 
     printf("\n\nLIST ALL CONTINENTS AND THEIR BONUS VALUES AND COUNTRIES\n");
     for(unsigned i = 0; i < mapLoader->mapContinents.size(); i++){
         Continent* tempCon = mapLoader->mapContinents[i];
+        world->addContinent(tempCon);
         printf("\n%s", tempCon->name.c_str());
         printf("\t%i", tempCon->bonus);
         for(unsigned j = 0; j < tempCon->numberOfCountries; j++){
@@ -41,14 +43,28 @@ int main(int args, char** argv){
         }
     }
 
-    printf("\n\nEXPECTING CORRECT FILE PATH AND FILE FORMAT:\n");
+    printf("\n\nTESTING (WORLD):\n");
+    world->isValidMap();
+
+    printf("\n\nEXPECTING CORRECT FILE PATH AND FILE FORMAT (KHORAS):\n");
     MapLoader* khorasLoader = new MapLoader("src/map/Khoras.map");
     khorasLoader->importMap();
     GameMap* khoras = new GameMap();
 
-    printf("CREATE GAMEMAP WITH IMPORTED FILE:\n");
+    printf("CREATE GAMEMAP WITH IMPORTED FILE AND TESTING (KHORAS):\n");
     for(unsigned i = 0; i < khorasLoader->mapContinents.size(); i++){
         Continent* tempCon = khorasLoader->mapContinents[i];
         khoras->addContinent(tempCon);
     }
+
+    printf("\n\nLIST ALL COUNTRIES AND THEIR NEIGHBOURS (KHORAS):\n");
+    for(unsigned i = 0; i < khorasLoader->mapCountries.size(); i++){
+        printf("\n%s", khorasLoader->mapCountries[i]->name.c_str());
+        for(unsigned j = 0; j < khorasLoader->mapCountries[i]->numberOfNeighbours; j++){
+            printf("\t%s",  khorasLoader->mapCountries[i]->neighbours[j]->name.c_str());
+        }
+    }
+
+    printf("\n\nTESTING (KHORAS):\n");
+    khoras->isValidMap();
 }
