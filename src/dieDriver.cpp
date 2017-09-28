@@ -66,7 +66,10 @@ int main(int args, char** argv){
       cin>> user_exit;
       user_exit == "exit"? rollDice = false: rollDice = true;    
     }
-  
+    
+    diceSet1->~DiceRolling();
+    diceSet2->~DiceRolling();
   }
   else cout<<"\nYou have failed to enter a proper value for the number of dice. Terminating....";
+
 }
