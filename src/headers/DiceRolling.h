@@ -17,7 +17,7 @@ public:
     DiceRolling();
     DiceRolling(int);
     void rollDice();
-    DiceRolling::~DiceRolling();
+    ~DiceRolling();
 };
 
 #endif
