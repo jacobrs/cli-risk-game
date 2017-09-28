@@ -1,4 +1,4 @@
-g++ *.cpp classes/*.cpp
+DEL a.exe
+g++ deckDriver.cpp
 a.exe
 pause
-DEL a.exe

@@ -7,7 +7,7 @@ Card::Card(string cardType)
 
 Card::Card()
 {
-    Card::Card("");
+    this -> cardType ="";
 }
 
 string Card::getCardType(){
@@ -17,4 +17,8 @@ string Card::getCardType(){
 
 void Card::setCardType(string cType){
     this -> cardType = cType;
+}
+
+string Card::printCard(){
+    return this -> cardType;
 }

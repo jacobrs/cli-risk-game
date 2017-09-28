@@ -1,44 +1,48 @@
 #ifndef DECK_H
-#define DECK_H 
+#define DECK_H
 
 #include "Card.h"
-#include "Hand.h"
-#include "Country.h"
-#include <string>
+
 #include <vector>
+#include <algorithm>
+#include <random>
 
 using namespace std;
 
-class Deck:{
+class Deck{
 
 public:
-
-    int numberOfCards;
+   
     int infantryCounter;
-    int cavalryCounter;
     int artilleryCounter;
-    int remainder; 
+    int cavalryCounter;
+    int counter;
 
     //Constructor
     Deck();
+    Deck(int);
     
     //Method to generate deck
     void createDeck(int);
 
-    //Methods to draw and transfer card to hand
+    //Methods to draw and transfer card to hand and copies the drawn card to the drawn deck
     Card draw();
-    
-    //Method to look through the deck
+
+    //Method to count type of drawn cards
+    Deck addDrawnPile(Card);
 
     //Method to shuffle
     void shuffleDeck();
 
-
+    //Method to print out deck
+    void printDeck();
+    void printDrawnPile();
 
 private:
     vector<Card> riskDeck;
+    vector<Card> drawnPile;
+    int currentCard;
 
 };
 
-
-#endif
+#endif 

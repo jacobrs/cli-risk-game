@@ -1,47 +1,82 @@
 #include "../headers/Deck.h"
-#include <algorithm>
-#include <random>
 
 using namespace std;
 
-Deck::Deck()(
-    numberOfCards = numberOfCountries;
-    createDeck(numberOfCards);
-    shuffle();
-)
-
-void Deck::createDeck(deckSize){
- 
-    for(i=0; i<(deckSize);i++){
-
-        remainder = deckSize%3;
-
-        if (remainder==0)
-            {
-                deck<i> = card("infantry");
-            }
-        else if (remainder==1)
-            {
-                deck<i> = card("artillery");
-            }
-        else if (remainder==2)
-            {
-                deck<i> = card("cavalry");
-            }
-        else{}
-        
+Deck::Deck(int numOfCards){ 
+    createDeck(numOfCards);
+    drawnPile.empty();
 }
+
+Deck::Deck(){
+    createDeck(0);
+}
+
+void Deck::createDeck(int numberOfCards){
+ 
+    for(counter = 0; counter < numberOfCards; counter++){
+
+        if(counter % 3 ==0){
+            Card newCard = Card("infantry");
+            this -> riskDeck.push_back(newCard);
+        } else if(counter % 3 == 1){
+            Card newCard = Card("artillery");
+            this -> riskDeck.push_back(newCard);
+        } else if(counter % 3 == 2){
+            Card newCard = Card("cavalry");
+            this -> riskDeck.push_back(newCard);
+        }
+    }
 }
 
 void Deck::shuffleDeck(){
+    random_device rd;
+	mt19937 g(rd());
 
-    for(int j = 0; j<numberOfCards; j++){
-        int r = j + rand() % (numberOfCards - j);
-        swap(elements[j],elements[r]);
-    }
-
+	shuffle(riskDeck.begin(), riskDeck.end(), g);
 }
 
 Card Deck::draw(){
 
+    Card cardDrawn = riskDeck.front();
+    riskDeck.erase(riskDeck.begin());
+    drawnPile.push_back(cardDrawn);
+    return cardDrawn;
+
 }
+
+void Deck::printDeck() {
+
+    int length = riskDeck.size();
+    Card current;
+
+    cout << "\nDeck" << endl;
+    for (int i = 0; i<length; i++){
+        current = riskDeck.at(i);
+        cout << current.getCardType() << endl;
+    }
+}
+
+void Deck::printDrawnPile() {
+    
+        int length = drawnPile.size();
+        Card current;
+        int infantryCounter =0;
+        int artilleryCounter =0;
+        int cavalryCounter =0;
+    
+        cout << "\nDeck drawn" << endl;
+        for (int i = 0; i<length; i++){
+            current = drawnPile.at(i);
+            if (current.getCardType() == "artillery"){
+                artilleryCounter++;
+            }else if(current.getCardType() == "infantry"){
+                infantryCounter++;
+            }else if(current.getCardType() == "cavalry"){
+                cavalryCounter++;
+            }else{
+
+            }
+        }
+        cout << "\nartillery: " << artilleryCounter <<"\ninfantry: "<<infantryCounter << "\ncavalry: "<< cavalryCounter <<endl;
+    }
+
