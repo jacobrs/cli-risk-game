@@ -49,11 +49,13 @@ void MapLoader::importMap(){
 		if(!readingContinents || !mapContinents.size()){
 			isValid = false;
 			printf("MAP FILE INVALID: DOES NOT CONTAIN CONTINENTS.\n");
+			mapFile.close();
 			return;
 		}
 		if(!readingCountries || !mapCountries.size()){
 			isValid = false;
 			printf("MAP FILE INVALID: DOES NOT CONTAIN COUNTRIES.\n");
+			mapFile.close();
 			return;
 		}
 		mapFile.close();
