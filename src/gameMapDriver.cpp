@@ -20,11 +20,7 @@ int main(int args, char** argv){
   usa->addNeighbour(mexico);
 
   brazil->addNeighbour(argentina);
-  brazil->addNeighbour(chile);
   brazil->addNeighbour(venezuela);
-
-  chile->addNeighbour(venezuela);
-  chile->addNeighbour(argentina);
 
   // link continents together
   venezuela->addNeighbour(mexico);
@@ -38,13 +34,31 @@ int main(int args, char** argv){
 
   southAmerica->addCountry(venezuela);
   southAmerica->addCountry(brazil);
+  southAmerica->addCountry(chile);
   southAmerica->addCountry(argentina);
 
   GameMap map = GameMap();
   map.addContinent(northAmerica);
   map.addContinent(southAmerica);
 
+  printf("Testing while chile is not connected\n===========================\n");
+
   map.isValidMap();
+  printf("\n");
+
+  printf("Adding chile's neighbours and retesting\n===========================\n");
+  brazil->addNeighbour(chile);
+  chile->addNeighbour(venezuela);
+  chile->addNeighbour(argentina);
+
+  map.isValidMap();
+  printf("\n");
+
+  printf("Adding chile to north america and retesting\n===========================\n");
+  northAmerica->addCountry(chile);
+
+  map.isValidMap();
+  printf("\n");
 
   delete chile;
   delete usa;
@@ -56,5 +70,5 @@ int main(int args, char** argv){
 
   delete northAmerica;
   delete southAmerica;
-
+  
 }
