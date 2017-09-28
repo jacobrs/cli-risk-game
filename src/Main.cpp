@@ -2,6 +2,8 @@
 #include "headers/Country.h"
 #include "headers/Continent.h"
 #include "headers/GameMap.h"
+#include "headers/Die.h"
+#include <stdio.h>
 
 using namespace std;
 
@@ -49,5 +51,4 @@ int main(int args, char** argv){
   for(int i = 0; i < map.numberOfContinents; i ++){
     printf("%s\n", map.continents[i]->name.c_str());
   }
-
 }
