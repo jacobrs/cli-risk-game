@@ -22,7 +22,6 @@ Deck gameDeck = Deck(15);
 
   Card drawn2 = gameDeck.draw();
   Card drawn3 = gameDeck.draw();
-  gameDeck.printDrawnPile();
   Card drawn4 = gameDeck.draw();
   Card drawn5 = gameDeck.draw();
 
@@ -30,10 +29,10 @@ Deck gameDeck = Deck(15);
   hand1.addCard(drawn3);
   hand1.addCard(drawn4);
   hand1.addCard(drawn5);
-
-  
-  gameDeck.printDeck();
   hand1.printHand();
+  gameDeck.printDrawnPile();
+
+  gameDeck.printDeck();
   
   int newArmy =0;
 

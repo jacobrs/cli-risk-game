@@ -9,7 +9,9 @@ Country::Country(string countryName){
 }
 
 Country::Country(){
-  Country::Country("");
+  armies = 0;
+  name = "";
+  numberOfNeighbours = 0;
 }
 
 void Country::addNeighbour(Country* newNeighbour){

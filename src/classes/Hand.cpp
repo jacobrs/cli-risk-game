@@ -1,6 +1,5 @@
 #include "../headers/Hand.h"
 
-
 Hand::Hand(){
     this -> inHandArt;
     this -> inHandCav;
@@ -45,7 +44,6 @@ void Hand::addCard(Card newCardHand){
     }else{
         cout << "error"<< endl;
     }
-    
 }
 
 void Hand::printHand(){

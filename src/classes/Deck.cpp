@@ -30,7 +30,7 @@ void Deck::createDeck(int numberOfCards){
 
 void Deck::shuffleDeck(){
     random_device rd;
-	mt19937 g(rd());
+    mt19937 g(rd());
 
 	shuffle(riskDeck.begin(), riskDeck.end(), g);
 }
@@ -58,25 +58,25 @@ void Deck::printDeck() {
 
 void Deck::printDrawnPile() {
     
-        int length = drawnPile.size();
+    int length = drawnPile.size();
         Card current;
-        int infantryCounter =0;
-        int artilleryCounter =0;
-        int cavalryCounter =0;
+    int infantryCounter =0;
+    int artilleryCounter =0;
+    int cavalryCounter =0;
     
-        cout << "\nDeck drawn" << endl;
-        for (int i = 0; i<length; i++){
-            current = drawnPile.at(i);
-            if (current.getCardType() == "artillery"){
-                artilleryCounter++;
-            }else if(current.getCardType() == "infantry"){
-                infantryCounter++;
-            }else if(current.getCardType() == "cavalry"){
-                cavalryCounter++;
-            }else{
+    cout << "\nDeck drawn" << endl;
+    for (int i = 0; i<length; i++){
+         current = drawnPile.at(i);
+        if (current.getCardType() == "artillery"){
+            artilleryCounter++;
+        }else if(current.getCardType() == "infantry"){
+            infantryCounter++;
+        }else if(current.getCardType() == "cavalry"){
+            cavalryCounter++;
+        }else{
 
             }
-        }
-        cout << "\nartillery: " << artilleryCounter <<"\ninfantry: "<<infantryCounter << "\ncavalry: "<< cavalryCounter <<endl;
     }
+    cout << "\nartillery: " << artilleryCounter <<"\ninfantry: "<<infantryCounter << "\ncavalry: "<< cavalryCounter <<endl;
+}
 
