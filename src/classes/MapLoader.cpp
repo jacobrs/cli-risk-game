@@ -115,6 +115,7 @@ void MapLoader::importCountry(string countryString){
 }
 
 void MapLoader::importNeighbours(string countryString){
+	countryString.replace(countryString.end()-1, countryString.end(), '\n', ',');
 	std::istringstream ss(countryString);
 	string countryName;
 	string neighbourName;
@@ -131,28 +132,12 @@ void MapLoader::importNeighbours(string countryString){
 			break;
 		}
 	}
-	
-	printf("\nBEFORE READ LOOP\n");
-	while(ss.good()){ // add all neighbours
-		getline(ss, neighbourName, ','); //get next neighbour name
+	while(getline(ss, neighbourName, ',')){ // add all neighbours
+		 //get next neighbour name
 		for(unsigned i = 0; i < mapCountries.size(); i++){
 			if(mapCountries[i]->name.find(neighbourName) != string::npos && mapCountries[i]->name.length() == neighbourName.length()){
 				mapCountries[countryIndex]->addNeighbour(mapCountries[i]);
-				printf("%s@",neighbourName.c_str());
 			}
 		}
-	}	
-	printf("\nAFTER READ LOOP\n");
-
-	string lastN;
-	getline(ss, lastN); //last neighbour
-	printf("\nBEFORE END LINE\n");
-	printf("%sEND LINE IS: \n", lastN.c_str());
-	for(unsigned i = 0; i < mapCountries.size(); i++){
-		if(mapCountries[i]->name.find(lastN) != string::npos && mapCountries[i]->name.length() == lastN.length()){
-			mapCountries[countryIndex]->addNeighbour(mapCountries[i]);
-			printf("%s@JUST READ LAST LINE\N",mapCountries[i]->name.c_str());
-		}
 	}
-	printf("\nAFTER END LINE\n");
 }
