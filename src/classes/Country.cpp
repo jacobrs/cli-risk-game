@@ -8,6 +8,15 @@ Country::Country(string countryName){
   numberOfNeighbours = 0;
 }
 
+<<<<<<< HEAD
+=======
+Country::Country(){
+  armies = 0;
+  name = "";
+  numberOfNeighbours = 0;
+}
+
+>>>>>>> ecfec1c8d3383c71a8daf48a769569b41f7b2c57
 void Country::addNeighbour(Country* newNeighbour){
   
   bool alreadyNeighbours = false;

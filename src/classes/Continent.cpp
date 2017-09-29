@@ -8,6 +8,15 @@ Continent::Continent(string continentName, int bonusValue){
   numberOfCountries = 0;
 }
 
+<<<<<<< HEAD
+=======
+Continent::Continent(){
+  bonus = 0;
+  name = "";
+  numberOfCountries = 0;
+}
+
+>>>>>>> ecfec1c8d3383c71a8daf48a769569b41f7b2c57
 void Continent::addCountry(Country* newCountry){
   
   bool alreadyElement = false;
