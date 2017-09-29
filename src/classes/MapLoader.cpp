@@ -14,6 +14,8 @@ MapLoader::MapLoader(const char* filePath){ /*File path is location of the game 
 	mapPath = filePath;
 	isValid = true;
 }
+MapLoader::~MapLoader(){
+}
 
 static ifstream mapFile;
 
