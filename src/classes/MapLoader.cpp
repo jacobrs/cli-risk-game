@@ -15,6 +15,8 @@ MapLoader::MapLoader(const char* filePath){ /*File path is location of the game 
 	isValid = true;
 }
 MapLoader::~MapLoader(){
+	mapContinents.clear();
+	mapCountries.clear();
 }
 
 static ifstream mapFile;
