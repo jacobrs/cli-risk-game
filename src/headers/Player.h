@@ -4,9 +4,10 @@
 #include <string>
 #include "Hand.h"
 #include "DiceRolling.h"
+#include "Country.h"
 
 using namespace std;
-
+class Country;
 class Player{
 public:
   int index;
@@ -18,9 +19,11 @@ public:
   Player(int, string, string, int);
   Player();
   void reinforce();
-  void attack();
+  void attack(Country*, Country*);
   void fortify();
   ~Player();
+private:
+  void diceBattle(DiceRolling*);
 };
 
 #endif
