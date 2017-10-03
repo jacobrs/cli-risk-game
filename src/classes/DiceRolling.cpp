@@ -16,7 +16,16 @@ DiceRolling::DiceRolling(int numberOfDice){
 }
 
 DiceRolling::DiceRolling(){
-    DiceRolling::DiceRolling(1);
+    number = 1;
+    numberOfRolls = 0;
+    dice = new Die*[number];
+    for(int i = 0; i < 6; i++){
+        valuesRolled[i] = 0;
+    }
+    total = 0;
+    for(int i = 0; i < number ; i++){
+        dice[i] = new Die();
+    }
 }
 
 void DiceRolling::rollDice(){

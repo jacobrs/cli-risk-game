@@ -8,7 +8,11 @@ Player::Player(int turnIndex, string playerName, string playerColor, int numberO
   diceRollingFacility = new DiceRolling(numberOfDice);
 }
 Player::Player(){
-  Player::Player(0, "", "", 0);
+  index = 0;    // to be used when deciding who's turn it is
+  name = "";
+  color = "";
+  hand  = new Hand();
+  diceRollingFacility = new DiceRolling(0);
 }
 void reinforce(){}
 void attack(){}
