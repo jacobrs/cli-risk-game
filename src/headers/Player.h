@@ -23,6 +23,7 @@ public:
   void fortify();
   ~Player();
 private:
+  
   void diceBattle(DiceRolling*);
 };
 

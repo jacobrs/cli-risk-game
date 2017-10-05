@@ -1,4 +1,5 @@
 #include "../headers/Player.h"
+#include <algorithm>
 
 Player::Player(int turnIndex, string playerName, string playerColor, int numberOfDice){
   index = turnIndex;    // to be used when deciding who's turn it is
@@ -45,9 +46,29 @@ void Player::attack(Country *attackingCountry, Country *enemyCountry){
   }
 }
 void Player::fortify(){}
-
+bool sortByDieSide(Die *lhs, Die *rhs){ return lhs->dieSide < rhs->dieSide; }
 void Player::diceBattle(DiceRolling *enemyDice){
   //roll dice for both
+  this->diceRollingFacility->rollDice();
+  enemyDice->rollDice();
+  //sort each dice array by descending order into a new array
+  /*int *playerSortedDice = new int [this->diceRollingFacility->number];
+  int *enemySortedDice = new int [enemyDice->number];
+  for(int i = 0; i < this->diceRollingFacility->number; i++){
+    if(this->diceRollingFacility->dice[i].dieSide >= this->diceRollingFacility->dice[i+1].dieSide){
+      playerSortedDice[i] = this->diceRollingFacility->dice[i].dieSide;
+    }
+    else {
+      playerSortedDice[i] = this->diceRollingFacility->dice[i+1].dieSide;
+    }
+  }*/
+  //compare the same indexes to eachother to determine winner
+  sort(this->diceRollingFacility->dice, this->diceRollingFacility->dice + this->diceRollingFacility->number, sortByDieSide);
+  for(int i = 0; i <  this->diceRollingFacility->number; i++)
+    cout<< this->diceRollingFacility->dice[i]->dieSide << "\n";
+  for(int i = 0; i < this->diceRollingFacility->number; i++){
+    this->diceRollingFacility->dice[i]->dieSide > enemyDice->dice[i]->dieSide;
+  }
   //foreach dice pair starting from highest result
 }
 
