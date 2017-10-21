@@ -8,22 +8,22 @@ using namespace std;
 int main(int args, char** argv){
 
     printf("\n\nEXPECTING FILE NOT FOUND:\n");
-    MapLoader* fileNotFound = new MapLoader("src/map/BEEPBEEP.map");
+    MapLoader* fileNotFound = new MapLoader("map/BEEPBEEP.map");
     fileNotFound->importMap();
     fileNotFound->~MapLoader();
 
     printf("\n\nEXPECTING MAP FILE THAT DOES NOT CONTAIN CONTINENTS:\n");
-    MapLoader* noContinent = new MapLoader("src/map/noContinent.map");
+    MapLoader* noContinent = new MapLoader("map/noContinent.map");
     noContinent->importMap();
     noContinent->~MapLoader();
 
     printf("\n\nEXPECTING MAP FILE THAT DOES NOT CONTAIN COUNTRIES:\n");
-    MapLoader* noCountry = new MapLoader("src/map/noCountry.map");
+    MapLoader* noCountry = new MapLoader("map/noCountry.map");
     noCountry->importMap();
     noCountry->~MapLoader();
 
     printf("\n\nEXPECTING CORRECT FILE PATH AND FILE FORMAT:\n");
-    MapLoader* mapLoader = new MapLoader("src/map/World.map");
+    MapLoader* mapLoader = new MapLoader("map/World.map");
     mapLoader->importMap();
     GameMap* world = new GameMap();
 
@@ -52,7 +52,7 @@ int main(int args, char** argv){
     world->~GameMap();
 
     printf("\n\nEXPECTING CORRECT FILE PATH AND FILE FORMAT (KHORAS):\n");
-    MapLoader* khorasLoader = new MapLoader("src/map/Khoras.map");
+    MapLoader* khorasLoader = new MapLoader("map/Khoras.map");
     khorasLoader->importMap();
     GameMap* khoras = new GameMap();
 
