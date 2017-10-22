@@ -2,6 +2,7 @@
 #include "headers/Continent.h"
 #include "headers/Country.h"
 #include "headers/GameMap.h"
+#include "headers/Player.h"
 
 using namespace std;
 
@@ -37,7 +38,7 @@ int main(int args, char** argv){
             printf("\t%s", tempCon->countries[j]->name.c_str());
         }
     }
-    
+
     printf("\n\nLIST ALL COUNTRIES AND THEIR NEIGHBOURS:\n");
     for(unsigned i = 0; i < mapLoader->mapCountries.size(); i++){
         printf("\n%s", mapLoader->mapCountries[i]->name.c_str());

@@ -14,8 +14,17 @@ Country::Country(){
   numberOfNeighbours = 0;
 }
 
+bool Country::isNeighbour(Country* c){
+  for(int i = 0; i < numberOfNeighbours; i++){
+    if(neighbours[i]->name == c->name){
+      return true;
+    }
+  }
+  return false;
+}
+
 void Country::addNeighbour(Country* newNeighbour){
-  
+
   bool alreadyNeighbours = false;
 
   // Create a new array of size current + 1
@@ -32,7 +41,7 @@ void Country::addNeighbour(Country* newNeighbour){
   // add the new neighbour to the list if not already neighbours
   if(!alreadyNeighbours){
     newNeighbours[numberOfNeighbours - 1] = newNeighbour;
-    // and make sure that the new neighbour knows its a neighbour    
+    // and make sure that the new neighbour knows its a neighbour
     neighbours = newNeighbours;
     newNeighbour->addNeighbour(this);
   }else{
