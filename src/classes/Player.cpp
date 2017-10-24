@@ -8,28 +8,27 @@ Player::Player(int turnIndex, string playerName, string playerColor, int numberO
   diceRollingFacility = new DiceRolling(numberOfDice);
 }
 Player::Player(){
-  Player(0, "", "", 0);
+  Player::Player(0, "", "", 0);
 }
-void Player::reinforce(){}
-void Player::attack(){}
+void reinforce(){}
+void attack(){
+  string input = "";
+  cout << "Do you want to attack (y/n)" << endl;
+  cin >> input;
 
-/*  Moves nbToMove armies from a to b
-*   1- Check if a and b are neighbours
-*   2- Check if country a and b belong the to this player
-*   3- Ask/Check if the amount of armies to be moved is valid (i.e.  armiesToMove < a's armies && armiesToMove >= 1)
-*/
-bool Player::fortify(Country* a, Country* b, int armiesToMove){
-  if(a->isNeighbour(b)){
-    if(a->owner->name == b->owner->name){
-      if(armiesToMove < a->armies && armiesToMove >= 1){
-        a->armies -= armiesToMove;
-        b->armies += armiesToMove;
-        return true;
-      }
-    }
+  while(input != "y" || input != "n") //just in case user can't read
+    cin >> input;
+
+  if(input == "n") //attack phase is over
+    return;
+
+  if(input == "y"){
+
   }
-  return false;
+  cout << "Something went wrong in attack phase" << endl;  // shouldn't reach here
+  return;
 }
+void fortify(){}
 
 Player::~Player(){
   delete hand;
