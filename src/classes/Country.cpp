@@ -14,6 +14,24 @@ Country::Country(){
   numberOfNeighbours = 0;
 }
 
+bool Country::hasEnnemies(){
+  for(int n = 0; n < numberOfNeighbours; n++){
+    if(neighbours[n]->owner != NULL && owner != NULL && neighbours[n]->owner != owner){
+      return true;
+    }
+  }
+  return false;
+}
+
+void Country::listEnnemies(){
+  for(int n = 0; n < numberOfNeighbours; n++){
+    if(neighbours[n]->owner != NULL && owner != NULL && neighbours[n]->owner != owner){
+      cout << neighbours[n]->name << ", ";
+    }
+  }
+  cout << endl;
+}
+
 bool Country::isNeighbour(Country* c){
   for(int i = 0; i < numberOfNeighbours; i++){
     if(neighbours[i]->name == c->name){

@@ -7,6 +7,7 @@ using namespace std;
 
 int main(int args, char** argv){
 
+  srand (time(NULL)); // seeding random VERY IMPORTANT!!!!
   // temporary testing code
   Continent* northAmerica = new Continent("North America", 5);
   Continent* southAmerica = new Continent("South America", 2);
@@ -40,21 +41,23 @@ int main(int args, char** argv){
   southAmerica->addCountry(argentina);
   southAmerica->addCountry(cuba);
 
-  GameMap map = GameMap();
-  map.addContinent(northAmerica);
-  map.addContinent(southAmerica);
+  GameMap* map = new GameMap();
+  map->addContinent(northAmerica);
+  map->addContinent(southAmerica);
 
-  map.isValidMap();
+  map->isValidMap();
 
-  Player* FOO = new Player(1,"foo","red",3);
-  Player* BAR = new Player(2,"bar","blue",3);
+  Player* FOO = new Player(1,"foo","red");
+  Player* BAR = new Player(2,"bar","blue");
 
-  canada->armies=1;
+  canada->armies=10;
   canada->owner=FOO;
-  mexico->armies=1;
+  mexico->armies=10;
   mexico->owner=FOO;
-  usa->armies=1;
+  usa->armies=2;
   usa->owner=BAR;
-
   
+  FOO->attack(map);
+  BAR->attack(map);
+
 }
