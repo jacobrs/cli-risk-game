@@ -37,3 +37,6 @@
 
 # Mac files
 .DS_Store
+
+# Compilation/Execution script
+*.bat
