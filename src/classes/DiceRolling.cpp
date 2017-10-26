@@ -49,6 +49,7 @@ int* DiceRolling::attackAndDefendRoll(int attackNbOfDices, int defendNbOfDices){
   for(int d = 0; d < defendNbOfDices; d++){
     delete defendDices[d];
   }
+  
   delete [] attackDices;
   delete [] defendDices;
   return casualties;
