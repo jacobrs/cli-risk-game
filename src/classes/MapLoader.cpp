@@ -1,6 +1,7 @@
 #include "../headers/MapLoader.h"
 #include "../headers/Continent.h"
 #include "../headers/Country.h"
+#include "../headers/GameMap.h"
 
 #include <stdio.h>
 #include <fstream>
@@ -144,4 +145,13 @@ void MapLoader::importNeighbours(string countryString){
 			}
 		}
 	}
+}
+
+GameMap* MapLoader::exportToGameMap(){
+	GameMap* world = new GameMap();
+	for(unsigned i = 0; i < this->mapContinents.size(); i++){
+		Continent* tempCon = this->mapContinents[i];
+		world->addContinent(tempCon);
+	}
+	return world;
 }

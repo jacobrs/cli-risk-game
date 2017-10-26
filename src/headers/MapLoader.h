@@ -3,6 +3,7 @@
 
 #include "Continent.h"
 #include "Country.h"
+#include "GameMap.h"
 
 #include <stdio.h>
 #include <fstream>
@@ -24,6 +25,8 @@ public:
   void importContinent(string);
   void importCountry(string);
   void importNeighbours(string);
+  GameMap* exportToGameMap();
+
 };
 
 #endif

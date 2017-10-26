@@ -2,6 +2,7 @@
 #define GAMEMAP_H
 
 #include "Continent.h"
+#include "GameMap.h"
 #include <string>
 
 using namespace std;
