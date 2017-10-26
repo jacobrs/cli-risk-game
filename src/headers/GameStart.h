@@ -1,7 +1,7 @@
 #ifndef GAMESTART_H
 #define GAMESTART_H
 
-#include "GameMap.h"
+#include "MapLoader.h"
 #include "Player.h"
 #include <string>
 
@@ -12,13 +12,13 @@ class GameStart {
 public:
 
     GameStart();
-    GameStart(string map, int nbplayers);
-    ~GameStart();
+    GameStart(string, int);
+    //~GameStart();
 
     //function to LoadMap
 
     //function to create Players
-    Player createPlayers(int nbplayers);
+    void createPlayers(int nbplayers);
 
     //Accessor
     int getNumOfPlayers();
@@ -29,7 +29,7 @@ public:
 
 private:
     int numOfPlayers;
-    string seletedMap;
+    string map;
     vector <Player> players;
 };
 

@@ -1,9 +1,9 @@
 #ifndef STARTUPPHASE_H
 #define STARTUPPHASE_H
 
-#import <string>
-#import "GameStart.h"
-#import "MapLoader.h"
+#include <string>
+#include "GameStart.h"
+#include "MapLoader.h"
 
 class StartupPhase{
 public:
@@ -15,6 +15,9 @@ public:
     void shufflePlayers();
 private:
     int armiesStart;
+    string map;
+    int nbPlayers;
+    vector <Player> players;
 };
 
 #endif

@@ -1,13 +1,11 @@
-#import "..headers/StartupPhase.h"
+#include "../headers/StartupPhase.h"
+#include <string>
+using namespace std;
 
 StartupPhase::StartupPhase(){
 }
 
-StartupPhase::~StartupPhase(){
-    delete StartupPhase();
-}
-
-StartupPhase::StartupPhase(mapPlaying, numPlayers){
+StartupPhase::StartupPhase(string mapPlaying, int numPlayers){
     map = mapPlaying;
     nbPlayers = numPlayers;
 
