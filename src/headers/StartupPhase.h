@@ -1,10 +1,13 @@
-/*
 #ifndef STARTUPPHASE_H
 #define STARTUPPHASE_H
 
-#include <string>
-#include "GameStart.h"
+#include "GameMap.h"
 #include "MapLoader.h"
+
+#include <string>
+#include <vector>
+using namespace std;
+
 
 class StartupPhase{
 public:
@@ -12,10 +15,13 @@ public:
     ~StartupPhase();
     StartupPhase(string, int);    
     vector <Player> players;
+    vector <Country> countries;
+
 
     void printMapWithOwner();
     void shufflePlayers();
     void createPlayer();
+    void shuffleCountries();
 
     
 private:
@@ -26,4 +32,3 @@ private:
 };
 
 #endif
-*/

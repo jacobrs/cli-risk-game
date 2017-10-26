@@ -1,4 +1,3 @@
-/*
 #include "../headers/StartupPhase.h"
 #include "../headers/MapLoader.h"
 #include "../headers/GameMap.h"
@@ -8,10 +7,10 @@
 
 using namespace std;
 
-StartupPhase::StartupPhase(){
+StartupPhase::StartupPhase2(){
 }
 
-StartupPhase::StartupPhase(string mapPlaying, int numPlayers){
+StartupPhase::StartupPhase2(string mapPlaying, int numPlayers){
     map = mapPlaying;
     nbPlayers = numPlayers;
 
@@ -67,4 +66,7 @@ void StartupPhase::createPlayer(){
            this -> players.push_back(newPlayer);
         }
 }
-*/
+
+void StartupPhase::shuffleCountries(){
+    
+}

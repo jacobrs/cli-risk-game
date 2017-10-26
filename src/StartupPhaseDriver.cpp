@@ -1,4 +1,3 @@
-/* 
 #include "headers/StartupPhase.h"
 #include "headers/GameStart.h"
 #include "headers/Player.h"
@@ -25,4 +24,3 @@ int main(){
    
     return 0;
 }
-*/
