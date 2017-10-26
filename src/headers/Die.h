@@ -2,6 +2,8 @@
 #define DIE_H
 
 #include "Die.h"
+#include <random>
+#include <time.h>
 #include <string>
 
 using namespace std;
@@ -11,7 +13,7 @@ public:
     int dieSide;
 
     Die();
-    int rollDie();
+    void rollDie();
 };
 
 #endif
