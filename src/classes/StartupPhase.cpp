@@ -40,3 +40,21 @@ void StartupPhase::shufflePlayers(){
 	shuffle(players.begin(), players.end(), g);
 }
 
+void StartupPhase::createPlayer(){
+    
+    players.reserve(nbPlayers);
+    
+        //creates the different players
+        for (int i = 0; i < nbPlayers; i++)
+        {
+                string playerName = "";
+                string playerColour = "";
+                cout << "Player name: ";
+                cin >> playerName;
+                cout << "\nPlayer colour: ";
+                cin >> playerColour;
+           
+            Player newPlayer = Player(i, playerName, playerColour);
+           this -> players.push_back(newPlayer);
+        }
+}

@@ -3,6 +3,7 @@
 #include "headers/Player.h"
 #include <iostream>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -12,9 +13,9 @@ int main(){
     int numOfPlayers = 0;
     bool promptPlayers = true;
     bool promptMap = true;
-    
+    vector <Player> players;
        
-
+    // Validates the number of players
     while (promptPlayers){
         cout << "Number of Players between 2-6: " << endl;
         cin >> numOfPlayers;
@@ -26,12 +27,12 @@ int main(){
             promptPlayers =false;
         }
     }
-
+    //validates the map chosen
     while (promptMap){
-        cout << "Select Map File: Khoras.map, noContinent.map, noCountry.map or World.map" << endl;
+        cout << "Select Map File: Khoras or World" << endl;
         cin >> selectedMap;
 
-        if (selectedMap.compare("Khoras.map") == 0 || selectedMap.compare("World.map") == 0){ 
+        if (selectedMap.compare("Khoras") == 0 || selectedMap.compare("World") == 0){ 
             promptMap =false;
 
            } 
@@ -40,8 +41,12 @@ int main(){
         }
     }
   
+    GameStart* newGame = new GameStart(selectedMap, numOfPlayers);
 
-    GameStart newGame = GameStart(selectedMap, numOfPlayers);
+    cout << "Amount of players: " << newGame -> players.size() << endl;
+
+    cout << "Bye";
+
 
     return 0;
     

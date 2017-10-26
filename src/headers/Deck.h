@@ -17,6 +17,7 @@ public:
     int artilleryCounter;
     int cavalryCounter;
     int counter;
+    
 
     //Constructor
     Deck();
@@ -38,10 +39,14 @@ public:
     void printDeck();
     void printDrawnPile();
 
+    //Accessor for size
+    int getSize();
+
 private:
     vector<Card> riskDeck;
     vector<Card> drawnPile;
     int currentCard;
+    int size;
 
 };
 

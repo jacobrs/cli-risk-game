@@ -9,10 +9,13 @@ class StartupPhase{
 public:
     StartupPhase();
     ~StartupPhase();
-    StartupPhase(string map, int nbPlayers);
+    StartupPhase(string, int);
 
     void printMapWithOwner();
     void shufflePlayers();
+    void createPlayer();
+
+    
 private:
     int armiesStart;
     string map;

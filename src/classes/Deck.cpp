@@ -3,12 +3,16 @@
 using namespace std;
 
 Deck::Deck(int numOfCards){ 
+    size = numOfCards;
     createDeck(numOfCards);
     drawnPile.empty();
 }
 
 Deck::Deck(){
     createDeck(0);
+}
+int Deck::getSize(){
+    return size;
 }
 
 void Deck::createDeck(int numberOfCards){

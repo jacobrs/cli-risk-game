@@ -1,46 +1,70 @@
 #include "../headers/GameStart.h"
+#include "../headers/MapLoader.h"
+#include "../headers/GameMap.h"
+#include "../headers/Deck.h"
+
 
 #include <string>
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
 GameStart::GameStart(){
     numOfPlayers =0;
     map = "";
+    deckSize =0;
 }
 
 
-GameStart::GameStart(string mapPlay, int nbPlayers){
-   // seletedMap = MapLoader(map);
+GameStart::GameStart(string mapChosen, int nbPlayers){
+   
+    //creating the players
     numOfPlayers = nbPlayers;
-    map = mapPlay;
-    createPlayers(numOfPlayers);
-    //get number of countries in the map
-  //  createDeck(numCountries);
+    createPlayers(nbPlayers);
+    MapLoader* playMap;
+    GameMap* gameMap;
+    
+    //Getting the map chosen
+    if(mapChosen.compare("Khoras") == 0){
+        playMap = new MapLoader("map/Khoras.map");
+        playMap->importMap();
+        gameMap = new GameMap();
+    } else if (mapChosen.compare("World") == 0){
+        playMap = new MapLoader("map/World.map");
+        playMap->importMap();
+        gameMap = new GameMap();
+    } else{
+        cout << "Error" << endl;
+    }
+
+    deckSize = playMap -> mapCountries.size();
+
+    //creates the Deck (num of cards has to be equal to num of Countries)
+    Deck* playDeck = new Deck(deckSize);
+
+    //Check the number of cards and countries
+    cout << "\nNumber of Countries: " << playMap -> mapCountries.size() << endl;
+    cout << "Deck size: " << playDeck -> getSize() << endl;
 }
+
 
 void GameStart::createPlayers(int nbPlayers){
 
-    //enterPlayer = true;
+    players.reserve(nbPlayers);
 
-    for (int i = 0; i < nbPlayers; i++){
-        //while(enterPlayer){
+    cout << "\nPlayers information: "<< endl;
+    //creates the different players
+    for (int i = 0; i < nbPlayers; i++)
+    {
             string playerName = "";
             string playerColour = "";
             cout << "Player name: ";
             cin >> playerName;
-            cout << "\nPlayer colour: ";
+            cout << "Player colour: ";
             cin >> playerColour;
-        //}
+       
         Player newPlayer = Player(i, playerName, playerColour);
-        this -> players.push_back(newPlayer);
-       // players[i] = newPlayer;
-
-
+       this -> players.push_back(newPlayer);
     }
-}
-
-int GameStart::getNumOfPlayers(){
-    return numOfPlayers;
 }
