@@ -11,13 +11,14 @@ using namespace std;
 
 class Game{
 private:
-  vector<Player> players;
+  vector<Player*> players;
   GameMap* gameMap;
 
 public:
   Game(GameMap* map, int numberOfPlayers);
   ~Game();
   void startGame();
+  bool isWon();
 
 };
 
