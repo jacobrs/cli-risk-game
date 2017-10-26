@@ -1,4 +1,5 @@
 #include <iostream>
+#include "./headers/Game.h"
 #include "./headers/GameMap.h"
 #include "./headers/MapLoader.h"
 
@@ -16,8 +17,9 @@ int main(int args, char** argv){
   printf("Checking integrity of game map\n\n");
   map->isValidMap();
 
-  printf("Starting main game loop");
-
+  printf("Starting main game loop\n");
+  Game game = Game(map);
+  
 
   // clean up pointers 
   delete map;
