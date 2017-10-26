@@ -5,10 +5,10 @@
 #include <string>
 
 using namespace std;
-
+class Player;
 class Country{
 public:
-  
+
   int armies;
   int numberOfNeighbours; // need to keep track of this since
                           // using traditional dynamic arrays
@@ -19,7 +19,7 @@ public:
   Country();
   Country(string);
   void addNeighbour(Country*);
-
+  bool isNeighbour(Country*);
 };
 
 #endif
