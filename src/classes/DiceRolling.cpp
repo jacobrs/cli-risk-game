@@ -30,7 +30,8 @@ int* DiceRolling::attackAndDefendRoll(int attackNbOfDices, int defendNbOfDices){
   }
 
   int dicesToCompare = (attackNbOfDices >= defendNbOfDices) ? defendNbOfDices : attackNbOfDices; // compare the least amount of dices
-  int* casualties = new int[2]{0,0};
+  int* casualties = new int[2];
+  fill_n(casualties, 2, 0);
 
   cout << endl << "compare " << dicesToCompare << endl;
   for(int d = 0; d < dicesToCompare; d++){
@@ -48,8 +49,8 @@ int* DiceRolling::attackAndDefendRoll(int attackNbOfDices, int defendNbOfDices){
   for(int d = 0; d < defendNbOfDices; d++){
     delete defendDices[d];
   }
-  delete attackDices;
-  delete defendDices;
+  delete [] attackDices;
+  delete [] defendDices;
   return casualties;
 }
 
