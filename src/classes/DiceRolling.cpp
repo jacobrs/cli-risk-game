@@ -3,22 +3,6 @@
 #include<iostream>
 using namespace std;
 
-/*DiceRolling::DiceRolling(int numberOfDice){
-    number = numberOfDice;
-    numberOfRolls = 0;
-    dice = new Die*[number];
-    for(int i = 0; i < 6; i++){
-        valuesRolled[i] = 0;
-    }
-    total = 0;
-    for(int i = 0; i < number ; i++){
-        dice[i] = new Die();
-    }
-}
-
-DiceRolling::DiceRolling(){
-}*/
-
 int* DiceRolling::attackAndDefendRoll(int attackNbOfDices, int defendNbOfDices){ // returns number of armies lost during that turn {attackerArmyLoss, defenderArmyLoss}
   Die** attackDices = new Die*[attackNbOfDices];
   for(int att = 0; att < attackNbOfDices; att++){
@@ -78,14 +62,5 @@ void DiceRolling::sort(Die** dArray, int arraySize){ //most basic sort because a
     }
   }
 }
-/*
-void DiceRolling::rollDice(){
-    for(int i = 0; i < number; i++){
-        dice[i]->rollDie();
-        total += dice[i]->dieSide;
-        numberOfRolls++;
-        valuesRolled[dice[i]->dieSide - 1]++;
-    }
-}*/
 
 DiceRolling::~DiceRolling(){}
