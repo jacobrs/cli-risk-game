@@ -1,6 +1,7 @@
+/* 
 #include "headers/StartupPhase.h"
 #include "headers/GameStart.h"
-#include "headers/Players.h"
+#include "headers/Player.h"
 #include <string>
 
 using namespace std;
@@ -24,3 +25,4 @@ int main(){
    
     return 0;
 }
+*/

@@ -1,3 +1,4 @@
+/*
 #ifndef STARTUPPHASE_H
 #define STARTUPPHASE_H
 
@@ -9,7 +10,8 @@ class StartupPhase{
 public:
     StartupPhase();
     ~StartupPhase();
-    StartupPhase(string, int);
+    StartupPhase(string, int);    
+    vector <Player> players;
 
     void printMapWithOwner();
     void shufflePlayers();
@@ -20,7 +22,8 @@ private:
     int armiesStart;
     string map;
     int nbPlayers;
-    vector <Player> players;
+
 };
 
 #endif
+*/

@@ -1,5 +1,11 @@
+/*
 #include "../headers/StartupPhase.h"
+#include "../headers/MapLoader.h"
+#include "../headers/GameMap.h"
+#include "../headers/Player.h"
 #include <string>
+#include <vector>
+
 using namespace std;
 
 StartupPhase::StartupPhase(){
@@ -9,27 +15,30 @@ StartupPhase::StartupPhase(string mapPlaying, int numPlayers){
     map = mapPlaying;
     nbPlayers = numPlayers;
 
+    createPlayer(numPlayers);
     shufflePlayers();
     
     switch (numPlayers){
         case(2):
-            armiesStart = 40;
+            armies = 40;
             break;
         case(3):
-            armiesStart = 35;
+            armies = 35;
             break;
         case(4):
-            armiesStart = 30;
+            armies = 30;
         break;
         case(5):
-            armiesStart = 25;
+            armies = 25;
             break;
         case(6):
-            armiesStart = 20;
+            armies = 20;
             break;
         default:
             break;
     }
+
+
 
 }
 
@@ -58,3 +67,4 @@ void StartupPhase::createPlayer(){
            this -> players.push_back(newPlayer);
         }
 }
+*/
