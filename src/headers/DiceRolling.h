@@ -7,16 +7,18 @@ using namespace std;
 
 class DiceRolling{
 public:
-    int total;
-    int number;
-    int valuesRolled[6];
-    int numberOfRolls;
+    //int total;
+    //int number;
+    //int valuesRolled[6];
+    //int numberOfRolls;
 
-    Die **dice;
+    //Die **dice;
 
-    DiceRolling();
-    DiceRolling(int);
-    void rollDice();
+    //DiceRolling();
+    //DiceRolling(int);
+    int* attackAndDefendRoll(int, int);
+    //void rollDice();
+    void sort(Die**, int);
     ~DiceRolling();
 };
 

@@ -3,10 +3,9 @@
 using namespace std;
 
 Die::Die(){
-    dieSide = 0;
+    dieSide = 1;
 }
 
-int Die::rollDie(){
+void Die::rollDie(){
     dieSide = rand()%6 + 1;
-    return dieSide;
 }

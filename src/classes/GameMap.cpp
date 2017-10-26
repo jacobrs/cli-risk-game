@@ -11,8 +11,20 @@ GameMap::GameMap(){
   numberOfContinents = 0;
 }
 
+Country* GameMap::getCountryByName(string name){
+  for(int cont = 0; cont < numberOfContinents; cont++){
+    for(int coun = 0; coun < continents[cont]->numberOfCountries; coun++){
+      Country* c = continents[cont]->countries[coun];
+      if(c->name == name){
+        return c;
+      }
+    }
+  }
+  return NULL;
+}
+
 void GameMap::addContinent(Continent* newContinent){
-  
+
   bool alreadyElement = false;
 
   // Create a new array of size current + 1
@@ -29,7 +41,7 @@ void GameMap::addContinent(Continent* newContinent){
   // add the new neighbour to the list if not already neighbours
   if(!alreadyElement){
     newContinents[numberOfContinents - 1] = newContinent;
-    // and make sure that the new neighbour knows its a neighbour    
+    // and make sure that the new neighbour knows its a neighbour
     continents = newContinents;
   }else{
     numberOfContinents--;
@@ -80,7 +92,7 @@ bool GameMap::isValidMap(){
   // check that the map is a connected graph
 
   printf("Checking if all countries are interconnected ");
-  
+
   vector<Country*> visited;
   Country *startingPoint = continents[0]->countries[0];
 

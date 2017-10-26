@@ -18,6 +18,8 @@ public:
 
   Country();
   Country(string);
+  bool hasEnnemies();
+  void listEnnemies();
   void addNeighbour(Country*);
   bool isNeighbour(Country*);
 };

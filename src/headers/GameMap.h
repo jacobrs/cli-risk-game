@@ -6,14 +6,17 @@
 
 using namespace std;
 
+class Continent;
+class Country;
 class GameMap{
 public:
-  
+
   int numberOfContinents;
 
   Continent **continents;
 
   GameMap();
+  Country* getCountryByName(string);
   void addContinent(Continent*);
   bool isValidMap();
 

@@ -1,17 +1,117 @@
 #include "../headers/Player.h"
 
-Player::Player(int turnIndex, string playerName, string playerColor, int numberOfDice){
+Player::Player(int turnIndex, string playerName, string playerColor){
   index = turnIndex;    // to be used when deciding who's turn it is
   name = playerName;
   color = playerColor;
   hand  = new Hand();
-  diceRollingFacility = new DiceRolling(numberOfDice);
 }
 Player::Player(){
-  Player(0, "", "", 0);
+  Player(0, "", "");
 }
-void Player::reinforce(){}
-void Player::attack(){}
+void reinforce(){}
+void Player::attack(GameMap* map){ //Have to pass GameMap because can't know my countries otherwise
+  string input = "";
+  while(input != "n"){
+    if(!ownsAttackCountry(map)){
+      cout << name << " can't attack because you don't own a country that can attack" << endl;
+      return;
+    }
+
+    cout << "Does " << name << "  want to attack (y/n)" << endl;
+    cin >> input;
+    while(input != "y" && input != "n"){ //just in case user can't read
+      input = "";
+      cout << "INVALID INPUT, Do you want to attack (y/n)" << endl;
+      cin >> input;
+    }
+
+    if(input == "n") //attack phase is over
+      return;
+
+
+    if(input == "y"){
+      //choosing attackCountry
+      input = "";
+      cout << "Choose one of your country to attack from" << endl;
+      listMyAttackCountries(map);
+      cin >> input;
+      Country* attackCountry = map->getCountryByName(input);
+      while(attackCountry == NULL){ //just in case user can't read
+        cout << "INVALID INPUT, Choose one of your country to attack from" << endl;
+        listMyAttackCountries(map);
+        input = "";
+        cin >> input;
+        attackCountry = map->getCountryByName(input);
+      }
+
+      //choosing defendCountry
+      input = "";
+      cout << "Choose an ennemy country to attack" << endl;
+      attackCountry->listEnnemies();
+      cin >> input;
+      Country* defendCountry = map->getCountryByName(input);
+      while(defendCountry == NULL){ //just in case user can't read
+        cout << "INVALID INPUT, Choose an ennemy country to attack" << endl;
+        attackCountry->listEnnemies();
+        input = "";
+        cin >> input;
+        defendCountry = map->getCountryByName(input);
+      }
+
+      // get amount of dice to attack with
+      int attackDices;
+      cout << name << " is attacking " << defendCountry->owner->name << "\'s country" << endl;
+      cout << name << " has an army size of " << attackCountry->armies << " you are allowed to have 1 to " << ((attackCountry->armies-1 >= 3) ? 3 : attackCountry->armies-1) << " dice." << endl;
+      cout << "How many dice would you like to have?" << endl;
+      cin >> attackDices;
+      while(cin.fail() || attackDices > attackCountry->armies-1 || attackDices < 1 || attackDices > 3){//just in case user can't read
+        cout << "INVALID INPUT, ";
+        cout << name << " has an army size of " << attackCountry->armies << " you are allowed to have 1 to " << ((attackCountry->armies-1 >= 3) ? 3 : attackCountry->armies-1) << " dice." << endl;
+        cout << "How many dice would you like to have?" << endl;
+        cin >> attackDices;
+      }
+
+      // get amount of dice to defend with
+      int defendDices;
+      cout << name << " is attacking " << defendCountry->owner->name << "\'s country" << endl;
+      cout << defendCountry->owner->name << " has an army size of " << defendCountry->armies << " you are allowed to have " << ((defendCountry->armies >= 2) ? 2 : 1) << " dice." << endl;
+      cout << "How many dice would you like to have?" << endl;
+      cin >> defendDices;
+      while(cin.fail() || defendDices > defendCountry->armies || defendDices < 1 || defendDices > 2){//just in case user can't read
+        cout << "INVALID INPUT, ";
+        cout << defendCountry->owner->name << " has an army size of " << defendCountry->armies << " you are allowed to have " << ((defendCountry->armies >= 2) ? 2 : 1) << " dice." << endl;
+        cout << "How many dice would you like to have?" << endl;
+        cin >> defendDices;
+      }
+
+      //deduct armies according to the dices rolled
+      DiceRolling roll;
+      int* casualties = roll.attackAndDefendRoll(attackDices, defendDices);
+      attackCountry->armies-=casualties[0];
+      defendCountry->armies-=casualties[1];
+
+      //if the armies in defend country reaches 0, that country is conquired by the attacker
+      if(defendCountry->armies<=0){
+        cout << defendCountry->name << " has been conquired, how many armies would " << attackCountry->owner->name << " like to move from " << attackCountry->name << " to " << defendCountry->name << "?" << endl;
+        cout << "You can move 1 to " << attackCountry->armies-1 << " armies." << endl;
+        int armiesToMove;
+        cin >> armiesToMove;
+        while(cin.fail() || armiesToMove > attackCountry->armies-1 || armiesToMove < 1){//just in case user can't read
+          cout << "INVALID INPUT, You can move 1 to " << attackCountry->armies-1 << " armies." << endl;
+          cin >> armiesToMove;
+        }
+        attackCountry->armies-=armiesToMove;
+        defendCountry->armies=armiesToMove;
+        defendCountry->owner=attackCountry->owner;
+      }
+      cout << attackCountry->owner->name << "\'s country " << attackCountry->name << " now has " << attackCountry->armies << " armies." << endl;
+      cout << defendCountry->owner->name << "\'s country " << defendCountry->name << " now has " << defendCountry->armies << " armies." << endl;
+      cout << attackCountry->owner->name << (ownsAttackCountry(map)?" can":" cannot") << " attack again." << endl;
+    }
+  }
+  return;
+}
 
 /*  Moves nbToMove armies from a to b
 *   1- Check if a and b are neighbours
@@ -31,7 +131,32 @@ bool Player::fortify(Country* a, Country* b, int armiesToMove){
   return false;
 }
 
+bool Player::ownsAttackCountry(GameMap* map){ //checks if player owns a country that can attack
+  for(int continent = 0; continent < map->numberOfContinents; continent++){
+    Continent* con = map->continents[continent];
+    for(int country = 0; country < con->numberOfCountries; country++){
+      Country* coun = con->countries[country];
+      if(coun->owner != NULL && coun->owner->name == name && coun->hasEnnemies() && coun->armies >= 2){ // if this player is the owner, has ennemies and armies >= 2 (can attack)
+          return true;
+      }
+    }
+  }
+  return false;
+}
+
+void Player::listMyAttackCountries(GameMap* map){ //Prints out attack countries that belong to this player
+  for(int continent = 0; continent < map->numberOfContinents; continent++){
+    Continent* con = map->continents[continent];
+    for(int country = 0; country < con->numberOfCountries; country++){
+      Country* coun = con->countries[country];
+      if(coun->owner != NULL && coun->owner->name == name && coun->hasEnnemies() && coun->armies >= 2){ // if this player is the owner, has ennemies and armies >= 2 (can attack)
+        cout << coun->name << ", " ;
+      }
+    }
+    cout << endl;
+  }
+}
+
 Player::~Player(){
   delete hand;
-  delete diceRollingFacility;
 }
