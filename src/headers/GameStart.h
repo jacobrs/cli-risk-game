@@ -25,7 +25,7 @@ public:
     int numCountries;
     bool enterPlayer;
     string playerName;
-    string playerColour
+    string playerColour;
 
 private:
     int numOfPlayers;
