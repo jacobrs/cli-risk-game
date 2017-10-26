@@ -5,22 +5,25 @@
 #include "Hand.h"
 #include "DiceRolling.h"
 #include "Country.h"
+#include "GameMap.h"
 
 using namespace std;
 class Country;
+class GameMap;
 class Player{
 public:
   int index;
   string name;
   string color;
   Hand *hand;
-  DiceRolling *diceRollingFacility;
 
-  Player(int, string, string, int);
+  Player(int, string, string);
   Player();
   void reinforce();
-  void attack();
+  void attack(GameMap*);
   bool fortify(Country*, Country*, int);
+  void listMyAttackCountries(GameMap*);
+  bool ownsAttackCountry(GameMap*);
   ~Player();
 };
 

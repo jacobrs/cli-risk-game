@@ -6,9 +6,10 @@
 
 using namespace std;
 
+class Country;
 class Continent{
 public:
-  
+
   int bonus;
   int numberOfCountries;
 
