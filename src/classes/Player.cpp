@@ -1,4 +1,9 @@
 #include "../headers/Player.h"
+#include <cmath>
+#include <vector>
+#include <iostream>
+
+using namespace std;
 
 Player::Player(int turnIndex, string playerName, string playerColor){
   index = turnIndex;    // to be used when deciding who's turn it is
@@ -111,6 +116,78 @@ void Player::attack(GameMap* map){ //Have to pass GameMap because can't know my 
     }
   }
   return;
+}
+
+void Player::reinforce(GameMap* map){
+
+  // count number of countries
+  int countries = 0;
+  int continentBonus = 0;
+
+  vector<Country*> playersCountries;
+
+  // calculate continents and countries owned
+  for(int i = 0; i < map->numberOfContinents; i++){
+    bool ownsContinent = true;
+    continentBonus += map->continents[i]->bonus;
+    for(int j = 0; j < map->continents[i]->numberOfCountries; j++){
+      if(map->continents[i]->countries[j]->owner->name == this->name){
+        countries ++;
+        playersCountries.push_back(map->continents[i]->countries[j]);
+      }else if(ownsContinent){
+        continentBonus -= map->continents[i]->bonus;
+        ownsContinent = false;
+      }
+    }
+  }
+
+  int armies = floor(countries / 3) + continentBonus;
+  if(armies < 3){
+    armies = 3;
+  }
+
+  // force an exchange if needed
+  if(this->hand->handSize > 5){
+    printf("Player %s is exchanging\n", this->name.c_str());
+    armies += this->hand->exchange();
+  }
+
+  printf("Player %s received %d armies\n", this->name.c_str(), armies);
+
+  // place armies received on countries
+  bool invalid = false;
+  while(armies > 0){
+    int toPlace;
+    if(invalid){
+      printf("ERROR: You don't have that many armies or you don't own that territory\n");
+      invalid = false;
+    }
+    // get armies they want to place
+    printf("Enter armies to place (max %d): ", armies);
+    cin >> toPlace;
+    if(toPlace > armies || toPlace < 1){
+      invalid = true;
+    }else{
+      printf("You can reinforce the following countries (enter index):\n");
+      // list available countries
+      for (int i = 0; i < playersCountries.size(); i++){
+        printf("[%d] %s (%d armies)\n", i, playersCountries[i]->name.c_str(), playersCountries[i]->armies);
+      }
+      int selected;
+      cin >> selected;
+      // place if country is in list of available countries
+      if(selected >= 0 && selected < playersCountries.size()){
+        playersCountries[selected]->armies += toPlace;
+        armies -= toPlace;
+        printf("Placing %d army/armies on %s\n", toPlace, playersCountries[selected]->name.c_str());
+      }else{
+        invalid = true;
+      }
+    }
+  }
+
+  printf("\nReinforcement phase complete\n\n\n");
+  
 }
 
 /*  Moves nbToMove armies from a to b

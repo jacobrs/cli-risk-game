@@ -21,6 +21,7 @@ public:
   Player();
   void reinforce();
   void attack(GameMap*);
+  void reinforce(GameMap*);
   bool fortify(Country*, Country*, int);
   void listMyAttackCountries(GameMap*);
   bool ownsAttackCountry(GameMap*);
