@@ -4,12 +4,14 @@ using namespace std;
 
 Country::Country(string countryName){
   armies = 0;
+  owner = NULL;
   name = countryName;
   numberOfNeighbours = 0;
 }
 
 Country::Country(){
   armies = 0;
+  owner = NULL;
   name = "";
   numberOfNeighbours = 0;
 }
