@@ -22,17 +22,19 @@ StartupPhase::StartupPhase(GameMap* map, int numPlayers){
     
     //Randomizing countries and assigning them an owner
 
-    for (int i=0; i < map->numberOfContinents; i++)
+    int playerCtr = 0;
+    for (int i=0; i < ap->continents->numberOfCountries; i++)
     {
         for (int j = 0; j < map->continents[i]->numberOfCountries; j++)
         {
             cout << map-> continents[i] -> countries[j]->name << endl;
-            cout << "loop1" <<endl;
+            map-> continents[i] -> countries[j]->owner = this->listPlayers[playerCtr];
+            playerCtr = (playerCtr + 1) % (nbPlayers);
+            cout << map-> continents[i] -> countries[j]->owner -> name << endl;
         }
-        cout << "loop2"<<endl;
     }
-
-    cout << "done";
+    //This doesnt print
+    cout << "here";
 
     printMapWithOwner();
     
