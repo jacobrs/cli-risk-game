@@ -48,8 +48,8 @@ int main(int args, char** argv){
 
   map.isValidMap();
 
-  Player* FOO = new Player(1,"foo","red",3);
-  Player* BAR = new Player(2,"bar","blue",3);
+  Player* FOO = new Player(1,"foo","red");
+  Player* BAR = new Player(2,"bar","blue");
 
   canada->armies=1;
   canada->owner=FOO;
