@@ -16,9 +16,8 @@ StartupPhase::StartupPhase(GameMap* map, int numPlayers){
 
     //Creation of players
     nbPlayers = numPlayers;
-    vector <Player> listPlayers(nbPlayers);
     createPlayer(numPlayers);
-    
+
     //Randomizing countries and assigning them an owner
 
     int playerCtr = 0;
@@ -55,6 +54,28 @@ StartupPhase::StartupPhase(GameMap* map, int numPlayers){
         default:
             cout << "Wrong number of players" <<endl;
             break;
+    }
+
+    for (int k = 0; k < nbPlayers; k ++)
+    {
+        int pieceCtr = armiesStart;
+        while (pieceCtr > 0)
+        {
+            for (int i=0; i < map->numberOfContinents; i++)
+            {
+                for (int j = 0; j < map->continents[i]->numberOfCountries; j++)
+                {
+                    if (map-> continents[i] -> countries[j]->owner->name == this->listPlayers[k]->name)
+                    {
+                        map-> continents[i] -> countries[j]->armies ++;
+                        cout << "Player " << map-> continents[i] -> countries[j]->owner->name << " placed a token on "<<map-> continents[i] -> countries[j]->name << " and now has "<< map-> continents[i] -> countries[j]->armies << " tokens " << endl;
+                        
+                        pieceCtr --;
+                    }
+                        
+                }
+            }
+        }
     }
 
 
