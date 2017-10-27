@@ -47,9 +47,9 @@ void Game::startGame(){
 
     printf("Player %s's turn\n", players[currentPlayer]->name.c_str());
 
-    printf("Reinforcement Phase\n");
-    printf("Attack Phase\n");
-    printf("Fortification Phase\n");
+    players[currentPlayer]->mockReinforce();
+    players[currentPlayer]->mockAttack();
+    players[currentPlayer]->mockFortify();
     i ++;
     if(i > 5){
       printf("giving everything to a player\n");

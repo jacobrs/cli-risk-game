@@ -237,3 +237,15 @@ void Player::listMyAttackCountries(GameMap* map){ //Prints out attack countries 
 Player::~Player(){
   delete hand;
 }
+
+void Player::mockReinforce(){
+  printf("Mock Reinforcement Phase\n");
+}
+
+void Player::mockAttack(){
+  printf("Mock Attack Phase\n");
+}
+
+void Player::mockFortify(){
+  printf("Mock Fortification Phase\n");
+}

@@ -25,6 +25,11 @@ public:
   bool fortify(Country*, Country*, int);
   void listMyAttackCountries(GameMap*);
   bool ownsAttackCountry(GameMap*);
+
+  void mockFortify();
+  void mockAttack();
+  void mockReinforce();
+
   ~Player();
 };
 
