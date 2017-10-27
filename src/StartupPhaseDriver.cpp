@@ -1,26 +1,30 @@
 #include "headers/StartupPhase.h"
-#include "headers/GameStart.h"
+#include "headers/MapLoader.h"
 #include "headers/Player.h"
 #include <string>
-
+#include <iostream>
+#include <vector>
 using namespace std;
 
 int main(){
 
-    string selectedMap;
+  // Initialize a new game with a valid map
+  MapLoader* loader = new MapLoader("./src/map/World.map");
+  loader->importMap();
+  GameMap* map = loader->exportToGameMap();
+
+  // verify that the map was loaded in properly
+  printf("Checking integrity of game map\n\n");
+  map->isValidMap();
+
     int numOfPlayers = 0;
-    bool promptPlayers = true;
-    bool promptMap = true;
+
     vector <Player> players;
        
-
         cout << "Number of Players between 2-6: " << endl;
         cin >> numOfPlayers;
-        cout << "Select Map File: Khoras or World" << endl;
-        cin >> selectedMap;
 
-        StartupPhase* start = new StartupPhase(selectedMap, numOfPlayers);
-
+        StartupPhase* startGame = new StartupPhase(map, numOfPlayers);
    
     return 0;
 }

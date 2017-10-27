@@ -13,14 +13,14 @@ class StartupPhase{
 public:
     StartupPhase();
     ~StartupPhase();
-    StartupPhase(string, int);    
-    vector <Player> players;
+    StartupPhase(GameMap*, int);    
+    vector <Player> listPlayers;
     vector <Country> countries;
 
 
     void printMapWithOwner();
     void shufflePlayers();
-    void createPlayer();
+    void createPlayer(int);
     void shuffleCountries();
 
     
