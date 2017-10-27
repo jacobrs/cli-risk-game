@@ -14,7 +14,7 @@ public:
     StartupPhase();
     ~StartupPhase();
     StartupPhase(GameMap*, int);    
-    vector <Player> listPlayers;
+    vector <Player*> listPlayers;
     vector <Country> countries;
 
 

@@ -18,19 +18,21 @@ StartupPhase::StartupPhase(GameMap* map, int numPlayers){
     nbPlayers = numPlayers;
     vector <Player> listPlayers(nbPlayers);
     createPlayer(numPlayers);
-    cout << "Hi";
     shufflePlayers();
-    cout << "Bye";
     
     //Randomizing countries and assigning them an owner
 
     for (int i=0; i < map->numberOfContinents; i++)
     {
-        for (int j = 0; j < map->continents[i]->numberOfCountries; i++)
+        for (int j = 0; j < map->continents[i]->numberOfCountries; j++)
         {
             cout << map-> continents[i] -> countries[j]->name << endl;
+            cout << "loop1" <<endl;
         }
+        cout << "loop2"<<endl;
     }
+
+    cout << "done";
 
     printMapWithOwner();
     
@@ -76,10 +78,9 @@ void StartupPhase::createPlayer(int nbPlayers){
                 cout << "Player name: ";
                 cin >> playerName;
  
-                Player newPlayer = Player(i, playerName, playerColour);
+                Player* newPlayer = new Player(i, playerName, playerColour);
                 this -> listPlayers.push_back(newPlayer);
         }
-        cout << "finishrd";
 }
 
 void StartupPhase::shuffleCountries(){
