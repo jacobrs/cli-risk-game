@@ -1,57 +1,95 @@
-/*
 #include "../headers/StartupPhase.h"
 #include "../headers/MapLoader.h"
 #include "../headers/GameMap.h"
 #include "../headers/Player.h"
 #include <string>
+#include <iostream>
 #include <vector>
 
 using namespace std;
 
 StartupPhase::StartupPhase(){
+    nbPlayers = 0;
 }
 
-StartupPhase::StartupPhase(string mapPlaying, int numPlayers){
-    map = mapPlaying;
-    nbPlayers = numPlayers;
+StartupPhase::StartupPhase(GameMap* map, int numPlayers){
 
+    //Creation of players
+    nbPlayers = numPlayers;
     createPlayer(numPlayers);
-    shufflePlayers();
-    
+
+    //Randomizing countries and assigning them an owner
+
+    int playerCtr = 0;
+    for (int i=0; i < map->numberOfContinents; i++)
+    {
+        for (int j = 0; j < map->continents[i]->numberOfCountries; j++)
+        {
+            cout << map-> continents[i] -> countries[j]->name << endl;
+            map-> continents[i] -> countries[j]->owner = this->listPlayers[playerCtr];
+            playerCtr = (playerCtr + 1) % (nbPlayers);
+            cout << map-> continents[i] -> countries[j]->owner -> name << endl;
+        }
+    }
+
+    //printMapWithOwner();
+
+    //Starting amount of armies varies depending on amount of players
     switch (numPlayers){
         case(2):
-            armies = 40;
+            armiesStart = 40;
             break;
         case(3):
-            armies = 35;
+            armiesStart = 35;
             break;
         case(4):
-            armies = 30;
+            armiesStart = 30;
         break;
         case(5):
-            armies = 25;
+            armiesStart = 25;
             break;
         case(6):
-            armies = 20;
+            armiesStart = 20;
             break;
         default:
+            cout << "Wrong number of players" <<endl;
             break;
     }
 
+    for (int k = 0; k < nbPlayers; k ++)
+    {
+        int pieceCtr = armiesStart;
+        while (pieceCtr > 0)
+        {
+            for (int i=0; i < map->numberOfContinents; i++)
+            {
+                for (int j = 0; j < map->continents[i]->numberOfCountries; j++)
+                {
+                    if (map-> continents[i] -> countries[j]->owner->name == this->listPlayers[k]->name)
+                    {
+                        map-> continents[i] -> countries[j]->armies ++;
+                        cout << "Player " << map-> continents[i] -> countries[j]->owner->name << " placed a token on "<<map-> continents[i] -> countries[j]->name << " and now has "<< map-> continents[i] -> countries[j]->armies << " tokens " << endl;
+                        
+                        pieceCtr --;
+                    }
+                        
+                }
+            }
+        }
+    }
 
 
 }
-
+//randomizing the order of the players
 void StartupPhase::shufflePlayers(){
     random_device rd;
     mt19937 g(rd());
 
-	shuffle(players.begin(), players.end(), g);
+	shuffle(listPlayers.begin(), listPlayers.end(), g);
 }
 
-void StartupPhase::createPlayer(){
-    
-    players.reserve(nbPlayers);
+void StartupPhase::createPlayer(int nbPlayers){
+        
     
         //creates the different players
         for (int i = 0; i < nbPlayers; i++)
@@ -60,11 +98,17 @@ void StartupPhase::createPlayer(){
                 string playerColour = "";
                 cout << "Player name: ";
                 cin >> playerName;
-                cout << "\nPlayer colour: ";
-                cin >> playerColour;
-           
-            Player newPlayer = Player(i, playerName, playerColour);
-           this -> players.push_back(newPlayer);
+ 
+                Player* newPlayer = new Player(i, playerName, playerColour);
+                this -> listPlayers.push_back(newPlayer);
         }
 }
-*/
+
+void StartupPhase::shuffleCountries(){
+    
+}
+
+//show country and respective its owner
+void StartupPhase::printMapWithOwner(){
+
+}
