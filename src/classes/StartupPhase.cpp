@@ -18,12 +18,11 @@ StartupPhase::StartupPhase(GameMap* map, int numPlayers){
     nbPlayers = numPlayers;
     vector <Player> listPlayers(nbPlayers);
     createPlayer(numPlayers);
-    shufflePlayers();
     
     //Randomizing countries and assigning them an owner
 
     int playerCtr = 0;
-    for (int i=0; i < ap->continents->numberOfCountries; i++)
+    for (int i=0; i < map->numberOfContinents; i++)
     {
         for (int j = 0; j < map->continents[i]->numberOfCountries; j++)
         {
@@ -33,11 +32,9 @@ StartupPhase::StartupPhase(GameMap* map, int numPlayers){
             cout << map-> continents[i] -> countries[j]->owner -> name << endl;
         }
     }
-    //This doesnt print
-    cout << "here";
 
-    printMapWithOwner();
-    
+    //printMapWithOwner();
+
     //Starting amount of armies varies depending on amount of players
     switch (numPlayers){
         case(2):
@@ -59,6 +56,7 @@ StartupPhase::StartupPhase(GameMap* map, int numPlayers){
             cout << "Wrong number of players" <<endl;
             break;
     }
+
 
 }
 //randomizing the order of the players
