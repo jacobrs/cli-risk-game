@@ -12,11 +12,12 @@ StartupPhase::StartupPhase(){
     nbPlayers = 0;
 }
 
-StartupPhase::StartupPhase(GameMap* map, int numPlayers){
+StartupPhase::StartupPhase(GameMap* map, vector<Player*> players){
 
     //Creation of players
-    nbPlayers = numPlayers;
-    createPlayer(numPlayers);
+    nbPlayers = players.size();
+    //createPlayer(nbPlayers);
+    listPlayers = players;
 
     //Randomizing countries and assigning them an owner
 
@@ -35,7 +36,7 @@ StartupPhase::StartupPhase(GameMap* map, int numPlayers){
     //printMapWithOwner();
 
     //Starting amount of armies varies depending on amount of players
-    switch (numPlayers){
+    switch (nbPlayers){
         case(2):
             armiesStart = 40;
             break;
@@ -104,11 +105,3 @@ void StartupPhase::createPlayer(int nbPlayers){
         }
 }
 
-void StartupPhase::shuffleCountries(){
-    
-}
-
-//show country and respective its owner
-void StartupPhase::printMapWithOwner(){
-
-}

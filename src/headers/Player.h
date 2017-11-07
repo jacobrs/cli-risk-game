@@ -6,12 +6,23 @@
 #include "DiceRolling.h"
 #include "Country.h"
 #include "GameMap.h"
+<<<<<<< HEAD
 #include "Subject.h"
+=======
+#include "Strategy.h"
+>>>>>>> e44a72db5dd88edf97a79010d31133dc37b1a1d0
 
 using namespace std;
 class Country;
 class GameMap;
+<<<<<<< HEAD
 class Player : public Subject{
+=======
+class Strategy;
+class Player{
+private:
+  Strategy *strategy;
+>>>>>>> e44a72db5dd88edf97a79010d31133dc37b1a1d0
 public:
   int index;
   string name;
@@ -20,16 +31,19 @@ public:
 
   Player(int, string, string);
   Player();
-  void reinforce();
+  Player(Strategy *initStrategy){
+    this->strategy = initStrategy;
+  }
+  void setStrategy(Strategy *newStrategy){
+    this->strategy = newStrategy;
+  }
+  void executeStrategy(GameMap*);
+  //void reinforce();
   void attack(GameMap*);
   void reinforce(GameMap*);
   bool fortify(Country*, Country*, int);
   void listMyAttackCountries(GameMap*);
   bool ownsAttackCountry(GameMap*);
-
-  void mockFortify();
-  void mockAttack();
-  void mockReinforce();
 
   ~Player();
   

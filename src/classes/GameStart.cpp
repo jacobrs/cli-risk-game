@@ -23,17 +23,20 @@ GameStart::GameStart(string mapChosen, int nbPlayers){
     numOfPlayers = nbPlayers;
     createPlayers(nbPlayers);
     MapLoader* playMap;
-    GameMap* gameMap;
     
     //Getting the map chosen
     if(mapChosen.compare("Khoras") == 0){
         playMap = new MapLoader("map/Khoras.map");
         playMap->importMap();
-        gameMap = new GameMap();
+        gameMap = playMap->exportToGameMap();
+        printf("Checking integrity of game map\n\n");
+        gameMap->isValidMap();
     } else if (mapChosen.compare("World") == 0){
         playMap = new MapLoader("map/World.map");
         playMap->importMap();
-        gameMap = new GameMap();
+        gameMap = playMap->exportToGameMap();
+        printf("Checking integrity of game map\n\n");
+        gameMap->isValidMap();
     } else{
         cout << "Error" << endl;
     }
@@ -51,7 +54,7 @@ GameStart::GameStart(string mapChosen, int nbPlayers){
 
 void GameStart::createPlayers(int nbPlayers){
 
-    players.reserve(nbPlayers);
+    //players.reserve(nbPlayers);
 
     cout << "\nPlayers information: "<< endl;
     //creates the different players
@@ -64,7 +67,7 @@ void GameStart::createPlayers(int nbPlayers){
             cout << "Player colour: ";
             cin >> playerColour;
        
-        Player newPlayer = Player(i, playerName, playerColour);
+        Player *newPlayer = new Player(i, playerName, playerColour);
        this -> players.push_back(newPlayer);
     }
 }
