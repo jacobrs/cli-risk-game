@@ -6,11 +6,15 @@
 #include "DiceRolling.h"
 #include "Country.h"
 #include "GameMap.h"
+#include "Strategy.h"
 
 using namespace std;
 class Country;
 class GameMap;
+class Strategy;
 class Player{
+private:
+  Strategy *strategy;
 public:
   int index;
   string name;
@@ -19,6 +23,13 @@ public:
 
   Player(int, string, string);
   Player();
+  Player(Strategy *initStrategy){
+    this->strategy = initStrategy;
+  }
+  void setStrategy(Strategy *newStrategy){
+    this->strategy = newStrategy;
+  }
+  void executeStrategy(GameMap*);
   void reinforce();
   void attack(GameMap*);
   void reinforce(GameMap*);

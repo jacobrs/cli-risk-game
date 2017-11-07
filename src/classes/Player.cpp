@@ -14,7 +14,9 @@ Player::Player(int turnIndex, string playerName, string playerColor){
 Player::Player(){
   Player(0, "", "");
 }
-void reinforce(){}
+void Player::executeStrategy(GameMap *map){
+  this->strategy->execute(this, map);
+}
 void Player::attack(GameMap* map){ //Have to pass GameMap because can't know my countries otherwise
   string input = "";
   while(input != "n"){
@@ -236,6 +238,7 @@ void Player::listMyAttackCountries(GameMap* map){ //Prints out attack countries 
 
 Player::~Player(){
   delete hand;
+  delete strategy;
 }
 
 void Player::mockReinforce(){
