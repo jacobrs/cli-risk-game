@@ -240,15 +240,3 @@ Player::~Player(){
   delete hand;
   delete strategy;
 }
-
-void Player::mockReinforce(){
-  printf("Mock Reinforcement Phase\n");
-}
-
-void Player::mockAttack(){
-  printf("Mock Attack Phase\n");
-}
-
-void Player::mockFortify(){
-  printf("Mock Fortification Phase\n");
-}

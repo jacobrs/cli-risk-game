@@ -15,7 +15,7 @@ private:
   GameMap* gameMap;
 
 public:
-  Game(GameMap* map, int numberOfPlayers);
+  Game(GameMap* map, vector<Player*>);
   ~Game();
   void startGame();
   bool isWon();

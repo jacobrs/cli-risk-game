@@ -30,17 +30,12 @@ public:
     this->strategy = newStrategy;
   }
   void executeStrategy(GameMap*);
-  void reinforce();
+  //void reinforce();
   void attack(GameMap*);
   void reinforce(GameMap*);
   bool fortify(Country*, Country*, int);
   void listMyAttackCountries(GameMap*);
   bool ownsAttackCountry(GameMap*);
-
-  void mockFortify();
-  void mockAttack();
-  void mockReinforce();
-
   ~Player();
 };
 

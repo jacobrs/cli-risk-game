@@ -7,10 +7,11 @@
 
 using namespace std;
 
-Game::Game(GameMap* map, int numberOfPlayers){
+Game::Game(GameMap* map, vector<Player*> initPlayers){
   gameMap = map;
-  players.push_back(new Player(0, "Tester1", "red"));
-  players.push_back(new Player(1, "Tester2", "blue"));
+  players = initPlayers;
+  //players.push_back(new Player(0, "Tester1", "red"));
+  //players.push_back(new Player(1, "Tester2", "blue"));
 }
 
 Game::~Game(){
@@ -47,9 +48,10 @@ void Game::startGame(){
 
     printf("Player %s's turn\n", players[currentPlayer]->name.c_str());
 
-    players[currentPlayer]->mockReinforce();
-    players[currentPlayer]->mockAttack();
-    players[currentPlayer]->mockFortify();
+    players[currentPlayer]->executeStrategy(gameMap);
+    //players[currentPlayer]->reinforce(gameMap);
+    //players[currentPlayer]->attack(gameMap);
+    //players[currentPlayer]->fortify();
     i ++;
     if(i > 5){
       printf("giving everything to a player\n");
