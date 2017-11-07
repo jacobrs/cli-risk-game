@@ -5,7 +5,7 @@ class Observer{
 
 public:
     ~Observer();
-    virtual void Update() =0;
+    virtual void update() = 0;
 
 protected:
     Observer();
