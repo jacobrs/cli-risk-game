@@ -23,3 +23,23 @@ void Subject::Notify(){
         (*i)->update();    
     }
 };
+
+void Subject::NotifyAttack(int a){
+    list<Observer*>::iterator i = _observers->begin();
+    for(; i != _observers->end(); ++i){
+        (*i)->updateAttack(a);    
+    }
+};
+
+void Subject::NotifyReinforce(int r){
+    list<Observer*>::iterator i = _observers->begin();
+    for(; i != _observers->end(); ++i){
+        (*i)->updateReinforce(r);    
+    }
+};
+void Subject::NotifyFortify(int f){
+    list<Observer*>::iterator i = _observers->begin();
+    for(; i != _observers->end(); ++i){
+        (*i)->updateFortify(f);    
+    }
+};

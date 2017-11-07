@@ -4,19 +4,24 @@
 #include "Observer.h"
 #include "Subject.h"
 #include "Player.h"
-#include "GamePlay.h"
 
 class GameView : public Observer {
 
 public:
     GameView();
-    GameView(GamePlay* gp);
+    GameView(Player* p);
     ~GameView();
     void update() override;
+    void updateAttack(int a) override;
+    void updateReinforce(int r) override;
+    void updateFortify(int f) override;
     void display();
+    void displayAttack(int a);
+    void displayReinforce(int r);
+    void displayFortify(int f);
 
 private:
-    GamePlay* _subject;
+    Player* _subject;
 };
 
-#endif 
+#endif

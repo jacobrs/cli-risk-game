@@ -19,7 +19,9 @@ void Player::attack(GameMap* map){ //Have to pass GameMap because can't know my 
   string input = "";
   while(input != "n"){
     if(!ownsAttackCountry(map)){
-      cout << name << " can't attack because you don't own a country that can attack" << endl;
+      //Notify cannnot attack
+      NotifyAttack(0);
+      //cout << name << " can't attack because you don't own a country that can attack" << endl;
       return;
     }
 
@@ -33,6 +35,7 @@ void Player::attack(GameMap* map){ //Have to pass GameMap because can't know my 
 
     if(input == "n") //attack phase is over
       return;
+      //Notify end of attack phase
 
 
     if(input == "y"){
@@ -110,6 +113,8 @@ void Player::attack(GameMap* map){ //Have to pass GameMap because can't know my 
         defendCountry->armies=armiesToMove;
         defendCountry->owner=attackCountry->owner;
       }
+
+      //Notify Observer on what is happening (replace with a notify method)
       cout << attackCountry->owner->name << "\'s country " << attackCountry->name << " now has " << attackCountry->armies << " armies." << endl;
       cout << defendCountry->owner->name << "\'s country " << defendCountry->name << " now has " << defendCountry->armies << " armies." << endl;
       cout << attackCountry->owner->name << (ownsAttackCountry(map)?" can":" cannot") << " attack again." << endl;

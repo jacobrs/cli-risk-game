@@ -6,11 +6,12 @@
 #include "DiceRolling.h"
 #include "Country.h"
 #include "GameMap.h"
+#include "Subject.h"
 
 using namespace std;
 class Country;
 class GameMap;
-class Player{
+class Player : public Subject{
 public:
   int index;
   string name;
@@ -31,6 +32,7 @@ public:
   void mockReinforce();
 
   ~Player();
+  
 };
 
 #endif

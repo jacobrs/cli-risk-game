@@ -12,6 +12,10 @@ public:
     virtual void Attach(Observer* O);
     virtual void Detach(Observer* O);
     virtual void Notify();
+    virtual void NotifyAttack(int);
+    virtual void NotifyReinforce(int);
+    virtual void NotifyFortify(int);
+
     Subject();
     ~Subject();
 private:
