@@ -33,7 +33,7 @@ string input = "";
   while(input != "n"){
     if(!ownsAttackCountry(map)){
       //Notify cannnot attack
-      NotifyAttack(2);
+      NotifyAttack(0);
       //cout << name << " can't attack because you don't own a country that can attack" << endl;
       return;
     }
@@ -49,10 +49,8 @@ string input = "";
     }
 
     if(input == "n") //attack phase is over
-      //Notify end of attack phase
-      Notify(0);
       return;
-      
+      //Notify end of attack phase
 
 
     if(input == "y"){
@@ -147,12 +145,9 @@ string input = "";
       }
 
       //Notify Observer on what is happening (replace with a notify method)
-      Notify(1);
-      /*
       cout << attackCountry->owner->name << "\'s country " << attackCountry->name << " now has " << attackCountry->armies << " armies." << endl;
       cout << defendCountry->owner->name << "\'s country " << defendCountry->name << " now has " << defendCountry->armies << " armies." << endl;
       cout << attackCountry->owner->name << (ownsAttackCountry(map)?" can":" cannot") << " attack again." << endl;
-      */
     }
   }
   return;
