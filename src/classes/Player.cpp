@@ -20,6 +20,9 @@ void Player::executeStrategy(GameMap *map){
   this->strategy->execute(this, map);
 }
 void Player::attack(GameMap* map){ //Have to pass GameMap because can't know my countries otherwise
+
+NotifyAttack(0);
+
 string playerType = "";
 if(dynamic_cast<AggressivePlayer*>(this->strategy) != nullptr){
   cout<< name <<" is an Aggressive computer player"<<endl;  
@@ -33,12 +36,13 @@ string input = "";
   while(input != "n"){
     if(!ownsAttackCountry(map)){
       //Notify cannnot attack
-      NotifyAttack(0);
+     // NotifyAttack(4, nullptr, nullptr);
       //cout << name << " can't attack because you don't own a country that can attack" << endl;
       return;
     }
 
     cout << "Does " << name << "  want to attack (y/n)" << endl;
+
     if(playerType == "A") {input = "y"; cout<<"y"<<endl;}
     else if(playerType == "B") {input = "n"; cout<<"n"<<endl;}
     else cin >> input;
@@ -48,12 +52,13 @@ string input = "";
       cin >> input;
     }
 
-    if(input == "n") //attack phase is over
-      return;
+    if(input == "n") {//attack phase is over
       //Notify end of attack phase
-
+     // NotifyAttack(1, nullptr, nullptr);
+      return;}
 
     if(input == "y"){
+     // NotifyAttack(2, nullptr, nullptr);
       //choosing attackCountry
       input = "";
       cout << "Choose one of your country to attack from" << endl;
@@ -143,11 +148,12 @@ string input = "";
         defendCountry->armies=armiesToMove;
         defendCountry->owner=attackCountry->owner;
       }
-
+			cout << attackCountry->owner->name << "\'s country " << attackCountry->name << " now has " << attackCountry->armies << " armies." << endl;
+			cout << defendCountry->owner->name << "\'s country " << defendCountry->name << " now has " << defendCountry->armies << " armies." << endl;
+			cout << attackCountry->owner->name << (ownsAttackCountry(map)?" can":" cannot") << " attack again." << endl;
+	
       //Notify Observer on what is happening (replace with a notify method)
-      cout << attackCountry->owner->name << "\'s country " << attackCountry->name << " now has " << attackCountry->armies << " armies." << endl;
-      cout << defendCountry->owner->name << "\'s country " << defendCountry->name << " now has " << defendCountry->armies << " armies." << endl;
-      cout << attackCountry->owner->name << (ownsAttackCountry(map)?" can":" cannot") << " attack again." << endl;
+     // NotifyAttack(3,attackCountry, defendCountry);
     }
   }
   return;
@@ -362,3 +368,4 @@ Player::~Player(){
   delete hand;
   delete strategy;
 }
+

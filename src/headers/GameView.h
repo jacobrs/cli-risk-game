@@ -2,8 +2,8 @@
 #define GAMEVIEW_H
 
 #include "Observer.h"
-#include "Subject.h"
 #include "Player.h"
+
 
 class GameView : public Observer {
 
@@ -21,7 +21,7 @@ public:
     void displayFortify(int f);
 
 private:
-    Player* _subject;
+    Player *_subject;
 };
 
 #endif

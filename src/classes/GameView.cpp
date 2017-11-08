@@ -7,16 +7,12 @@ GameView::GameView(){
 
 }
 
-/*
+
 GameView::~GameView(){
-    for each (Player* p1 in _subjects)
-	{
-		delete p1;
-		p1 = nullptr;
-	}
+	//Detach from player when it destroys itself
 	_subject->Detach(this);
 }
-*/
+
 GameView::GameView(Player* p){
     _subject = p;
     _subject->Attach(this);
@@ -39,14 +35,34 @@ void GameView::updateAttack(int a){
 }
 
 void GameView::displayAttack(int a){
+	//Get the player name
+	string playerName = _subject->name;
 
-	if (a == 0){
-	//	cout << player->name << " can't attack because you don't own a country that can attack" << endl;
-	} else if (a == 1) {
+	switch(a){
+		case 0:
+			cout << playerName << ": Attack phase" << endl;
+			break;
+		case 1:
+			cout << playerName << " ends their turn" << endl;
+			break;
+		case 2:
+			cout << playerName <<  " attacks" << endl;
+		/*
+		cout << attackCountry->owner->name << "\'s country " << attackCountry->name << " now has " << attackCountry->armies << " armies." << endl;
+		cout << defendCountry->owner->name << "\'s country " << defendCountry->name << " now has " << defendCountry->armies << " armies." << endl;
+		cout << attackCountry->owner->name << (ownsAttackCountry(map)?" can":" cannot") << " attack again." << endl;
+		
+		*/
+			break;
+		case 4:
+			cout << playerName << " can't attack" << endl;
+			break;
+		default:
 
-	} else {
+			break;
 
 	}
+	
 }
 
 void GameView::updateFortify(int f){

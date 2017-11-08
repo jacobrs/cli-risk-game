@@ -1,7 +1,7 @@
 #ifndef SUBJECT_H
 #define SUBJECT_H
 
-#include "observer.h"
+#include "Observer.h"
 #include <list>
 using namespace std;
 
@@ -12,7 +12,7 @@ public:
     virtual void Attach(Observer* O);
     virtual void Detach(Observer* O);
     virtual void Notify();
-    virtual void NotifyAttack(int);
+    virtual void NotifyAttack(int a);
     virtual void NotifyReinforce(int);
     virtual void NotifyFortify(int);
 
@@ -20,6 +20,7 @@ public:
     ~Subject();
 private:
     list <Observer*> *_observers;
+    
 };
 
 #endif

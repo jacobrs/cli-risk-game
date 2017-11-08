@@ -16,6 +16,7 @@ class Strategy;
 class Player : public Subject{
 private:
   Strategy *strategy;
+  string attackingCountry;
 public:
   int index;
   string name;
