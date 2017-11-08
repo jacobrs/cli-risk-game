@@ -20,6 +20,7 @@ public:
   Country(string);
   bool hasEnnemies();
   void listEnnemies();
+  string getWeakestEnemy();
   void addNeighbour(Country*);
   bool isNeighbour(Country*);
 };
