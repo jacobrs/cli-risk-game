@@ -33,6 +33,20 @@ void Country::listEnnemies(){
   }
   cout << endl;
 }
+string Country::getWeakestEnemy(){
+  int armiesInweakestCountry = 1000;
+  string weakestCountry = "";
+  for(int n = 0; n < numberOfNeighbours; n++){
+    if(neighbours[n]->owner != NULL && 
+        owner != NULL && neighbours[n]->owner != owner && 
+        neighbours[n]->armies < armiesInweakestCountry){
+      cout << neighbours[n]->name << ", with "<< neighbours[n]->armies << endl;
+      armiesInweakestCountry = neighbours[n]->armies;
+      weakestCountry = neighbours[n]->name;
+    }
+  }
+  return weakestCountry;
+}
 
 bool Country::isNeighbour(Country* c){
   for(int i = 0; i < numberOfNeighbours; i++){

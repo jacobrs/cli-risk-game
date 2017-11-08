@@ -10,6 +10,8 @@ class AggressivePlayer: public Strategy{
 public:
     void execute(Player*, GameMap*);
     ~AggressivePlayer();
+private:
+    void attack(Player*, GameMap*);
 };
 
 #endif
