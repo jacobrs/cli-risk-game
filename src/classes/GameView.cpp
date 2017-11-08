@@ -41,7 +41,7 @@ void GameView::updateAttack(int a){
 void GameView::displayAttack(int a){
 
 	if (a == 0){
-		cout << player->name << " can't attack because you don't own a country that can attack" << endl;
+	//	cout << player->name << " can't attack because you don't own a country that can attack" << endl;
 	} else if (a == 1) {
 
 	} else {
