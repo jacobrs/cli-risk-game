@@ -36,7 +36,9 @@ public:
   bool fortify(Country*, Country*, int);
   void listMyAttackCountries(GameMap*);
   bool ownsAttackCountry(GameMap*);
+  string getStrongetAttackCountry(GameMap*);
   string getStrongetCountry(GameMap*);
+  string getWeaketCountry(GameMap*);
 
   ~Player();
 };

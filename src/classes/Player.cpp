@@ -56,7 +56,7 @@ string input = "";
       cout << "Choose one of your country to attack from" << endl;
       listMyAttackCountries(map);
       if(playerType == "A") {
-        input = getStrongetCountry(map);
+        input = getStrongetAttackCountry(map);
         cout<< name <<" chooses it's strongest country: " << input << endl;
       }
       else cin >> input;
@@ -296,7 +296,7 @@ void Player::listMyAttackCountries(GameMap* map){ //Prints out attack countries 
   }
 }
 
-string Player::getStrongetCountry(GameMap* map){
+string Player::getStrongetAttackCountry(GameMap* map){
   int armiesInStrongestCountry = 0;
   string stronggestCountry = "";
   for(int continent = 0; continent < map->numberOfContinents; continent++){
@@ -314,6 +314,44 @@ string Player::getStrongetCountry(GameMap* map){
     }
   }
   return stronggestCountry;
+}
+string Player::getStrongetCountry(GameMap* map){
+  int armiesInStrongestCountry = 0;
+  string stronggestCountry = "";
+  for(int continent = 0; continent < map->numberOfContinents; continent++){
+    Continent* con = map->continents[continent];
+    for(int country = 0; country < con->numberOfCountries; country++){
+      Country* coun = con->countries[country];
+      if(coun->owner != NULL && 
+          coun->owner->name == name){ // if this player is the owner, has ennemies and armies >= 2 (can attack) and this country has more armies than the last strongest country choose this one
+            cout << coun->name << ", " << " with " <<  coun->armies << " armies"<< endl;
+            if(coun->armies > armiesInStrongestCountry){
+              armiesInStrongestCountry = coun->armies;
+              stronggestCountry = coun->name;
+            }
+      }
+    }
+  }
+  return stronggestCountry;
+}
+string Player::getWeaketCountry(GameMap* map){
+  int armiesInWeakestCountry = 1000;
+  string weakestCountry = "";
+  for(int continent = 0; continent < map->numberOfContinents; continent++){
+    Continent* con = map->continents[continent];
+    for(int country = 0; country < con->numberOfCountries; country++){
+      Country* coun = con->countries[country];
+      if(coun->owner != NULL && 
+          coun->owner->name == name){ // if this player is the owner, has ennemies and armies >= 2 (can attack) and this country has less armies than the last weakest country choose this one
+            cout << coun->name << ", " << " with " <<  coun->armies << " armies"<< endl;
+            if(coun->armies > armiesInWeakestCountry){
+              armiesInWeakestCountry = coun->armies;
+              weakestCountry = coun->name;
+            }
+      }
+    }
+  }
+  return weakestCountry;
 }
 Player::~Player(){
   delete hand;
