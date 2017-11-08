@@ -107,7 +107,10 @@ string input = "";
       cout << defendCountry->owner->name << " has an army size of " << defendCountry->armies << " you are allowed to have " << ((defendCountry->armies >= 2) ? 2 : 1) << " dice." << endl;
       cout << "How many dice would you like to have?" << endl;
       if(dynamic_cast<AggressivePlayer*>(defendCountry->owner->strategy) != nullptr ||
-      dynamic_cast<BenevolentPlayer*>(defendCountry->owner->strategy) != nullptr) defendDices = ((defendCountry->armies >= 2) ? 2 : 1);
+      dynamic_cast<BenevolentPlayer*>(defendCountry->owner->strategy) != nullptr) {
+        defendDices = ((defendCountry->armies >= 2) ? 2 : 1);
+        cout<<defendDices<<endl;
+      }
       else cin >> defendDices;
       while(cin.fail() || defendDices > defendCountry->armies || defendDices < 1 || defendDices > 2){//just in case user can't read
         cout << "INVALID INPUT, ";
@@ -146,7 +149,16 @@ string input = "";
 }
 
 void Player::reinforce(GameMap* map){
-
+  //set player type depending on the strategy that is set for it
+  string playerType = "";
+  if(dynamic_cast<AggressivePlayer*>(this->strategy) != nullptr){
+    cout<< name <<" is an Aggressive computer player"<<endl;  
+    playerType = "A";
+  }
+  else if(dynamic_cast<BenevolentPlayer*>(this->strategy) != nullptr){
+    cout<< name <<" is an Benevolent computer player"<<endl;  
+    playerType = "B";
+  }
   // count number of countries
   int countries = 0;
   int continentBonus = 0;
@@ -191,17 +203,40 @@ void Player::reinforce(GameMap* map){
     }
     // get armies they want to place
     printf("Enter armies to place (max %d): ", armies);
-    cin >> toPlace;
+    if(playerType == "A"|| playerType == "B"){toPlace = armies; cout<<armies<<endl;}
+    else cin >> toPlace;
     if(toPlace > armies || toPlace < 1){
       invalid = true;
     }else{
       printf("You can reinforce the following countries (enter index):\n");
       // list available countries
+      int armiesOfWeakestContry = 1000;
+      int armiesOfStrongestCountry = 0;
+      int indexOfWeakestCountry = 0;
+      int indexOfStrongestCountry = 0;
       for (int i = 0; i < playersCountries.size(); i++){
         printf("[%d] %s (%d armies)\n", i, playersCountries[i]->name.c_str(), playersCountries[i]->armies);
+        //determine strongest country
+        if(playersCountries[i]->armies > armiesOfStrongestCountry){
+          armiesOfStrongestCountry = playersCountries[i]->armies;
+          indexOfStrongestCountry = i;
+        }
+        //determine weakest country
+        if(playersCountries[i]->armies < armiesOfWeakestContry){
+          armiesOfWeakestContry = playersCountries[i]->armies;
+          indexOfWeakestCountry = i;
+        }
       }
       int selected;
-      cin >> selected;
+      if(playerType == "A"){
+        cout<<"Aggressive player will reinforce its strongest country " <<indexOfStrongestCountry<<endl;
+        selected = indexOfStrongestCountry;
+      }
+      else if(playerType == "B"){
+        cout<<"Benevolent player will reinforce its weakest country " <<indexOfWeakestCountry<<endl;
+        selected = indexOfWeakestCountry;
+      }
+      else cin >> selected;
       // place if country is in list of available countries
       if(selected >= 0 && selected < playersCountries.size()){
         playersCountries[selected]->armies += toPlace;
