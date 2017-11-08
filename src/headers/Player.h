@@ -6,23 +6,16 @@
 #include "DiceRolling.h"
 #include "Country.h"
 #include "GameMap.h"
-<<<<<<< HEAD
 #include "Subject.h"
-=======
 #include "Strategy.h"
->>>>>>> e44a72db5dd88edf97a79010d31133dc37b1a1d0
 
 using namespace std;
 class Country;
 class GameMap;
-<<<<<<< HEAD
-class Player : public Subject{
-=======
 class Strategy;
-class Player{
+class Player : public Subject{
 private:
   Strategy *strategy;
->>>>>>> e44a72db5dd88edf97a79010d31133dc37b1a1d0
 public:
   int index;
   string name;
