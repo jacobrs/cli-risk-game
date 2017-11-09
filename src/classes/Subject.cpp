@@ -24,10 +24,10 @@ void Subject::Notify(){
     }
 };
 
-void Subject::NotifyAttack(int a){
+void Subject::NotifyAttack(int a, string attackName, string defendName, int aa, int da, bool conquered){
     list<Observer*>::iterator i = _observers->begin();
     for(; i != _observers->end(); ++i){
-        (*i)->updateAttack(a);    
+        (*i)->updateAttack(a, attackName, defendName, aa, da, conquered);    
     }
 };
 

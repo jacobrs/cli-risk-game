@@ -12,11 +12,11 @@ public:
     GameView(Player* p);
     ~GameView();
     void update() override;
-    void updateAttack(int a) override;
+    void updateAttack(int a, string attackName, string defendName, int aa, int da, bool conquered) override;
     void updateReinforce(int r) override;
     void updateFortify(int f) override;
     void display();
-    void displayAttack(int a);
+    void displayAttack(int a, string attackName, string defendName, int aa, int da, bool conquered);
     void displayReinforce(int r);
     void displayFortify(int f);
 

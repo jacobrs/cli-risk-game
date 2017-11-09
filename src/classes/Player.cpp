@@ -21,7 +21,7 @@ void Player::executeStrategy(GameMap *map){
 }
 void Player::attack(GameMap* map){ //Have to pass GameMap because can't know my countries otherwise
 
-NotifyAttack(0);
+NotifyAttack(0, "", "" , 0, 0, false);
 
 string playerType = "";
 if(dynamic_cast<AggressivePlayer*>(this->strategy) != nullptr){
@@ -34,9 +34,10 @@ else if(dynamic_cast<BenevolentPlayer*>(this->strategy) != nullptr){
 }
 string input = "";
   while(input != "n"){
+    bool conquered = false;
     if(!ownsAttackCountry(map)){
       //Notify cannnot attack
-     // NotifyAttack(4, nullptr, nullptr);
+      NotifyAttack(4, "", "", 0, 0 , conquered);
       //cout << name << " can't attack because you don't own a country that can attack" << endl;
       return;
     }
@@ -54,11 +55,11 @@ string input = "";
 
     if(input == "n") {//attack phase is over
       //Notify end of attack phase
-     // NotifyAttack(1, nullptr, nullptr);
+      NotifyAttack(1, "", "", 0 , 0, conquered);
       return;}
 
     if(input == "y"){
-     // NotifyAttack(2, nullptr, nullptr);
+      NotifyAttack(2, "", "" , 0, 0, conquered);
       //choosing attackCountry
       input = "";
       cout << "Choose one of your country to attack from" << endl;
@@ -93,6 +94,7 @@ string input = "";
         input = "";
         cin >> input;
         defendCountry = map->getCountryByName(input);
+      
       }
 
       // get amount of dice to attack with
@@ -135,6 +137,7 @@ string input = "";
 
       //if the armies in defend country reaches 0, that country is conquired by the attacker
       if(defendCountry->armies<=0){
+        conquered = true;
         cout << defendCountry->name << " has been conquired, how many armies would " << attackCountry->owner->name << " like to move from " << attackCountry->name << " to " << defendCountry->name << "?" << endl;
         cout << "You can move 1 to " << attackCountry->armies-1 << " armies." << endl;
         int armiesToMove;
@@ -148,12 +151,15 @@ string input = "";
         defendCountry->armies=armiesToMove;
         defendCountry->owner=attackCountry->owner;
       }
-			cout << attackCountry->owner->name << "\'s country " << attackCountry->name << " now has " << attackCountry->armies << " armies." << endl;
-			cout << defendCountry->owner->name << "\'s country " << defendCountry->name << " now has " << defendCountry->armies << " armies." << endl;
-			cout << attackCountry->owner->name << (ownsAttackCountry(map)?" can":" cannot") << " attack again." << endl;
-	
-      //Notify Observer on what is happening (replace with a notify method)
-     // NotifyAttack(3,attackCountry, defendCountry);
+   
+      //Notify Observer on what is happening 
+      string attackName = attackCountry->name;
+      string defendName = defendCountry->name;
+      int attackArmies = attackCountry->armies;
+      int defendArmies = defendCountry->armies;
+
+      NotifyAttack(3, attackName, defendName, attackArmies , defendArmies, conquered);
+      
     }
   }
   return;

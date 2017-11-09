@@ -91,7 +91,6 @@ void StartupPhase::shufflePlayers(){
 
 void StartupPhase::createPlayer(int nbPlayers){
         
-    
         //creates the different players
         for (int i = 0; i < nbPlayers; i++)
         {

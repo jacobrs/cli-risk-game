@@ -19,6 +19,7 @@ public:
   ~Game();
   void startGame();
   bool isWon();
+  void observeGame();
 
 };
 

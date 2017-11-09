@@ -10,8 +10,7 @@ using namespace std;
 Game::Game(GameMap* map, vector<Player*> initPlayers){
   gameMap = map;
   players = initPlayers;
-  //players.push_back(new Player(0, "Tester1", "red"));
-  //players.push_back(new Player(1, "Tester2", "blue"));
+
 }
 
 Game::~Game(){
@@ -49,9 +48,7 @@ void Game::startGame(){
     printf("Player %s's turn\n", players[currentPlayer]->name.c_str());
 
     players[currentPlayer]->executeStrategy(gameMap);
-    //players[currentPlayer]->reinforce(gameMap);
-    //players[currentPlayer]->attack(gameMap);
-    //players[currentPlayer]->fortify();
+    
     i ++;
     if(i > 5){
       printf("giving everything to a player\n");
@@ -65,4 +62,50 @@ void Game::startGame(){
 
   printf("Game was won!\n");
 
+}
+
+void Game::observeGame(){
+
+  cout << "in obsesrve" << endl;
+  while(true){
+ 
+    for (int i = 0; i < players.size() ; i++){
+
+    cout << "Iteration " << i <<endl;
+
+      players.at(i)->reinforce(gameMap);
+
+      players.at(i)->attack(gameMap);
+
+      bool fortifying = true;
+      while (fortifying){
+
+      cout << "What country do you want to fortify?" << endl;
+      string armingCountry = "";
+      cin >> armingCountry;
+      Country* arming = gameMap->getCountryByName(armingCountry);
+
+      cout << "Which country are the armies coming from?" << endl;
+      string armlessCountry = "";
+      cin >> armlessCountry;
+      Country* armless = gameMap->getCountryByName(armlessCountry);
+
+      cout << "How many armies are you moving?" << endl;
+      int nbarmy =0;
+      cin >> nbarmy;
+      players.at(i)->fortify(arming, armless, nbarmy);
+
+      cout << "Do you want to continue fortufying? (y/n)";
+      string answer ="";
+      cin >> answer;
+      if(answer == "n"){
+        fortifying = false;
+      }
+    }
+    }
+    if(this->isWon() == true)
+    break;
+  }
+  printf("Game was won!\n");
+  
 }

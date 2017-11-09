@@ -2,6 +2,7 @@
 #define SUBJECT_H
 
 #include "Observer.h"
+#include <string>
 #include <list>
 using namespace std;
 
@@ -12,7 +13,7 @@ public:
     virtual void Attach(Observer* O);
     virtual void Detach(Observer* O);
     virtual void Notify();
-    virtual void NotifyAttack(int a);
+    virtual void NotifyAttack(int a, string attackName, string defendName, int aa, int da, bool conquered);
     virtual void NotifyReinforce(int);
     virtual void NotifyFortify(int);
 

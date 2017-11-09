@@ -28,13 +28,13 @@ void GameView::display(){
 }
 
 
-void GameView::updateAttack(int a){
+void GameView::updateAttack(int a, string attackName, string defendName, int aa, int da, bool conquered){
 	
-		displayAttack(a);
+		displayAttack(a, attackName, defendName, aa, da, conquered);
 	  
 }
 
-void GameView::displayAttack(int a){
+void GameView::displayAttack(int a, string attackName, string defendName, int aa, int da, bool conquered){
 	//Get the player name
 	string playerName = _subject->name;
 
@@ -47,12 +47,10 @@ void GameView::displayAttack(int a){
 			break;
 		case 2:
 			cout << playerName <<  " attacks" << endl;
-		/*
-		cout << attackCountry->owner->name << "\'s country " << attackCountry->name << " now has " << attackCountry->armies << " armies." << endl;
-		cout << defendCountry->owner->name << "\'s country " << defendCountry->name << " now has " << defendCountry->armies << " armies." << endl;
-		cout << attackCountry->owner->name << (ownsAttackCountry(map)?" can":" cannot") << " attack again." << endl;
-		
-		*/
+		case 3:
+			cout << playerName << "'s country " << attackName << " attacks " << defendName << "." << endl;
+			cout << attackName << " now has " << aa << " armies." <<endl;
+			cout << defendName << " now has " << da << " armies." <<endl;
 			break;
 		case 4:
 			cout << playerName << " can't attack" << endl;
