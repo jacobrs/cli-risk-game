@@ -1,0 +1,7 @@
+Observer::Observer(){
+    
+}
+
+Observer::~Observer(){
+
+}
