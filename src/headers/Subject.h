@@ -18,4 +18,4 @@ public:
     list <Observer*> *_observers;
  };
 
- #endi
+ #endif
