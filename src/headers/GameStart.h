@@ -12,25 +12,22 @@ using namespace std;
 class GameStart {
 
 public:
-
-    GameStart();
-    GameStart(string, int);
-    vector<Player> players;
+    vector<Player*> players;
     Deck playDeck;
-    //~GameStart();
-
-    //function to LoadMap
-
-    //function to create Players
-    void createPlayers(int);
-
-    //Accessor
-    int getNumOfPlayers();
     int numCountries;
     bool enterPlayer;
     string playerName;
     string playerColour;
     int deckSize;
+    GameMap *gameMap;
+
+    GameStart();
+    GameStart(string, int);
+    ~GameStart();
+    //function to create Players
+    void createPlayers(int);
+    //Accessor
+    int getNumOfPlayers();
 
 private:
     int numOfPlayers;

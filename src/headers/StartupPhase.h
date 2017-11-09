@@ -13,7 +13,7 @@ class StartupPhase{
 public:
     StartupPhase();
     ~StartupPhase();
-    StartupPhase(GameMap*, int);    
+    StartupPhase(GameMap*, vector <Player*>);    
     vector <Player*> listPlayers;
     vector <Country> countries;
 
