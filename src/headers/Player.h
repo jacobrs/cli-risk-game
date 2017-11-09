@@ -6,13 +6,14 @@
 #include "DiceRolling.h"
 #include "Country.h"
 #include "GameMap.h"
+#include "Subject.h"
 #include "Strategy.h"
 
 using namespace std;
 class Country;
 class GameMap;
 class Strategy;
-class Player{
+class Player : public Subject{
 private:
   Strategy *strategy;
 public:
@@ -41,6 +42,7 @@ public:
   string getWeaketCountry(GameMap*);
 
   ~Player();
+  
 };
 
 #endif
