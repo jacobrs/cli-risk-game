@@ -160,36 +160,7 @@ srand (time(NULL));
          game -> players.at(i) -> reinforce(map);
     //Subject does their attack phase
          game -> players.at(i) -> attack(map);
-        
-
-/*
-    bool fortifying = true;
-
-        while (fortifying){
-            string endPhase = "";
-
-            cout << "What country do you want to fortify?" << endl;
-            string armingCountry = "";
-            cin >> armingCountry;
-            Country* arming = map->getCountryByName(armingCountry);
-        
-            cout << "Which country are the armies coming from?" << endl;
-            string armlessCountry = "";
-            cin >> armlessCountry;
-            Country* armless = map->getCountryByName(armlessCountry);
-        
-            cout << "How many armies are you moving?" << endl;
-            int nbarmy =0;
-            cin >> nbarmy;
-            newGame -> players.at(i)->fortify(arming, armless, nbarmy);
-            
-            cout << "End phase? (y/n)" <<endl;
-            
-            if (endPhase != "y"){
-                fortifying = false;
-            }
-  }
-  */
+    
 
 }
     return 0;
