@@ -69,7 +69,7 @@ int main(){
         map->addContinent(northAmerica);
         map->addContinent(southAmerica);
       
-//        map->isValidMap();
+        map->isValidMap();
       
         canada->armies=10;
         canada->owner=FOO;
@@ -101,6 +101,8 @@ int main(){
 }
 
 */
+
+
 
 
 srand (time(NULL)); 
@@ -138,70 +140,58 @@ srand (time(NULL));
   }
 
   GameStart* newGame = new GameStart(selectedMap, numOfPlayers);
-  cout << "Gamestart done" << endl;
   GameMap* map = newGame -> gameMap;
-/*
+
   string playerType = "";
   for(int i = 0; i < newGame->players.size(); i++){
-    cout<<"What type of player is " << newGame->players.at(i)->name << "?"<< endl;
-    cout<<"Enter H for Human, A for Aggressive and B for benevolent"<< endl;
-    cin>> playerType;
-    if(playerType == "H" || playerType == "h"){
+
       newGame->players.at(i)->setStrategy(new HumanPlayer());
-    }
-    else if(playerType == "A" || playerType == "a"){
-      newGame->players.at(i)->setStrategy(new AggressivePlayer());
-    }
-    else if (playerType == "B" || playerType == "b"){
-      newGame->players.at(i)->setStrategy(new BenevolentPlayer());
-    }
-    else{
-      cout<< "You did not enter a correct value for a player type. By default it will be a benevolent player"<< endl;
-      newGame->players.at(i)->setStrategy(new BenevolentPlayer());
-    }
+    
+  }
+
+  StartupPhase* startGame = new StartupPhase(newGame->gameMap, newGame->players);
+  Game *game = new Game(newGame->gameMap, newGame->players);
+
+  
+      for (int i = 0; i<game->players.size(); i++){
+    //Set the observer to look at each player while they are going through their turn
+         GameView *gameView = new GameView(game ->players.at(i));
+    //Subject does the reinforcement phase
+         game -> players.at(i) -> reinforce(map);
+    //Subject does their attack phase
+         game -> players.at(i) -> attack(map);
+        
+
+/*
+    bool fortifying = true;
+
+        while (fortifying){
+            string endPhase = "";
+
+            cout << "What country do you want to fortify?" << endl;
+            string armingCountry = "";
+            cin >> armingCountry;
+            Country* arming = map->getCountryByName(armingCountry);
+        
+            cout << "Which country are the armies coming from?" << endl;
+            string armlessCountry = "";
+            cin >> armlessCountry;
+            Country* armless = map->getCountryByName(armlessCountry);
+        
+            cout << "How many armies are you moving?" << endl;
+            int nbarmy =0;
+            cin >> nbarmy;
+            newGame -> players.at(i)->fortify(arming, armless, nbarmy);
+            
+            cout << "End phase? (y/n)" <<endl;
+            
+            if (endPhase != "y"){
+                fortifying = false;
+            }
   }
   */
 
-  StartupPhase* startGame = new StartupPhase(newGame->gameMap, newGame->players);
-  cout << "Startup phase done" << endl;
-  Game *game = new Game(newGame->gameMap, newGame->players);
-  cout << "Game" << endl;
-
-
-  for (int i = 0; i<players.size(); i++){
-    cout << "in for loop" << endl;
-    GameView *gameView = new GameView(newGame ->players.at(i));
-    cout << "observer" << endl;
-    newGame -> players.at(i) -> reinforce(map);
-    cout << "reinforce done" << endl;
-    newGame -> players.at(i) -> attack(map);
-    cout << "attack done" << endl;
-
-    bool fortifying = true;
-    while (fortifying){
-        
-              cout << "What country do you want to fortify?" << endl;
-              string armingCountry = "";
-              cin >> armingCountry;
-              Country* arming = map->getCountryByName(armingCountry);
-        
-              cout << "Which country are the armies coming from?" << endl;
-              string armlessCountry = "";
-              cin >> armlessCountry;
-              Country* armless = map->getCountryByName(armlessCountry);
-        
-              cout << "How many armies are you moving?" << endl;
-              int nbarmy =0;
-              cin >> nbarmy;
-              newGame -> players.at(i)->fortify(arming, armless, nbarmy);
-            }
-
-
-
-  }
-  
-
-
+}
     return 0;
 }
 

@@ -31,15 +31,15 @@ void Subject::NotifyAttack(int a, string attackName, string defendName, int aa, 
     }
 };
 
-void Subject::NotifyReinforce(int r){
+void Subject::NotifyReinforce(int r, int p, string where){
     list<Observer*>::iterator i = _observers->begin();
     for(; i != _observers->end(); ++i){
-        (*i)->updateReinforce(r);    
+        (*i)->updateReinforce(r, p, where);    
     }
 };
-void Subject::NotifyFortify(int f){
+void Subject::NotifyFortify(int f, string a, string b, int m){
     list<Observer*>::iterator i = _observers->begin();
     for(; i != _observers->end(); ++i){
-        (*i)->updateFortify(f);    
+        (*i)->updateFortify(f, a, b, m);    
     }
 };

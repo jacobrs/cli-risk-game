@@ -38,16 +38,21 @@ void GameView::displayAttack(int a, string attackName, string defendName, int aa
 	//Get the player name
 	string playerName = _subject->name;
 
+	//Displays the different possible actions in the phase
 	switch(a){
 		case 0:
-			cout << playerName << ": Attack phase" << endl;
+			cout << playerName << ": Attack Phase" << endl;
 			break;
 		case 1:
-			cout << playerName << " ends their turn" << endl;
+			cout << playerName << " ends their attack phase" << endl;
 			break;
 		case 2:
 			cout << playerName <<  " attacks" << endl;
+			break;
 		case 3:
+			if (conquered){
+				cout << playerName << " has conquered " << defendName << endl;
+			}
 			cout << playerName << "'s country " << attackName << " attacks " << defendName << "." << endl;
 			cout << attackName << " now has " << aa << " armies." <<endl;
 			cout << defendName << " now has " << da << " armies." <<endl;
@@ -63,23 +68,47 @@ void GameView::displayAttack(int a, string attackName, string defendName, int aa
 	
 }
 
-void GameView::updateFortify(int f){
+void GameView::updateFortify(int f, string a, string b, int m){
 	
-		displayFortify(f);
+		displayFortify(f, a, b, m);
 	  
 }
 
-void GameView::displayFortify(int f){
-
+void GameView::displayFortify(int f, string a, string b, int m){
+	string playerName = _subject->name;
+	switch(f){
+		case 0:
+			cout <<playerName << "ends their fortify phase " << endl;
+			break;
+		case 1:
+			cout << playerName << " fortifies " << b << " with " << m << " armies."<< endl;
+			break;
+		case 2:
+			cout << playerName << ": Fortification Phase." << endl;
+	}
 }
-void GameView::updateReinforce(int r){
+void GameView::updateReinforce(int r, int p, string where){
 	
-		displayReinforce(r);
+		displayReinforce(r, p, where);
 	  
 }
 
-void GameView::displayReinforce(int r){
-
+void GameView::displayReinforce(int r, int p, string where){
+	string playerName = _subject->name;
+	switch(r){
+		case 0:
+			cout << playerName << " ends their reinforce phase " << endl;
+			break;
+		case 1:
+			cout << playerName << " reinforces " << where << " with " << p << " armies." <<endl;
+			break;
+		case 2:
+			cout << playerName << " has to exchange cards." << endl;
+			break;
+		case 3:
+			cout << playerName << ": Reinforcement Phase" <<endl;
+			break;
+	}
 }
 
 

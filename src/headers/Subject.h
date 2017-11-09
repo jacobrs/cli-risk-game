@@ -14,8 +14,8 @@ public:
     virtual void Detach(Observer* O);
     virtual void Notify();
     virtual void NotifyAttack(int a, string attackName, string defendName, int aa, int da, bool conquered);
-    virtual void NotifyReinforce(int);
-    virtual void NotifyFortify(int);
+    virtual void NotifyReinforce(int r, int p, string where);
+    virtual void NotifyFortify(int f, string a, string b, int m);
 
     Subject();
     ~Subject();

@@ -24,6 +24,7 @@ void Player::attack(GameMap* map){ //Have to pass GameMap because can't know my 
 NotifyAttack(0, "", "" , 0, 0, false);
 
 string playerType = "";
+
 if(dynamic_cast<AggressivePlayer*>(this->strategy) != nullptr){
   cout<< name <<" is an Aggressive computer player"<<endl;  
   playerType = "A";
@@ -32,6 +33,7 @@ else if(dynamic_cast<BenevolentPlayer*>(this->strategy) != nullptr){
   cout<< name <<" is an Benevolent computer player"<<endl;  
   playerType = "B";
 }
+
 string input = "";
   while(input != "n"){
     bool conquered = false;
@@ -116,6 +118,7 @@ string input = "";
       cout << name << " is attacking " << defendCountry->owner->name << "\'s country" << endl;
       cout << defendCountry->owner->name << " has an army size of " << defendCountry->armies << " you are allowed to have " << ((defendCountry->armies >= 2) ? 2 : 1) << " dice." << endl;
       cout << "How many dice would you like to have?" << endl;
+      
       if(dynamic_cast<AggressivePlayer*>(defendCountry->owner->strategy) != nullptr ||
       dynamic_cast<BenevolentPlayer*>(defendCountry->owner->strategy) != nullptr) {
         defendDices = ((defendCountry->armies >= 2) ? 2 : 1);
@@ -166,8 +169,10 @@ string input = "";
 }
 
 void Player::reinforce(GameMap* map){
+  NotifyReinforce(3, 0, "");
   //set player type depending on the strategy that is set for it
   string playerType = "";
+  
   if(dynamic_cast<AggressivePlayer*>(this->strategy) != nullptr){
     cout<< name <<" is an Aggressive computer player"<<endl;  
     playerType = "A";
@@ -176,6 +181,7 @@ void Player::reinforce(GameMap* map){
     cout<< name <<" is an Benevolent computer player"<<endl;  
     playerType = "B";
   }
+  
   // count number of countries
   int countries = 0;
   int continentBonus = 0;
@@ -204,6 +210,7 @@ void Player::reinforce(GameMap* map){
 
   // force an exchange if needed
   if(this->hand->handSize > 5){
+    NotifyReinforce(2, 0, "");
     printf("Player %s is exchanging\n", this->name.c_str());
     armies += this->hand->exchange();
   }
@@ -258,14 +265,17 @@ void Player::reinforce(GameMap* map){
       if(selected >= 0 && selected < playersCountries.size()){
         playersCountries[selected]->armies += toPlace;
         armies -= toPlace;
-        printf("Placing %d army/armies on %s\n", toPlace, playersCountries[selected]->name.c_str());
+       string  countryReinforced = playersCountries[selected]->name.c_str();
+       // printf("Placing %d army/armies on %s\n", toPlace, playersCountries[selected]->name.c_str());
+      NotifyReinforce(1,toPlace,countryReinforced);
       }else{
         invalid = true;
       }
     }
   }
-
-  printf("\nReinforcement phase complete\n\n\n");
+  // Replace current print with a notification phase end to observer
+ // printf("\nReinforcement phase complete\n\n\n");
+  NotifyReinforce(0,0,"");
   
 }
 
@@ -275,15 +285,21 @@ void Player::reinforce(GameMap* map){
 *   3- Ask/Check if the amount of armies to be moved is valid (i.e.  armiesToMove < a's armies && armiesToMove >= 1)
 */
 bool Player::fortify(Country* a, Country* b, int armiesToMove){
+  NotifyFortify(3, "", "", 0);
   if(a->isNeighbour(b)){
     if(a->owner->name == b->owner->name){
       if(armiesToMove < a->armies && armiesToMove >= 1){
         a->armies -= armiesToMove;
         b->armies += armiesToMove;
+        string nameA = a->name;
+        string nameB = b->name;
+        NotifyFortify(1, nameA, nameB, armiesToMove);
         return true;
       }
     }
   }
+  
+  NotifyFortify(2, "", "", 0);
   return false;
 }
 

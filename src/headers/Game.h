@@ -11,7 +11,7 @@ using namespace std;
 
 class Game{
 private:
-  vector<Player*> players;
+  //vector<Player*> players;
   GameMap* gameMap;
 
 public:
@@ -20,6 +20,7 @@ public:
   void startGame();
   bool isWon();
   void observeGame();
+  vector<Player*> players;
 
 };
 
