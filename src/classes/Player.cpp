@@ -49,14 +49,17 @@ string input = "";
 
     if(playerType == "A") {input = "y"; cout<<"y"<<endl;}
     else if(playerType == "B") {input = "n"; cout<<"n"<<endl;}
-    else cin >> input;
+    else {
+      cin >> input;
+      cin.ignore();
+    }
     while(input != "y" && input != "n"){ //just in case user can't read
       input = "";
       cout << "INVALID INPUT, Do you want to attack (y/n)" << endl;
       cin >> input;
+      cin.ignore();
     }
 
-    cin.ignore();
     if(input == "n") {//attack phase is over
       //Notify end of attack phase
       NotifyAttack(1, "", "", 0 , 0, conquered);
