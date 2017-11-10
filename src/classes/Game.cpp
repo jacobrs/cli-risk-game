@@ -10,12 +10,17 @@ using namespace std;
 Game::Game(GameMap* map, vector<Player*> initPlayers){
   gameMap = map;
   players = initPlayers;
-
+  stateChanges = new GameSubject();
+  stateObserver = new GameStateObserver();
+  stateChanges->Attach(stateObserver);
 }
 
 Game::~Game(){
   if(gameMap != NULL)
     delete gameMap;
+
+  delete stateChanges;
+  delete stateObserver;
 }
 
 bool Game::isWon(){
@@ -47,13 +52,9 @@ void Game::startGame(){
 
     printf("Player %s's turn\n", players[currentPlayer]->name.c_str());
 
+    stateChanges->Notify(gameMap, players);
     players[currentPlayer]->executeStrategy(gameMap);
     
-    i ++;
-    if(i > 5){
-      printf("giving everything to a player\n");
-      break;
-    }
     currentPlayer = (currentPlayer + 1) % players.size();
 
     if(this->isWon() == true)
@@ -66,13 +67,12 @@ void Game::startGame(){
 
 void Game::observeGame(){
 
-  cout << "in obsesrve" << endl;
+  cout << "in observe" << endl;
   while(true){
  
     for (int i = 0; i < players.size() ; i++){
 
-    cout << "Iteration " << i <<endl;
-
+      cout << "Iteration " << i <<endl;
       players.at(i)->reinforce(gameMap);
 
       players.at(i)->attack(gameMap);
@@ -80,31 +80,31 @@ void Game::observeGame(){
       bool fortifying = true;
       while (fortifying){
 
-      cout << "What country do you want to fortify?" << endl;
-      string armingCountry = "";
-      cin >> armingCountry;
-      Country* arming = gameMap->getCountryByName(armingCountry);
+        cout << "What country do you want to fortify?" << endl;
+        string armingCountry = "";
+        cin >> armingCountry;
+        Country* arming = gameMap->getCountryByName(armingCountry);
 
-      cout << "Which country are the armies coming from?" << endl;
-      string armlessCountry = "";
-      cin >> armlessCountry;
-      Country* armless = gameMap->getCountryByName(armlessCountry);
+        cout << "Which country are the armies coming from?" << endl;
+        string armlessCountry = "";
+        cin >> armlessCountry;
+        Country* armless = gameMap->getCountryByName(armlessCountry);
 
-      cout << "How many armies are you moving?" << endl;
-      int nbarmy =0;
-      cin >> nbarmy;
-      players.at(i)->fortify(arming, armless, nbarmy);
+        cout << "How many armies are you moving?" << endl;
+        int nbarmy =0;
+        cin >> nbarmy;
+        players.at(i)->fortify(arming, armless, nbarmy);
 
-      cout << "Do you want to continue fortufying? (y/n)";
-      string answer ="";
-      cin >> answer;
-      if(answer == "n"){
-        fortifying = false;
+        cout << "Do you want to continue fortifying? (y/n)";
+        string answer ="";
+        cin >> answer;
+        if(answer == "n"){
+          fortifying = false;
+        }
       }
     }
-    }
     if(this->isWon() == true)
-    break;
+      break;
   }
   printf("Game was won!\n");
   

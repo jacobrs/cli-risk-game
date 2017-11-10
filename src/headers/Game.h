@@ -4,6 +4,8 @@
 #include "GameMap.h"
 #include "Player.h"
 #include "Deck.h"
+#include "GameSubject.h"
+#include "GameStateObserver.h"
 #include "DiceRolling.h"
 #include <vector>
 
@@ -13,6 +15,8 @@ class Game{
 private:
   //vector<Player*> players;
   GameMap* gameMap;
+  GameSubject* stateChanges;
+  GameStateObserver* stateObserver;
 
 public:
   Game(GameMap* map, vector<Player*>);
