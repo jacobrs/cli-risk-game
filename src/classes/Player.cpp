@@ -211,6 +211,11 @@ void Player::reinforce(GameMap* map){
     }
   }
 
+  if(countries < 1){
+    printf("%s has been ELIMINATED, skipping their turn.\n", name.c_str());
+    return;
+  }
+
   int armies = floor(countries / 3) + continentBonus;
   if(armies < 3){
     armies = 3;
