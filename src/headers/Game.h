@@ -15,7 +15,6 @@ class Game{
 private:
   //vector<Player*> players;
   GameMap* gameMap;
-  GameSubject* stateChanges;
   GameStateObserver* stateObserver;
 
 public:
@@ -24,6 +23,7 @@ public:
   void startGame();
   bool isWon();
   void observeGame();
+  GameSubject* stateChanges;
   vector<Player*> players;
 
 };

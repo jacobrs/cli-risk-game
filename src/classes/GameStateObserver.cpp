@@ -29,9 +29,11 @@ void GameStateObserver::updateState(GameMap* map, vector<Player*> players){
   string DEFAULT = "\x1b[0m";
 
   std::map<const char*, int> playerCountries;
+  std::map<const char*, int> playerArmies;
   for (auto &player : players)
   {  
       playerCountries.insert(std::pair<const char*, int>(player->name.c_str(), 0));
+      playerArmies.insert(std::pair<const char*, int>(player->name.c_str(), 0));
   }
 
   double totalCountries = 0;
@@ -40,16 +42,20 @@ void GameStateObserver::updateState(GameMap* map, vector<Player*> players){
     for(int j = 0; j < map->continents[i]->numberOfCountries; j++){
       int n_c = playerCountries.at(map->continents[i]->countries[j]->owner->name.c_str()) + 1;
       playerCountries[map->continents[i]->countries[j]->owner->name.c_str()] = n_c;
+      n_c = playerArmies.at(map->continents[i]->countries[j]->owner->name.c_str()) + map->continents[i]->countries[j]->armies;
+      playerArmies[map->continents[i]->countries[j]->owner->name.c_str()] = n_c;
       totalCountries += 1;
     }
   }
 
   printf("\n\n%s============ GAME STATE ================%s\n", CYAN.c_str(), DEFAULT.c_str());
-  printf("%s=                                      =%s\n", CYAN.c_str(), DEFAULT.c_str());
+  printf("%s|                                       %s\n", CYAN.c_str(), DEFAULT.c_str());
   for (auto &player : players)
   {
-    printf("%s=%s %s has %d countries\n", CYAN.c_str(), DEFAULT.c_str(), player->name.c_str(), playerCountries.at(player->name.c_str()));
-    printf("%s=%s %s %s=%s\n", CYAN.c_str(), DEFAULT.c_str(), generateBar(playerCountries.at(player->name.c_str()) / totalCountries).c_str(), CYAN.c_str(), DEFAULT.c_str());
+    printf("%s|%s %s has %d countries\n", CYAN.c_str(), DEFAULT.c_str(), player->name.c_str(), playerCountries.at(player->name.c_str()));
+    printf("%s|%s and %d armies\n", CYAN.c_str(), DEFAULT.c_str(), playerArmies.at(player->name.c_str()));
+    printf("%s|%s %s \n", CYAN.c_str(), DEFAULT.c_str(), generateBar(playerCountries.at(player->name.c_str()) / totalCountries).c_str());
+    printf("%s|                                       %s\n", CYAN.c_str(), DEFAULT.c_str());
   }
   printf("%s========================================%s\n\n", CYAN.c_str(), DEFAULT.c_str());
 
