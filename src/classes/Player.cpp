@@ -61,6 +61,7 @@ string input = "";
       return;}
 
     if(input == "y"){
+      //Notify that the player decided to attack
       NotifyAttack(2, "", "" , 0, 0, conquered);
       //choosing attackCountry
       input = "";
@@ -169,6 +170,7 @@ string input = "";
 }
 
 void Player::reinforce(GameMap* map){
+  //Notify that player is starting their reinforcement phase
   NotifyReinforce(3, 0, "");
   //set player type depending on the strategy that is set for it
   string playerType = "";
@@ -267,6 +269,7 @@ void Player::reinforce(GameMap* map){
         armies -= toPlace;
        string  countryReinforced = playersCountries[selected]->name.c_str();
        // printf("Placing %d army/armies on %s\n", toPlace, playersCountries[selected]->name.c_str());
+       //Notifies which country has been reinforced
       NotifyReinforce(1,toPlace,countryReinforced);
       }else{
         invalid = true;
