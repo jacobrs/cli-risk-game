@@ -17,7 +17,7 @@ using namespace std;
 
 int main(){
 
-srand (time(NULL)); 
+  srand (time(NULL));
 
   string selectedMap;
   int numOfPlayers = 0;

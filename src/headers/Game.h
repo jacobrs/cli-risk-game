@@ -4,6 +4,8 @@
 #include "GameMap.h"
 #include "Player.h"
 #include "Deck.h"
+#include "GameSubject.h"
+#include "GameStateObserver.h"
 #include "DiceRolling.h"
 #include <vector>
 
@@ -13,6 +15,7 @@ class Game{
 private:
   //vector<Player*> players;
   GameMap* gameMap;
+  GameStateObserver* stateObserver;
 
 public:
   Game(GameMap* map, vector<Player*>);
@@ -20,6 +23,7 @@ public:
   void startGame();
   bool isWon();
   void observeGame();
+  GameSubject* stateChanges;
   vector<Player*> players;
 
 };

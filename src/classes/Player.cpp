@@ -4,6 +4,7 @@
 #include <cmath>
 #include <vector>
 #include <iostream>
+#include <sstream>
 
 using namespace std;
 
@@ -48,11 +49,15 @@ string input = "";
 
     if(playerType == "A") {input = "y"; cout<<"y"<<endl;}
     else if(playerType == "B") {input = "n"; cout<<"n"<<endl;}
-    else cin >> input;
+    else {
+      cin >> input;
+      cin.ignore();
+    }
     while(input != "y" && input != "n"){ //just in case user can't read
       input = "";
       cout << "INVALID INPUT, Do you want to attack (y/n)" << endl;
       cin >> input;
+      cin.ignore();
     }
 
     if(input == "n") {//attack phase is over
@@ -71,13 +76,14 @@ string input = "";
         input = getStrongetAttackCountry(map);
         cout<< name <<" chooses it's strongest country: " << input << endl;
       }
-      else cin >> input;
+      else 
+        getline(cin, input);
       Country* attackCountry = map->getCountryByName(input);
       while(attackCountry == NULL){ //just in case user can't read
         cout << "INVALID INPUT, Choose one of your country to attack from" << endl;
         listMyAttackCountries(map);
         input = "";
-        cin >> input;
+        getline(cin, input);
         attackCountry = map->getCountryByName(input);
       }
 
@@ -89,13 +95,14 @@ string input = "";
         input = attackCountry->getWeakestEnemy();
         cout<< name <<" chooses it's oponent's weakest country: " << input << endl;
       }
-      else cin >> input;
+      else 
+        getline(cin, input);
       Country* defendCountry = map->getCountryByName(input);
       while(defendCountry == NULL){ //just in case user can't read
         cout << "INVALID INPUT, Choose an ennemy country to attack" << endl;
         attackCountry->listEnnemies();
         input = "";
-        cin >> input;
+        getline(cin, input);
         defendCountry = map->getCountryByName(input);
       
       }

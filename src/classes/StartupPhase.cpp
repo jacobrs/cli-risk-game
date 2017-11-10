@@ -26,10 +26,8 @@ StartupPhase::StartupPhase(GameMap* map, vector<Player*> players){
     {
         for (int j = 0; j < map->continents[i]->numberOfCountries; j++)
         {
-            cout << map-> continents[i] -> countries[j]->name << endl;
             map-> continents[i] -> countries[j]->owner = this->listPlayers[playerCtr];
             playerCtr = (playerCtr + 1) % (nbPlayers);
-            cout << map-> continents[i] -> countries[j]->owner -> name << endl;
         }
     }
 
@@ -69,7 +67,6 @@ StartupPhase::StartupPhase(GameMap* map, vector<Player*> players){
                     if (map-> continents[i] -> countries[j]->owner->name == this->listPlayers[k]->name)
                     {
                         map-> continents[i] -> countries[j]->armies ++;
-                        cout << "Player " << map-> continents[i] -> countries[j]->owner->name << " placed a token on "<<map-> continents[i] -> countries[j]->name << " and now has "<< map-> continents[i] -> countries[j]->armies << " tokens " << endl;
                         
                         pieceCtr --;
                     }
