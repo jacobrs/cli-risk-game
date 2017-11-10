@@ -61,6 +61,7 @@ void Game::startGame(){
       break;
   }
 
+  stateChanges->Notify(gameMap, players);
   printf("Game was won!\n");
 
 }
@@ -106,6 +107,7 @@ void Game::observeGame(){
     if(this->isWon() == true)
       break;
   }
+  stateChanges->Notify(gameMap, players);
   printf("Game was won!\n");
   
 }

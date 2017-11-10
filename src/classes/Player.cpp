@@ -40,6 +40,7 @@ string input = "";
     bool conquered = false;
     if(!ownsAttackCountry(map)){
       //Notify cannnot attack
+      cout<<"++++++++++++++++++++++++++++++I've been conquuered+++++++++++++++++++++++++++"<<endl;
       NotifyAttack(4, "", "", 0, 0 , conquered);
       //cout << name << " can't attack because you don't own a country that can attack" << endl;
       return;
@@ -212,6 +213,11 @@ void Player::reinforce(GameMap* map){
     }
   }
 
+  if(countries < 1){
+    printf("%s has been ELIMINATED, skipping their turn.\n", name.c_str());
+    return;
+  }
+
   int armies = floor(countries / 3) + continentBonus;
   if(armies < 3){
     armies = 3;
@@ -250,7 +256,7 @@ void Player::reinforce(GameMap* map){
       for (int i = 0; i < playersCountries.size(); i++){
         printf("[%d] %s (%d armies)\n", i, playersCountries[i]->name.c_str(), playersCountries[i]->armies);
         //determine strongest country
-        if(playersCountries[i]->armies > armiesOfStrongestCountry){
+        if(playersCountries[i]->armies > armiesOfStrongestCountry && playersCountries[i]->hasEnnemies()){
           armiesOfStrongestCountry = playersCountries[i]->armies;
           indexOfStrongestCountry = i;
         }
@@ -350,7 +356,7 @@ string Player::getStrongetAttackCountry(GameMap* map){
           coun->owner->name == name && 
           coun->hasEnnemies() && coun->armies >= 2 && 
           coun->armies > armiesInStrongestCountry){ // if this player is the owner, has ennemies and armies >= 2 (can attack) and this country has more armies than the last strongest country choose this one
-            //cout << coun->name << ", " << " with " <<  coun->armies << endl;
+            cout << coun->name << ", " << " with " <<  coun->armies << endl;
             armiesInStrongestCountry = coun->armies;
             stronggestCountry = coun->name;
       }
@@ -358,6 +364,7 @@ string Player::getStrongetAttackCountry(GameMap* map){
   }
   return stronggestCountry;
 }
+
 string Player::getStrongetCountry(GameMap* map){
   int armiesInStrongestCountry = 0;
   string stronggestCountry = "";
