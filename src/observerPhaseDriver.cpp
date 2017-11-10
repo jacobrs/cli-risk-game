@@ -17,7 +17,7 @@ using namespace std;
 
 int main(){
 
-  srand (time(NULL)); 
+  srand (time(NULL));
 
   string selectedMap;
   int numOfPlayers = 0;
@@ -51,6 +51,7 @@ int main(){
       }
   }
 
+  //Creates the initial game state
   GameStart* newGame = new GameStart(selectedMap, numOfPlayers);
   GameMap* map = newGame -> gameMap;
 
@@ -61,6 +62,7 @@ int main(){
     
   }
 
+  //Starts the game
   StartupPhase* startGame = new StartupPhase(newGame->gameMap, newGame->players);
   Game *game = new Game(newGame->gameMap, newGame->players);
 
@@ -68,9 +70,9 @@ int main(){
       for (int i = 0; i<game->players.size(); i++){
     //Set the observer to look at each player while they are going through their turn
          GameView *gameView = new GameView(game ->players.at(i));
-    //Subject does the reinforcement phase
+    // Scenario 1: Subject does the reinforcement phase
          game -> players.at(i) -> reinforce(map);
-    //Subject does their attack phase
+    // Scenario 2: Subject does their attack phase
          game -> players.at(i) -> attack(map);
     
 
