@@ -283,9 +283,10 @@ void Player::reinforce(GameMap* map){
     // get armies they want to place
     printf("Enter armies to place (max %d): ", armies);
     if(playerType == "A"|| playerType == "B"){toPlace = armies; cout<<armies<<endl;}
-    //else if (playerType == "R"){
-      //TODO
-    //}
+    else if (playerType == "R"){
+      toPlace = (rand() % armies) + 1;
+      cout<<toPlace<<endl;
+    }
     else cin >> toPlace;
     if(toPlace > armies || toPlace < 1){
       invalid = true;
@@ -296,6 +297,7 @@ void Player::reinforce(GameMap* map){
       int armiesOfStrongestCountry = 0;
       int indexOfWeakestCountry = 0;
       int indexOfStrongestCountry = 0;
+      int indexOfRandomCountry = rand()%(playersCountries.size());
       for (int i = 0; i < playersCountries.size(); i++){
         printf("[%d] %s (%d armies)\n", i, playersCountries[i]->name.c_str(), playersCountries[i]->armies);
         //determine strongest country
@@ -318,9 +320,10 @@ void Player::reinforce(GameMap* map){
         cout<<"Benevolent player will reinforce its weakest country " <<indexOfWeakestCountry<<endl;
         selected = indexOfWeakestCountry;
       }
-      //else if(playerType == "R"){
-        //TODO
-      //}
+      else if(playerType == "R"){
+        cout<<"Random player will reinforce a random country"<<indexOfRandomCountry<<endl;
+        selected = indexOfRandomCountry;
+      }
       else cin >> selected;
       // place if country is in list of available countries
       if(selected >= 0 && selected < playersCountries.size()){
