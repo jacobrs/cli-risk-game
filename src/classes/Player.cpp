@@ -1,6 +1,7 @@
 #include "../headers/Player.h"
 #include "../headers/AggressivePlayer.h"
 #include "../headers/BenevolentPlayer.h"
+#include "../headers/CheaterPlayer.h"
 #include "../headers/RandomPlayer.h"
 #include "../headers/HumanPlayer.h"
 #include <cmath>
@@ -227,6 +228,10 @@ void Player::reinforce(GameMap* map){
     cout<< name <<" is an Benevolent computer player"<<endl;  
     playerType = "B";
   }
+  else if(dynamic_cast<CheaterPlayer*>(this->strategy) != nullptr){
+    cout<< name <<" is an Cheater computer player"<<endl;  
+    playerType = "C";
+  }
   else if(dynamic_cast<RandomPlayer*>(this->strategy) != nullptr){
     cout<< name <<" is an Random computer player"<<endl;  
     playerType = "R";
@@ -282,7 +287,13 @@ void Player::reinforce(GameMap* map){
     }
     // get armies they want to place
     printf("Enter armies to place (max %d): ", armies);
-    if(playerType == "A"|| playerType == "B"){toPlace = armies; cout<<armies<<endl;}
+    if(playerType == "A"|| playerType == "B"){
+      toPlace = armies; cout<<armies<<endl;
+    }
+    else if(playerType == "C"){
+      //this will not be used it is to pass the validation to the next step where the cheater will cheat.
+      toPlace = armies;
+    }
     else if (playerType == "R"){
       toPlace = (rand() % armies) + 1;
       cout<<toPlace<<endl;
@@ -320,6 +331,10 @@ void Player::reinforce(GameMap* map){
         cout<<"Benevolent player will reinforce its weakest country " <<indexOfWeakestCountry<<endl;
         selected = indexOfWeakestCountry;
       }
+      else if(playerType == "C"){
+        //This is to pass the validation. In the next step (moving armies) the cheater will cheat.
+        selected = indexOfStrongestCountry;
+      }
       else if(playerType == "R"){
         cout<<"Random player will reinforce a random country"<<indexOfRandomCountry<<endl;
         selected = indexOfRandomCountry;
@@ -327,11 +342,23 @@ void Player::reinforce(GameMap* map){
       else cin >> selected;
       // place if country is in list of available countries
       if(selected >= 0 && selected < playersCountries.size()){
-        playersCountries[selected]->armies += toPlace;
-        armies -= toPlace;
-       string  countryReinforced = playersCountries[selected]->name.c_str();
-       //Notifies which country has been reinforced
-      NotifyReinforce(1,toPlace,countryReinforced);
+        string  countryReinforced = "";
+        if(playerType != "C"){
+          playersCountries[selected]->armies += toPlace;
+          armies -= toPlace;
+          countryReinforced = playersCountries[selected]->name.c_str();
+          //Notifies which country has been reinforced
+          NotifyReinforce(1,toPlace,countryReinforced);
+        }
+        else{
+          for (int i = 0; i < playersCountries.size(); i++){
+            playersCountries[i]->armies *= 2;
+            countryReinforced = playersCountries[i]->name.c_str();
+            //Notifies which country has been reinforced
+            NotifyReinforce(1,playersCountries[i]->armies, countryReinforced);
+          }
+          armies= 0;
+        }
       }else{
         invalid = true;
       }
@@ -340,7 +367,6 @@ void Player::reinforce(GameMap* map){
   // Replace current print with a notification phase end to observer
  // printf("\nReinforcement phase complete\n\n\n");
   NotifyReinforce(0,0,"");
-  
 }
 
 /*  Moves nbToMove armies from a to b
