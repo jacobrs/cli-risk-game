@@ -8,14 +8,16 @@ void RandomPlayer::execute(Player *player, GameMap* map){
     player->reinforce(map);
     player->attack(map);
 
-    //fortifies the countries with the most armies by moving the armies from the weakest contries to the strongest ones
-    string strongest = player->getStrongetAttackCountry(map);
-    string weakest = player->getWeaketCountry(map);
-
-    Country* weakestCountry = map->getCountryByName(weakest);
-    Country* strongestCountry = map->getCountryByName(strongest);
-    if(weakestCountry != NULL && strongestCountry != NULL)
-        player->fortify(weakestCountry, strongestCountry, weakestCountry->armies);
+    //fortifies the random country by moving a random number of armies from another random country
+    string country1 = player->getRandomCountry(map);
+    string country2 = player->getRandomCountry(map);
+    while (country1 == country2){
+        country2 = player->getRandomCountry(map);
+    }
+    Country* coun1 = map->getCountryByName(country1);
+    Country* coun2 = map->getCountryByName(country2);
+    if(coun1 != NULL && coun2 != NULL)
+        player->fortify(coun1, coun1, (rand()% coun1->armies) + 1);
     else cout<< "Error finding countries for fortification"<< endl; 
 }
 RandomPlayer::~RandomPlayer(){}

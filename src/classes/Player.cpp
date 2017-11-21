@@ -330,7 +330,6 @@ void Player::reinforce(GameMap* map){
         playersCountries[selected]->armies += toPlace;
         armies -= toPlace;
        string  countryReinforced = playersCountries[selected]->name.c_str();
-       // printf("Placing %d army/armies on %s\n", toPlace, playersCountries[selected]->name.c_str());
        //Notifies which country has been reinforced
       NotifyReinforce(1,toPlace,countryReinforced);
       }else{
@@ -460,6 +459,16 @@ string Player::getRandomAttackCountry(GameMap* map){
         !coun->hasEnnemies() || 
         coun->armies < 2){
           //if one of the conditions of country to be able to attack is not met, randomly pick one again
+          con = map->continents[rand()% map->numberOfContinents];
+          coun = con->countries[rand()% con->numberOfCountries];
+        }
+  return coun->name;
+}
+string Player::getRandomCountry(GameMap* map){
+  Continent* con = map->continents[rand()% map->numberOfContinents];
+  Country* coun = con->countries[rand()% con->numberOfCountries];
+  while(coun->owner == NULL || 
+        coun->owner->name != name){
           con = map->continents[rand()% map->numberOfContinents];
           coun = con->countries[rand()% con->numberOfCountries];
         }
