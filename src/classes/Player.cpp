@@ -34,11 +34,15 @@ if(dynamic_cast<AggressivePlayer*>(this->strategy) != nullptr){
   playerType = "A";
 }
 else if(dynamic_cast<BenevolentPlayer*>(this->strategy) != nullptr){
-  cout<< name <<" is an Benevolent computer player"<<endl;  
+  cout<< name <<" is a Benevolent computer player"<<endl;  
   playerType = "B";
 }
+else if(dynamic_cast<CheaterPlayer*>(this->strategy) != nullptr){
+  cout<< name <<" is a Cheater computer player"<<endl;  
+  playerType = "C";
+}
 else if(dynamic_cast<RandomPlayer*>(this->strategy) != nullptr){
-  cout<< name <<" is an Random computer player"<<endl;  
+  cout<< name <<" is a Random computer player"<<endl;  
   playerType = "R";
 }
 string input = "";
@@ -46,7 +50,6 @@ string input = "";
     bool conquered = false;
     if(!ownsAttackCountry(map)){
       //Notify cannnot attack
-      cout<<"++++++++++++++++++++++++++++++I've been conquuered+++++++++++++++++++++++++++"<<endl;
       NotifyAttack(4, "", "", 0, 0 , conquered);
       //cout << name << " can't attack because you don't own a country that can attack" << endl;
       return;
@@ -54,7 +57,7 @@ string input = "";
 
     cout << "Does " << name << "  want to attack (y/n)" << endl;
 
-    if(playerType == "A") {input = "y"; cout<<input<<endl;}
+    if(playerType == "A" || playerType == "C") {input = "y"; cout<<input<<endl;}
     else if(playerType == "B") {input = "n"; cout<<input<<endl;}
     else if(playerType == "R"){
       //randomly generated 0 or 1 
@@ -85,7 +88,7 @@ string input = "";
       input = "";
       cout << "Choose one of your country to attack from" << endl;
       listMyAttackCountries(map);
-      if(playerType == "A") {
+      if(playerType == "A" || playerType == "C") {
         input = getStrongetAttackCountry(map);
         cout<< name <<" chooses it's strongest country: " << input << endl;
       }
@@ -108,7 +111,7 @@ string input = "";
       input = "";
       cout << "Choose an ennemy country to attack" << endl;
       attackCountry->listEnnemies();
-      if(playerType == "A") {
+      if(playerType == "A" || playerType == "C") {
         input = attackCountry->getWeakestEnemy();
         cout<< name <<" chooses it's oponent's weakest country: " << input << endl;
       }
@@ -133,7 +136,7 @@ string input = "";
       cout << name << " is attacking " << defendCountry->owner->name << "\'s country" << endl;
       cout << name << " has an army size of " << attackCountry->armies << " you are allowed to have 1 to " << ((attackCountry->armies-1 >= 3) ? 3 : attackCountry->armies-1) << " dice." << endl;
       cout << "How many dice would you like to have?" << endl;
-      if(playerType == "A") attackDices = ((attackCountry->armies-1 >= 3) ? 3 : attackCountry->armies-1);
+      if(playerType == "A" || playerType == "C") attackDices = ((attackCountry->armies-1 >= 3) ? 3 : attackCountry->armies-1);
       else if(playerType == "R") {
         int maxDice = ((attackCountry->armies-1 >= 3) ? 3 : attackCountry->armies-1);
         attackDices = rand() % maxDice + 1;
@@ -153,7 +156,8 @@ string input = "";
       cout << "How many dice would you like to have?" << endl;
       
       if(dynamic_cast<AggressivePlayer*>(defendCountry->owner->strategy) != nullptr ||
-      dynamic_cast<BenevolentPlayer*>(defendCountry->owner->strategy) != nullptr) {
+      dynamic_cast<BenevolentPlayer*>(defendCountry->owner->strategy) != nullptr ||
+      dynamic_cast<CheaterPlayer*>(defendCountry->owner->strategy) != nullptr) {
         defendDices = ((defendCountry->armies >= 2) ? 2 : 1);
         cout<<defendDices<<endl;
       }
@@ -172,9 +176,16 @@ string input = "";
 
       //deduct armies according to the dices rolled
       DiceRolling roll;
-      int* casualties = roll.attackAndDefendRoll(attackDices, defendDices);
-      attackCountry->armies-=casualties[0];
-      defendCountry->armies-=casualties[1];
+      if(playerType != "C"){
+        int* casualties = roll.attackAndDefendRoll(attackDices, defendDices);
+        attackCountry->armies-=casualties[0];
+        defendCountry->armies-=casualties[1];
+      }
+      else {
+        //the cheater automatically conquires the defending country
+        //it does not have any casualties but cheats by setting the defending country to 0 armies
+        defendCountry->armies = 0;
+      }
 
       //if the armies in defend country reaches 0, that country is conquired by the attacker
       if(defendCountry->armies<=0){
@@ -182,7 +193,7 @@ string input = "";
         cout << defendCountry->name << " has been conquired, how many armies would " << attackCountry->owner->name << " like to move from " << attackCountry->name << " to " << defendCountry->name << "?" << endl;
         cout << "You can move 1 to " << attackCountry->armies-1 << " armies." << endl;
         int armiesToMove;
-        if(playerType == "A") {
+        if(playerType == "A" || playerType == "C") {
           armiesToMove = attackCountry->armies-1;
           cout<<armiesToMove<<endl;
         }
@@ -375,10 +386,21 @@ void Player::reinforce(GameMap* map){
 *   3- Ask/Check if the amount of armies to be moved is valid (i.e.  armiesToMove < a's armies && armiesToMove >= 1)
 */
 bool Player::fortify(Country* a, Country* b, int armiesToMove){
+  string playerType = "";
+  if(dynamic_cast<CheaterPlayer*>(this->strategy) != nullptr){ 
+    playerType = "C";
+  }
   NotifyFortify(3, "", "", 0);
-  if(a->isNeighbour(b)){
+  if(playerType == "C"){
+    b->armies = armiesToMove;
+    string nameB = b->name;
+    NotifyFortify(1, "No country", nameB, armiesToMove);
+    return true;
+  }
+  else if(a->isNeighbour(b)){
     if(a->owner->name == b->owner->name){
-      if(armiesToMove < a->armies && armiesToMove >= 1){
+      //if a player is a cheater don't check if armies being moved are less then max number of armies
+      if((armiesToMove < a->armies && armiesToMove >= 1)){
         a->armies -= armiesToMove;
         b->armies += armiesToMove;
         string nameA = a->name;
