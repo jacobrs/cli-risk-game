@@ -48,13 +48,13 @@ void Game::startGame(){
   int i = 0;
   int currentPlayer = 0;
   while(true){
-    printf("Playing iteration %d\n", i);
+    printf("Playing iteration %d\n", i++);
 
     printf("Player %s's turn\n", players[currentPlayer]->name.c_str());
 
     stateChanges->Notify(gameMap, players);
     players[currentPlayer]->executeStrategy(gameMap);
-    
+
     currentPlayer = (currentPlayer + 1) % players.size();
 
     if(this->isWon() == true)
@@ -70,7 +70,7 @@ void Game::observeGame(){
 
   cout << "in observe" << endl;
   while(true){
- 
+
     for (int i = 0; i < players.size() ; i++){
 
       cout << "Iteration " << i <<endl;
@@ -107,7 +107,7 @@ void Game::observeGame(){
     if(this->isWon() == true)
       break;
   }
-  stateChanges->Notify(gameMap, players);
+  stateChanges->Notify(gameMap, players, players.at(0)->turns);
   printf("Game was won!\n");
-  
+
 }

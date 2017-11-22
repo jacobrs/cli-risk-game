@@ -21,7 +21,8 @@ string generateBar(double percent){
   return GREEN + bar + DEFAULT;
 }
 
-void GameStateObserver::updateState(GameMap* map, vector<Player*> players){
+// decorators array: {onOffAsk, onOffDomination, onOffHands, onOffContinentControl}
+void GameStateObserver::updateState(GameMap* map, vector<Player*> players, int turns){
 
   const int LINE_LENGTH = 40;
 
@@ -31,7 +32,7 @@ void GameStateObserver::updateState(GameMap* map, vector<Player*> players){
   std::map<const char*, int> playerCountries;
   std::map<const char*, int> playerArmies;
   for (auto &player : players)
-  {  
+  {
       playerCountries.insert(std::pair<const char*, int>(player->name.c_str(), 0));
       playerArmies.insert(std::pair<const char*, int>(player->name.c_str(), 0));
   }
@@ -50,6 +51,7 @@ void GameStateObserver::updateState(GameMap* map, vector<Player*> players){
 
   printf("\n\n%s============ GAME STATE ================%s\n", CYAN.c_str(), DEFAULT.c_str());
   printf("%s|                                       %s\n", CYAN.c_str(), DEFAULT.c_str());
+  printf("%s|%sTurn number %d                         \n", CYAN.c_str(), DEFAULT.c_str(), turns);
   for (auto &player : players)
   {
     printf("%s|%s %s has %d countries\n", CYAN.c_str(), DEFAULT.c_str(), player->name.c_str(), playerCountries.at(player->name.c_str()));
@@ -58,6 +60,7 @@ void GameStateObserver::updateState(GameMap* map, vector<Player*> players){
     printf("%s|                                       %s\n", CYAN.c_str(), DEFAULT.c_str());
   }
   printf("%s========================================%s\n\n", CYAN.c_str(), DEFAULT.c_str());
+
 
 }
 

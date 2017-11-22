@@ -17,6 +17,8 @@ class Player : public Subject{
 private:
   Strategy *strategy;
 public:
+  bool* decorators;
+  static int turns;
   int index;
   string name;
   string color;
@@ -42,7 +44,7 @@ public:
   string getWeaketCountry(GameMap*);
 
   ~Player();
-  
+
 };
 
 #endif

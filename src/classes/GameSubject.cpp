@@ -17,9 +17,9 @@ void GameSubject::Detach(GameStateObserver* o){
     _observers -> remove(o);
 };
 
-void GameSubject::Notify(GameMap* map, vector<Player*> players){
+void GameSubject::Notify(GameMap* map, vector<Player*> players, int turns){
     list<GameStateObserver*>::iterator i = _observers->begin();
     for(; i != _observers->end(); ++i){
-        (*i)->updateState(map, players);
+        (*i)->updateState(map, players, turns);
     }
 }

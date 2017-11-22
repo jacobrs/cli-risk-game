@@ -14,7 +14,7 @@ class GameSubject{
 public:
     void Attach(GameStateObserver* O);
     void Detach(GameStateObserver* O);
-    void Notify(GameMap* map, vector<Player*> players);
+    void Notify(GameMap* map, vector<Player*> players, int turns);
 
     GameSubject();
     ~GameSubject();

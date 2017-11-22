@@ -9,6 +9,11 @@
 using namespace std;
 
 Player::Player(int turnIndex, string playerName, string playerColor){
+  turns = 1;
+  decorators[0] = false;
+  decorators[1] = false;
+  decorators[2] = false;
+  decorators[3] = false;
   index = turnIndex;    // to be used when deciding who's turn it is
   name = playerName;
   color = playerColor;
@@ -27,11 +32,11 @@ NotifyAttack(0, "", "" , 0, 0, false);
 string playerType = "";
 
 if(dynamic_cast<AggressivePlayer*>(this->strategy) != nullptr){
-  cout<< name <<" is an Aggressive computer player"<<endl;  
+  cout<< name <<" is an Aggressive computer player"<<endl;
   playerType = "A";
 }
 else if(dynamic_cast<BenevolentPlayer*>(this->strategy) != nullptr){
-  cout<< name <<" is an Benevolent computer player"<<endl;  
+  cout<< name <<" is an Benevolent computer player"<<endl;
   playerType = "B";
 }
 
@@ -77,7 +82,7 @@ string input = "";
         input = getStrongetAttackCountry(map);
         cout<< name <<" chooses it's strongest country: " << input << endl;
       }
-      else 
+      else
         getline(cin, input);
       Country* attackCountry = map->getCountryByName(input);
       while(attackCountry == NULL){ //just in case user can't read
@@ -96,7 +101,7 @@ string input = "";
         input = attackCountry->getWeakestEnemy();
         cout<< name <<" chooses it's oponent's weakest country: " << input << endl;
       }
-      else 
+      else
         getline(cin, input);
       Country* defendCountry = map->getCountryByName(input);
       while(defendCountry == NULL){ //just in case user can't read
@@ -105,7 +110,7 @@ string input = "";
         input = "";
         getline(cin, input);
         defendCountry = map->getCountryByName(input);
-      
+
       }
 
       // get amount of dice to attack with
@@ -127,7 +132,7 @@ string input = "";
       cout << name << " is attacking " << defendCountry->owner->name << "\'s country" << endl;
       cout << defendCountry->owner->name << " has an army size of " << defendCountry->armies << " you are allowed to have " << ((defendCountry->armies >= 2) ? 2 : 1) << " dice." << endl;
       cout << "How many dice would you like to have?" << endl;
-      
+
       if(dynamic_cast<AggressivePlayer*>(defendCountry->owner->strategy) != nullptr ||
       dynamic_cast<BenevolentPlayer*>(defendCountry->owner->strategy) != nullptr) {
         defendDices = ((defendCountry->armies >= 2) ? 2 : 1);
@@ -163,15 +168,15 @@ string input = "";
         defendCountry->armies=armiesToMove;
         defendCountry->owner=attackCountry->owner;
       }
-   
-      //Notify Observer on what is happening 
+
+      //Notify Observer on what is happening
       string attackName = attackCountry->name;
       string defendName = defendCountry->name;
       int attackArmies = attackCountry->armies;
       int defendArmies = defendCountry->armies;
 
       NotifyAttack(3, attackName, defendName, attackArmies , defendArmies, conquered);
-      
+
     }
   }
   return;
@@ -182,16 +187,16 @@ void Player::reinforce(GameMap* map){
   NotifyReinforce(3, 0, "");
   //set player type depending on the strategy that is set for it
   string playerType = "";
-  
+
   if(dynamic_cast<AggressivePlayer*>(this->strategy) != nullptr){
-    cout<< name <<" is an Aggressive computer player"<<endl;  
+    cout<< name <<" is an Aggressive computer player"<<endl;
     playerType = "A";
   }
   else if(dynamic_cast<BenevolentPlayer*>(this->strategy) != nullptr){
-    cout<< name <<" is an Benevolent computer player"<<endl;  
+    cout<< name <<" is an Benevolent computer player"<<endl;
     playerType = "B";
   }
-  
+
   // count number of countries
   int countries = 0;
   int continentBonus = 0;
@@ -292,7 +297,7 @@ void Player::reinforce(GameMap* map){
   // Replace current print with a notification phase end to observer
  // printf("\nReinforcement phase complete\n\n\n");
   NotifyReinforce(0,0,"");
-  
+
 }
 
 /*  Moves nbToMove armies from a to b
@@ -314,7 +319,7 @@ bool Player::fortify(Country* a, Country* b, int armiesToMove){
       }
     }
   }
-  
+
   NotifyFortify(2, "", "", 0);
   return false;
 }
@@ -352,9 +357,9 @@ string Player::getStrongetAttackCountry(GameMap* map){
     Continent* con = map->continents[continent];
     for(int country = 0; country < con->numberOfCountries; country++){
       Country* coun = con->countries[country];
-      if(coun->owner != NULL && 
-          coun->owner->name == name && 
-          coun->hasEnnemies() && coun->armies >= 2 && 
+      if(coun->owner != NULL &&
+          coun->owner->name == name &&
+          coun->hasEnnemies() && coun->armies >= 2 &&
           coun->armies > armiesInStrongestCountry){ // if this player is the owner, has ennemies and armies >= 2 (can attack) and this country has more armies than the last strongest country choose this one
             cout << coun->name << ", " << " with " <<  coun->armies << endl;
             armiesInStrongestCountry = coun->armies;
@@ -372,7 +377,7 @@ string Player::getStrongetCountry(GameMap* map){
     Continent* con = map->continents[continent];
     for(int country = 0; country < con->numberOfCountries; country++){
       Country* coun = con->countries[country];
-      if(coun->owner != NULL && 
+      if(coun->owner != NULL &&
           coun->owner->name == name){ // if this player is the owner, has ennemies and armies >= 2 (can attack) and this country has more armies than the last strongest country choose this one
             cout << coun->name << ", " << " with " <<  coun->armies << " armies"<< endl;
             if(coun->armies > armiesInStrongestCountry){
@@ -391,7 +396,7 @@ string Player::getWeaketCountry(GameMap* map){
     Continent* con = map->continents[continent];
     for(int country = 0; country < con->numberOfCountries; country++){
       Country* coun = con->countries[country];
-      if(coun->owner != NULL && 
+      if(coun->owner != NULL &&
           coun->owner->name == name){ // if this player is the owner, has ennemies and armies >= 2 (can attack) and this country has less armies than the last weakest country choose this one
             cout << coun->name << ", " << " with " <<  coun->armies << " armies"<< endl;
             if(coun->armies > armiesInWeakestCountry){
@@ -407,4 +412,3 @@ Player::~Player(){
   delete hand;
   delete strategy;
 }
-
