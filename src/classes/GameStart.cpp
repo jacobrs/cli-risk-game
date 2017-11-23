@@ -89,3 +89,11 @@ void GameStart::createPlayers(int nbPlayers){
        this -> players.push_back(newPlayer);
     }
 }
+GameStart::~GameStart(){
+    delete gameMap;
+    gameMap = NULL;
+    for(int i = 0; i < players.size(); i++){
+        delete players[i];
+        players[i] = NULL;
+    }
+}

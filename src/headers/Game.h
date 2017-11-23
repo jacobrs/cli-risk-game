@@ -20,8 +20,8 @@ private:
 public:
   Game(GameMap* map, vector<Player*>);
   ~Game();
-  void startGame();
-  bool isWon();
+  string startGame();
+  string isWon();
   void observeGame();
   GameSubject* stateChanges;
   vector<Player*> players;

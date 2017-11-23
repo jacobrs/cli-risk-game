@@ -140,6 +140,7 @@ int main(int args, char** argv){
   Tournament* tour = new Tournament(numOfMaps, numOfPlayers, numOfGames, numOfTurns, selectedMaps, playerTypes);
 
   tour -> startTournament();
-
+  delete tour;
+  tour = NULL;
   return 0;
 }

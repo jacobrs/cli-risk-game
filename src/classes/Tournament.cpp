@@ -46,21 +46,29 @@ Tournament::Tournament(int nbOfMaps, int nbOfStrats, int nbOfGames, int nbOfTurn
 }
 
 void Tournament::startTournament(){
+  vector<string> tournamentStats;
   for(int game = 0; game < nbGames; game++){
+    string statString = "Game " + to_string(game) + ": \n";
     GameStart* newGame = new GameStart(maps[game], nbStrats);
+    statString += "Map " + to_string(game) + ": " + maps[game] + "\n";
     string playerType = "";
     for(int i = 0; i < nbStrats; i++){
+      statString += "Player " + to_string(i) + ": ";
       if(strats[i] == "a"){
         newGame->players.at(i)->setStrategy(new AggressivePlayer());
+        statString += "Aggressive\n";
       }
       else if (strats[i] == "b"){
         newGame->players.at(i)->setStrategy(new BenevolentPlayer());
+        statString += "Benevolent\n";
       }
       else if(strats[i] == "c"){
         newGame->players.at(i)->setStrategy(new CheaterPlayer());
+        statString += "Cheater\n";
       }
       else if(strats[i] == "r"){
         newGame->players.at(i)->setStrategy(new RandomPlayer());
+        statString += "Random\n";
       }
       else{
         cout << "ERROR IN TOURNAMENT PLAYER STRATS" << endl;
@@ -68,8 +76,14 @@ void Tournament::startTournament(){
     }
     StartupPhase* startGame = new StartupPhase(newGame->gameMap, newGame->players);
     Game *match = new Game(newGame->gameMap, newGame->players);
-    match->startGame();
+    statString += "The winner of the game is: " + match->startGame();
+
+    tournamentStats.push_back(statString);
     delete match;
     delete startGame;
+    delete newGame;
+  }
+  for(int i = 0; i < nbGames; i++){
+    cout<<tournamentStats[nbGames]<<endl;
   }
 }
