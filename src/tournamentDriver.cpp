@@ -9,6 +9,7 @@
 #include "headers/StartupPhase.h"
 #include "headers/Game.h"
 #include "headers/GameView.h"
+#include "headers/Tournament.h"
 
 #include <iostream>
 #include <string>
@@ -45,10 +46,9 @@ int main(int args, char** argv){
   string playerTypes[numOfPlayers];
   for(int i = 0; i < numOfPlayers; i++){
     cout << endl << "Enter strategy number " << i+1 << endl;
-    cout<<"Enter H for Human, A for Aggressive, B for Benevolent, C for Cheater and R for random"<< endl;
+    cout<<"Enter A for Aggressive, B for Benevolent, C for Cheater and R for random"<< endl;
     cin>> playerTypes[i];
-    if(playerTypes[i] == "H" || playerTypes[i] == "h"){playerTypes[i] = "h";}
-    else if(playerTypes[i] == "A" || playerTypes[i] == "a"){playerTypes[i] = "a";}
+    if(playerTypes[i] == "A" || playerTypes[i] == "a"){playerTypes[i] = "a";}
     else if (playerTypes[i] == "B" || playerTypes[i] == "b"){playerTypes[i] = "b";}
     else if(playerTypes[i] == "C" || playerTypes[i] == "c"){playerTypes[i] = "c";}
     else if(playerTypes[i] == "R" || playerTypes[i] == "r"){playerTypes[i] = "r";}
@@ -63,7 +63,6 @@ int main(int args, char** argv){
       }
     }
   }
-
   // Validates the number of maps
   while (promptNbMaps){
       cout << endl << "Number of maps to be played between 1-5: " << endl;
@@ -134,5 +133,10 @@ int main(int args, char** argv){
   for(int i = 0; i < numOfMaps; i++){
     cout << "Map nb " << i+1 << " is " << selectedMaps[i] << endl;
   }
+
+  Tournament* tour = new Tournament(numOfMaps, numOfPlayers, numOfGames, numOfTurns, selectedMaps, playerTypes);
+
+  tour -> startTournament();
+
   return 0;
 }

@@ -12,12 +12,15 @@ using namespace std;
 class Tournament {
 
 public:
-  GameMap **gameMaps;
-  vector<Player*> players;
-  int gamesPlayed;
-  int maxTurns;
+  int nbMaps;
+  int nbStrats;
+  int nbGames;
+  int nbTurns;
+  string* maps;
+  string* strats;
 
   Tournament();
+  Tournament(int, int, int, int, string*, string*);
   ~Tournament();
   void startTournament();
 };
