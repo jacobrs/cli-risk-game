@@ -43,25 +43,26 @@ int main(int args, char** argv){
       }
   }
   //select player strategies
-  string playerTypes[numOfPlayers];
+  vector<string> playerTypes;
   for(int i = 0; i < numOfPlayers; i++){
     cout << endl << "Enter strategy number " << i+1 << endl;
     cout<<"Enter A for Aggressive, B for Benevolent, C for Cheater and R for random"<< endl;
-    cin>> playerTypes[i];
-    if(playerTypes[i] == "A" || playerTypes[i] == "a"){playerTypes[i] = "a";}
-    else if (playerTypes[i] == "B" || playerTypes[i] == "b"){playerTypes[i] = "b";}
-    else if(playerTypes[i] == "C" || playerTypes[i] == "c"){playerTypes[i] = "c";}
-    else if(playerTypes[i] == "R" || playerTypes[i] == "r"){playerTypes[i] = "r";}
+    string input = "";
+    cin>> input;
+    if(input == "A" || input == "a"){playerTypes.push_back("a");}
+    else if (input == "B" || input == "b"){playerTypes.push_back("b");}
+    else if(input == "C" || input == "c"){playerTypes.push_back("c");}
+    else if(input == "R" || input == "r"){playerTypes.push_back("r");}
     else{
       cout << "You did not enter a correct value for a player type. By default it will be a benevolent player"<< endl;
-      playerTypes[i] = "b";
+      playerTypes.push_back("b");
     }
-    for(int j = 0; j < i; j++){
+    /*for(int j = 0; j < i; j++){
       if(playerTypes[j].compare(playerTypes[i]) == 0){
         cout << "This strategy is already entered, choose another one." << endl;
         i--;
       }
-    }
+    }*/
   }
   // Validates the number of maps
   while (promptNbMaps){
@@ -76,14 +77,16 @@ int main(int args, char** argv){
       }
   }
   //validates the map chosen
-  string selectedMaps[numOfMaps];
+  vector<string> selectedMaps;
   for(int mapNb = 0; mapNb < numOfMaps; mapNb++){
     bool promptMap = true;
     while (promptMap){
       cout << "Select Map File number " << mapNb+1 << ": Atlantis, Dice, Khoras, Swamp, or World" << endl;
-      cin >> selectedMaps[mapNb];
+      string input = "";
+      cin >> input;
 
-      if (selectedMaps[mapNb].compare("Khoras") == 0 || selectedMaps[mapNb].compare("World") == 0 || selectedMaps[mapNb].compare("Dice") == 0 || selectedMaps[mapNb].compare("Swamp") == 0 || selectedMaps[mapNb].compare("Atlantis") == 0){
+      if (input =="Khoras"|| input == "World" || input == "Dice" || input == "Swamp" || input == "Atlantis"){
+        selectedMaps.push_back(input);
         promptMap =false;
       }
       else{
@@ -91,7 +94,7 @@ int main(int args, char** argv){
       }
     }
     for(int j = 0; j < mapNb; j++){
-      if(selectedMaps[j].compare(selectedMaps[mapNb]) == 0){
+      if(selectedMaps[j] == selectedMaps[mapNb]){
         cout << "This map is already entered, choose another one." << endl;
         mapNb--;
       }

@@ -100,4 +100,9 @@ void StartupPhase::createPlayer(int nbPlayers){
                 this -> listPlayers.push_back(newPlayer);
         }
 }
-
+StartupPhase::~StartupPhase(){
+    for(int i = 0; i < listPlayers.size(); i++){
+        delete listPlayers[i];
+        listPlayers[i] = NULL;
+    }
+}

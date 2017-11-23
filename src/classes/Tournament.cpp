@@ -17,10 +17,10 @@
 using namespace std;
 
 Tournament::~Tournament(){
-  delete maps;
-  delete strats;
-  maps = NULL;
-  strats = NULL;
+  //delete maps;
+  //delete strats;
+  //maps = NULL;
+  //strats = NULL;
 }
 
 // default tournament
@@ -36,7 +36,7 @@ Tournament::Tournament(){
 }
 
 // custom tournament
-Tournament::Tournament(int nbOfMaps, int nbOfStrats, int nbOfGames, int nbOfTurns, const string* newMaps, const string* newStrats){
+Tournament::Tournament(int nbOfMaps, int nbOfStrats, int nbOfGames, int nbOfTurns, vector<string> newMaps, vector<string> newStrats){
   nbMaps = nbOfMaps;
   nbStrats = nbOfStrats;
   nbGames = nbOfGames;
@@ -69,5 +69,7 @@ void Tournament::startTournament(){
     StartupPhase* startGame = new StartupPhase(newGame->gameMap, newGame->players);
     Game *match = new Game(newGame->gameMap, newGame->players);
     match->startGame();
+    delete match;
+    delete startGame;
   }
 }

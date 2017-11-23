@@ -16,11 +16,11 @@ public:
   int nbStrats;
   int nbGames;
   int nbTurns;
-  string* maps;
-  string* strats;
+  vector<string> maps;
+  vector<string> strats;
 
   Tournament();
-  Tournament(int, int, int, int, const string*, const string*);
+  Tournament(int, int, int, int, vector<string>, vector<string>);
   ~Tournament();
   void startTournament();
 };
