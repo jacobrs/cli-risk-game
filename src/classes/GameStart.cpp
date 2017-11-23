@@ -18,26 +18,44 @@ GameStart::GameStart(){
 
 
 GameStart::GameStart(string mapChosen, int nbPlayers){
-   
+
     //creating the players
     numOfPlayers = nbPlayers;
     createPlayers(nbPlayers);
     MapLoader* playMap;
-    
+
     //Getting the map chosen
-    if(mapChosen.compare("Khoras") == 0){
+    if(mapChosen.compare("Atlantis") == 0){
+        playMap = new MapLoader("map/Atlantis.map");
+        playMap->importMap();
+        gameMap = playMap->exportToGameMap();
+        printf("Checking integrity of game map\n\n");
+        gameMap->isValidMap();
+    } else if (mapChosen.compare("Dice") == 0){
+        playMap = new MapLoader("map/Dice.map");
+        playMap->importMap();
+        gameMap = playMap->exportToGameMap();
+        printf("Checking integrity of game map\n\n");
+        gameMap->isValidMap();
+    }else if (mapChosen.compare("Khoras") == 0){
         playMap = new MapLoader("map/Khoras.map");
         playMap->importMap();
         gameMap = playMap->exportToGameMap();
         printf("Checking integrity of game map\n\n");
         gameMap->isValidMap();
-    } else if (mapChosen.compare("World") == 0){
+    } else if (mapChosen.compare("Swamp") == 0){
+        playMap = new MapLoader("map/Swamp.map");
+        playMap->importMap();
+        gameMap = playMap->exportToGameMap();
+        printf("Checking integrity of game map\n\n");
+        gameMap->isValidMap();
+    }else if (mapChosen.compare("World") == 0){
         playMap = new MapLoader("map/World.map");
         playMap->importMap();
         gameMap = playMap->exportToGameMap();
         printf("Checking integrity of game map\n\n");
         gameMap->isValidMap();
-    } else{
+    }else{
         cout << "Error" << endl;
     }
 
@@ -66,7 +84,7 @@ void GameStart::createPlayers(int nbPlayers){
             cin >> playerName;
             cout << "Player colour: ";
             cin >> playerColour;
-       
+
         Player *newPlayer = new Player(i, playerName, playerColour);
        this -> players.push_back(newPlayer);
     }
