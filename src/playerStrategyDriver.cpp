@@ -4,7 +4,9 @@
 #include "headers/GameMap.h"
 #include "headers/HumanPlayer.h"
 #include "headers/AggressivePlayer.h"
+#include "headers/RandomPlayer.h"
 #include "headers/BenevolentPlayer.h"
+#include "headers/CheaterPlayer.h"
 #include "headers/GameStart.h"
 #include "headers/StartupPhase.h"
 #include "headers/Game.h"
@@ -52,7 +54,7 @@ int main(int args, char** argv){
   string playerType = "";
   for(int i = 0; i < newGame->players.size(); i++){
     cout<<"What type of player is " << newGame->players.at(i)->name << "?"<< endl;
-    cout<<"Enter H for Human, A for Aggressive and B for benevolent"<< endl;
+    cout<<"Enter H for Human, A for Aggressive, B for Benevolent, C for Cheater and R for random"<< endl;
     cin>> playerType;
     if(playerType == "H" || playerType == "h"){
       newGame->players.at(i)->setStrategy(new HumanPlayer());
@@ -62,6 +64,12 @@ int main(int args, char** argv){
     }
     else if (playerType == "B" || playerType == "b"){
       newGame->players.at(i)->setStrategy(new BenevolentPlayer());
+    }
+    else if(playerType == "C" || playerType == "c"){
+      newGame->players.at(i)->setStrategy(new CheaterPlayer());
+    }
+    else if(playerType == "R" || playerType == "r"){
+      newGame->players.at(i)->setStrategy(new RandomPlayer());
     }
     else{
       cout<< "You did not enter a correct value for a player type. By default it will be a benevolent player"<< endl;
