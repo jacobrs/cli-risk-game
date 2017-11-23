@@ -11,6 +11,7 @@
 #include "headers/GameView.h"
 #include "headers/CountryObserverDecorator.h"
 #include "headers/HandObserverDecorator.h"
+#include "headers/ContinentObserverDecorator.h"
 
 #include <iostream>
 #include <string>
@@ -30,6 +31,8 @@ int main(){
   bool handDecorator = false;
   bool continentDecorator = false;
      
+  bool lockDecorators = false;
+
   // Validates the number of players
   while (promptPlayers){
     cout << "Number of Players between 2-6: " << endl;
@@ -65,26 +68,68 @@ int main(){
 
   StartupPhase* startGame = new StartupPhase(newGame->gameMap, newGame->players);
   Game *game = new Game(newGame->gameMap, newGame->players);
+
+  CountryObserverDecorator* countryObv = new CountryObserverDecorator(game->stateObserver);
+  HandObserverDecorator* handObv = new HandObserverDecorator(game->stateObserver);
+  ContinentObserverDecorator* continentObv = new ContinentObserverDecorator(game->stateObserver);
   
-  for(int j = 0; j < 10; j++){
+  while(!game->isWon()){
     for(int i = 0; i<game->players.size(); i++){
       char input;
       
-      if(!dominationDecorator){
-        cout << "Enable domination decorator? [Yy]" << endl;
-        cin >> input;
-        if(toupper(input) == 'Y'){
-          game->stateChanges->Attach(new CountryObserverDecorator(game->stateObserver));
-          dominationDecorator = true;
+      if(!lockDecorators){
+        if(!dominationDecorator){
+          cout << "Enable domination decorator? [Yy]" << endl;
+          cin >> input;
+          if(toupper(input) == 'Y'){
+            game->stateChanges->Attach(countryObv);
+            dominationDecorator = true;
+          }
+        }else{
+          cout << "Disable domination decorator? [Yy]" << endl;
+          cin >> input;
+          if(toupper(input) == 'Y'){
+            game->stateChanges->Detach(countryObv);
+            dominationDecorator = false;
+          }
         }
-      }
 
-      if(!handDecorator){
-        cout << "Enable hand decorator? [Yy]" << endl;
+        if(!handDecorator){
+          cout << "Enable hand decorator? [Yy]" << endl;
+          cin >> input;
+          if(toupper(input) == 'Y'){
+            game->stateChanges->Attach(handObv);
+            handDecorator = true;
+          }
+        }else{
+          cout << "Disable hand decorator? [Yy]" << endl;
+          cin >> input;
+          if(toupper(input) == 'Y'){
+            game->stateChanges->Detach(handObv);
+            handDecorator = false;
+          }
+        }
+
+        if(!continentDecorator){
+          cout << "Enable continent decorator? [Yy]" << endl;
+          cin >> input;
+          if(toupper(input) == 'Y'){
+            game->stateChanges->Attach(continentObv);
+            continentDecorator = true;
+          }
+        }else{
+          cout << "Disable continent decorator? [Yy]" << endl;
+          cin >> input;
+          if(toupper(input) == 'Y'){
+            game->stateChanges->Detach(continentObv);
+            continentDecorator = false;
+          }
+        }
+
+        cout << "Lock decorator configuration? [Yy]" << endl;
         cin >> input;
         if(toupper(input) == 'Y'){
-          game->stateChanges->Attach(new HandObserverDecorator(game->stateObserver));
-          handDecorator = true;
+          lockDecorators = true;
         }
       }
       
@@ -94,8 +139,11 @@ int main(){
       game -> players.at(i)->hand->addCard(newGame->playDeck->draw());
       game->stateChanges->Notify(map, game->players);
 
+      if(game->isWon())
+        break;
     }
   }
+
   return 0;
 }
 

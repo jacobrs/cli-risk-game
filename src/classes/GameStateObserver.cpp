@@ -41,7 +41,7 @@ void GameStateObserver::updateState(GameMap* map, vector<Player*> players){
     printf("%s|%s and %d armies\n", CYAN.c_str(), DEFAULT.c_str(), playerArmies.at(player->name.c_str()));
     printf("%s|                                       %s\n", CYAN.c_str(), DEFAULT.c_str());
   }
-  printf("%s========================================%s\n\n", CYAN.c_str(), DEFAULT.c_str());
+  printf("%s========================================%s\n", CYAN.c_str(), DEFAULT.c_str());
 
 }
 
