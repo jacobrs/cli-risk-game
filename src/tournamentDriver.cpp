@@ -19,7 +19,6 @@ int main(int args, char** argv){
 
   srand (time(NULL));
 
-  string selectedMap;
   int numOfPlayers = 0;
   bool promptPlayers = true;
   int numOfMaps = 0;
@@ -32,7 +31,7 @@ int main(int args, char** argv){
 
   // Validates the number of player strategies
   while (promptPlayers){
-      cout << "Number of Player strategies between 2-4: " << endl;
+      cout << endl << "Number of Player strategies between 2-4: " << endl;
       cin >> numOfPlayers;
 
       if (numOfPlayers < 2 || numOfPlayers > 4){
@@ -43,31 +42,31 @@ int main(int args, char** argv){
       }
   }
   //select player strategies
-  string[numOfPlayers] playerTypes;;
-  while(numOfPlayers-- > 0){
-    string playerType = "";
-    for(int i = 0; i < newGame->players.size(); i++){
-      cout<<"What type of player is " << newGame->players.at(i)->name << "?"<< endl;
-      cout<<"Enter H for Human, A for Aggressive and B for benevolent"<< endl;
-      cin>> playerType;
-      if(playerType == "H" || playerType == "h"){
-        newGame->players.at(i)->setStrategy(new HumanPlayer());
-      }
-      else if(playerType == "A" || playerType == "a"){
-        newGame->players.at(i)->setStrategy(new AggressivePlayer());
-      }
-      else if (playerType == "B" || playerType == "b"){
-        newGame->players.at(i)->setStrategy(new BenevolentPlayer());
-      }
-      else{
-        cout<< "You did not enter a correct value for a player type. By default it will be a benevolent player"<< endl;
-        newGame->players.at(i)->setStrategy(new BenevolentPlayer());
+  string playerTypes[numOfPlayers];
+  for(int i = 0; i < numOfPlayers; i++){
+    cout << endl << "Enter strategy number " << i+1 << endl;
+    cout<<"Enter H for Human, A for Aggressive, B for Benevolent, C for Cheater and R for random"<< endl;
+    cin>> playerTypes[i];
+    if(playerTypes[i] == "H" || playerTypes[i] == "h"){playerTypes[i] = "h";}
+    else if(playerTypes[i] == "A" || playerTypes[i] == "a"){playerTypes[i] = "a";}
+    else if (playerTypes[i] == "B" || playerTypes[i] == "b"){playerTypes[i] = "b";}
+    else if(playerTypes[i] == "C" || playerTypes[i] == "c"){playerTypes[i] = "c";}
+    else if(playerTypes[i] == "R" || playerTypes[i] == "r"){playerTypes[i] = "r";}
+    else{
+      cout << "You did not enter a correct value for a player type. By default it will be a benevolent player"<< endl;
+      playerTypes[i] = "b";
+    }
+    for(int j = 0; j < i; j++){
+      if(playerTypes[j].compare(playerTypes[i]) == 0){
+        cout << "This strategy is already entered, choose another one." << endl;
+        i--;
       }
     }
   }
+
   // Validates the number of maps
   while (promptNbMaps){
-      cout << "Number of maps to be played between 1-5: " << endl;
+      cout << endl << "Number of maps to be played between 1-5: " << endl;
       cin >> numOfMaps;
 
       if (numOfMaps < 1 || numOfMaps > 5){
@@ -78,24 +77,30 @@ int main(int args, char** argv){
       }
   }
   //validates the map chosen
-  while(numOfMaps-- > 0){
+  string selectedMaps[numOfMaps];
+  for(int mapNb = 0; mapNb < numOfMaps; mapNb++){
     bool promptMap = true;
     while (promptMap){
-      printf("Map Nb.%d",numOfMaps);
-      cout << "Select Map File: Atlantis, Dice, Khoras, Swamp, or World" << endl;
-      cin >> selectedMap;
+      cout << "Select Map File number " << mapNb+1 << ": Atlantis, Dice, Khoras, Swamp, or World" << endl;
+      cin >> selectedMaps[mapNb];
 
-      if (selectedMap.compare("Khoras") == 0 || selectedMap.compare("World") == 0 || selectedMap.compare("Dice") == 0 || selectedMap.compare("Swamp") == 0 || selectedMap.compare("Atlantis") == 0){
+      if (selectedMaps[mapNb].compare("Khoras") == 0 || selectedMaps[mapNb].compare("World") == 0 || selectedMaps[mapNb].compare("Dice") == 0 || selectedMaps[mapNb].compare("Swamp") == 0 || selectedMaps[mapNb].compare("Atlantis") == 0){
         promptMap =false;
       }
       else{
         cout << "Please enter the correct filename" << endl;
       }
     }
+    for(int j = 0; j < mapNb; j++){
+      if(selectedMaps[j].compare(selectedMaps[mapNb]) == 0){
+        cout << "This map is already entered, choose another one." << endl;
+        mapNb--;
+      }
+    }
   }
   // Validates the number of games
   while (promptNbGames){
-      cout << "Number of games to be played between 1-5: " << endl;
+      cout << endl << "Number of games to be played between 1-5: " << endl;
       cin >> numOfGames;
 
       if (numOfGames < 1 || numOfGames > 5){
@@ -107,7 +112,7 @@ int main(int args, char** argv){
   }
   // Validates the number of turns
   while (promptNbTurns){
-      cout << "Number of turns in a game between 10-50: " << endl;
+      cout << endl << "Number of turns in a game between 10-50: " << endl;
       cin >> numOfTurns;
 
       if (numOfTurns < 10 || numOfTurns > 50){
@@ -116,6 +121,18 @@ int main(int args, char** argv){
       else{
           promptNbTurns =false;
       }
+  }
+
+  cout << endl << "===== TOURNAMENT SETTINGS ======" << endl;
+  cout << "Nb of Strategies: " << numOfPlayers << endl;
+  cout << "Nb of Maps: " << numOfMaps << endl;
+  cout << "Nb of Games: " << numOfGames << endl;
+  cout << "Max Nb of Turns: " << numOfTurns << endl;
+  for(int i = 0; i < numOfPlayers; i++){
+    cout << "Strategy nb " << i+1 << " is " << playerTypes[i] << endl;
+  }
+  for(int i = 0; i < numOfMaps; i++){
+    cout << "Map nb " << i+1 << " is " << selectedMaps[i] << endl;
   }
   return 0;
 }
