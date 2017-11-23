@@ -20,7 +20,7 @@ public:
   string* strats;
 
   Tournament();
-  Tournament(int, int, int, int, string*, string*);
+  Tournament(int, int, int, int, const string*, const string*);
   ~Tournament();
   void startTournament();
 };

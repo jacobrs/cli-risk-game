@@ -36,7 +36,7 @@ Tournament::Tournament(){
 }
 
 // custom tournament
-Tournament::Tournament(int nbOfMaps, int nbOfStrats, int nbOfGames, int nbOfTurns, string* newMaps, string* newStrats){
+Tournament::Tournament(int nbOfMaps, int nbOfStrats, int nbOfGames, int nbOfTurns, const string* newMaps, const string* newStrats){
   nbMaps = nbOfMaps;
   nbStrats = nbOfStrats;
   nbGames = nbOfGames;
