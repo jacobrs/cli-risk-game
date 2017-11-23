@@ -13,7 +13,7 @@ class GameStart {
 
 public:
     vector<Player*> players;
-    Deck playDeck;
+    Deck* playDeck;
     int numCountries;
     bool enterPlayer;
     string playerName;

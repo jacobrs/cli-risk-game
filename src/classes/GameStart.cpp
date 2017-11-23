@@ -44,7 +44,7 @@ GameStart::GameStart(string mapChosen, int nbPlayers){
     deckSize = playMap -> mapCountries.size();
 
     //creates the Deck (num of cards has to be equal to num of Countries)
-    Deck* playDeck = new Deck(deckSize);
+    playDeck = new Deck(deckSize);
 
     //Check the number of cards and countries
     cout << "\nNumber of Countries: " << playMap -> mapCountries.size() << endl;
