@@ -57,12 +57,13 @@ int main(int args, char** argv){
       cout << "You did not enter a correct value for a player type. By default it will be a benevolent player"<< endl;
       playerTypes.push_back("b");
     }
-    /*for(int j = 0; j < i; j++){
-      if(playerTypes[j].compare(playerTypes[i]) == 0){
+    for(int j = 0; j < i; j++){
+      if(playerTypes.at(j).compare(playerTypes.at(i)) == 0){
+        playerTypes.erase(playerTypes.end());
         cout << "This strategy is already entered, choose another one." << endl;
         i--;
       }
-    }*/
+    }
   }
   // Validates the number of maps
   while (promptNbMaps){
@@ -94,7 +95,8 @@ int main(int args, char** argv){
       }
     }
     for(int j = 0; j < mapNb; j++){
-      if(selectedMaps[j] == selectedMaps[mapNb]){
+      if(selectedMaps.at(j).compare(selectedMaps.at(mapNb)) == 0){
+        selectedMaps.erase(selectedMaps.end());
         cout << "This map is already entered, choose another one." << endl;
         mapNb--;
       }

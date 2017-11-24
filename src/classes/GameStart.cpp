@@ -78,15 +78,12 @@ void GameStart::createPlayers(int nbPlayers){
     //creates the different players
     for (int i = 0; i < nbPlayers; i++)
     {
-            string playerName = "";
-            string playerColour = "";
-            cout << "Player name: ";
-            cin >> playerName;
-            cout << "Player colour: ";
-            cin >> playerColour;
+      string playerName = "Player ";
+      playerName += std::to_string(i);
+      string playerColour = "white";
 
-        Player *newPlayer = new Player(i, playerName, playerColour);
-       this -> players.push_back(newPlayer);
+      Player *newPlayer = new Player(i, playerName, playerColour);
+      this -> players.push_back(newPlayer);
     }
 }
 GameStart::~GameStart(){

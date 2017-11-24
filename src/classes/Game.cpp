@@ -16,16 +16,18 @@ Game::Game(GameMap* map, vector<Player*> initPlayers){
 }
 
 Game::~Game(){
-  if(gameMap != NULL)
-    delete gameMap;
+  delete gameMap;
   gameMap = NULL;
+    printf("d stateChanges");
   delete stateChanges;
   stateChanges = NULL;
+  printf("d stateObserver");
   delete stateObserver;
   stateObserver = NULL;
   for(int i = 0; i < players.size(); i++){
-    delete players[i];
-    players[i] = NULL;
+    printf("d players.at(%d)", i);
+    delete players.at(i);
+    players.at(i) = NULL;
   }
 }
 
@@ -60,15 +62,17 @@ string Game::startGame(){
 
     stateChanges->Notify(gameMap, players);
     players[currentPlayer]->executeStrategy(gameMap);
-    
+
     currentPlayer = (currentPlayer + 1) % players.size();
 
     if(this->isWon() != "None")
       break;
   }
-
+  printf("notify win");
   stateChanges->Notify(gameMap, players);
   printf("Game was won!\n");
+  printf("first won\n");
+  printf("after first won");
   return this->isWon();
 
 }
@@ -77,7 +81,7 @@ void Game::observeGame(){
 
   cout << "in observe" << endl;
   while(true){
- 
+
     for (int i = 0; i < players.size() ; i++){
 
       cout << "Iteration " << i <<endl;
@@ -115,6 +119,7 @@ void Game::observeGame(){
       break;
   }
   stateChanges->Notify(gameMap, players);
+  printf("second won\n");
   printf("Game was won!\n");
-  
+
 }

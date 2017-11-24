@@ -41,32 +41,37 @@ Tournament::Tournament(int nbOfMaps, int nbOfStrats, int nbOfGames, int nbOfTurn
   nbStrats = nbOfStrats;
   nbGames = nbOfGames;
   nbTurns = nbOfTurns;
-  maps = newMaps;
-  strats = newStrats;
+  for(int i = 0; i < nbOfMaps; i++){
+    maps.push_back(newMaps.at(i));
+  }
+  for(int i = 0; i < nbOfStrats; i++){
+    strats.push_back(newStrats.at(i));
+  }
 }
 
 void Tournament::startTournament(){
   vector<string> tournamentStats;
   for(int game = 0; game < nbGames; game++){
+    cout << "game loop" <<endl;
     string statString = "Game " + to_string(game) + ": \n";
-    GameStart* newGame = new GameStart(maps[game], nbStrats);
-    statString += "Map " + to_string(game) + ": " + maps[game] + "\n";
+    GameStart* newGame = new GameStart(maps.at(game), nbStrats);
+    statString += "Map " + to_string(game) + ": " + maps.at(game) + "\n";
     string playerType = "";
     for(int i = 0; i < nbStrats; i++){
       statString += "Player " + to_string(i) + ": ";
-      if(strats[i] == "a"){
+      if(strats.at(i) == "a"){
         newGame->players.at(i)->setStrategy(new AggressivePlayer());
         statString += "Aggressive\n";
       }
-      else if (strats[i] == "b"){
+      else if (strats.at(i) == "b"){
         newGame->players.at(i)->setStrategy(new BenevolentPlayer());
         statString += "Benevolent\n";
       }
-      else if(strats[i] == "c"){
+      else if(strats.at(i) == "c"){
         newGame->players.at(i)->setStrategy(new CheaterPlayer());
         statString += "Cheater\n";
       }
-      else if(strats[i] == "r"){
+      else if(strats.at(i) == "r"){
         newGame->players.at(i)->setStrategy(new RandomPlayer());
         statString += "Random\n";
       }
@@ -75,15 +80,20 @@ void Tournament::startTournament(){
       }
     }
     StartupPhase* startGame = new StartupPhase(newGame->gameMap, newGame->players);
+    cout << "post startupphase" << endl;
     Game *match = new Game(newGame->gameMap, newGame->players);
+    cout << "post game" << endl;
     statString += "The winner of the game is: " + match->startGame();
-
+    cout << "post startGame()";
     tournamentStats.push_back(statString);
     delete match;
     delete startGame;
     delete newGame;
+    match = NULL;
+    startGame = NULL;
+    newGame = NULL;
   }
   for(int i = 0; i < nbGames; i++){
-    cout<<tournamentStats[nbGames]<<endl;
+    cout<<tournamentStats.at(nbGames)<<endl;
   }
 }
