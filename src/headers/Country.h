@@ -21,6 +21,7 @@ public:
   bool hasEnnemies();
   void listEnnemies();
   string getWeakestEnemy();
+  string getRandonEnemy();
   void addNeighbour(Country*);
   bool isNeighbour(Country*);
 };

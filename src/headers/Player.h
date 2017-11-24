@@ -40,7 +40,8 @@ public:
   string getStrongetAttackCountry(GameMap*);
   string getStrongetCountry(GameMap*);
   string getWeaketCountry(GameMap*);
-
+  string getRandomAttackCountry(GameMap*);
+  string getRandomCountry(GameMap*);
   ~Player();
   
 };

@@ -47,6 +47,16 @@ string Country::getWeakestEnemy(){
   }
   return weakestCountry;
 }
+string Country::getRandonEnemy(){
+  Country* coun = neighbours[rand()% numberOfNeighbours];
+  while(coun->owner == NULL ||
+        owner == NULL ||
+        coun->owner == owner){
+          //condition to be an enemy is not met, then randomly choose another one
+          coun = neighbours[rand()% numberOfNeighbours];
+        }
+  return coun->name;
+}
 
 bool Country::isNeighbour(Country* c){
   for(int i = 0; i < numberOfNeighbours; i++){

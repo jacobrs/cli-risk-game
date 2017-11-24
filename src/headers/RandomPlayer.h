@@ -1,15 +1,15 @@
-#ifndef AGGRESSIVEPLAYER_H
-#define AGGRESSIVEPLAYER_H
+#ifndef RANDOMPLAYER_H
+#define RANDOMPLAYER_H
 
 #include "Strategy.h"
 #include "Player.h"
 #include "GameMap.h"
 using namespace std;
 
-class AggressivePlayer: public Strategy{
+class RandomPlayer: public Strategy{
 public:
     void execute(Player*, GameMap*);
-    ~AggressivePlayer();
+    ~RandomPlayer();
 };
 
 #endif
