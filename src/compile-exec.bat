@@ -1,4 +1,4 @@
-g++ -std=c++11 -fpermissive attackDriver.cpp classes/*.cpp
+g++ -std=c++11 -fpermissive tournamentDriver.cpp classes/*.cpp
 a.exe
 del a.exe
 pause

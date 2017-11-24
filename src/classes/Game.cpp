@@ -16,34 +16,39 @@ Game::Game(GameMap* map, vector<Player*> initPlayers){
 }
 
 Game::~Game(){
-  if(gameMap != NULL)
-    delete gameMap;
-
+  delete gameMap;
+  gameMap = NULL;
   delete stateChanges;
+  stateChanges = NULL;
   delete stateObserver;
+  stateObserver = NULL;
+  for(int i = 0; i < players.size(); i++){
+    delete players.at(i);
+    players.at(i) = NULL;
+  }
 }
 
-bool Game::isWon(){
+string Game::isWon(){
   string winnerName = "None";
   if(gameMap->continents[0]->countries[0]->owner != NULL){
     winnerName = gameMap->continents[0]->countries[0]->owner->name;
   }
   else{
-    return false;
+    return "None";
   }
 
   for(int i = 0; i < gameMap->numberOfContinents; i++){
     for(int j = 0; j < gameMap->continents[i]->numberOfCountries; j++){
       if(gameMap->continents[i]->countries[j]->owner->name != winnerName){
-        return false;
+        return "None";
       }
     }
   }
 
-  return true;
+  return winnerName;
 }
 
-void Game::startGame(){
+string Game::startGame(){
 
   int i = 0;
   int currentPlayer = 0;
@@ -54,15 +59,15 @@ void Game::startGame(){
 
     stateChanges->Notify(gameMap, players);
     players[currentPlayer]->executeStrategy(gameMap);
-    
+
     currentPlayer = (currentPlayer + 1) % players.size();
 
-    if(this->isWon() == true)
+    if(this->isWon() != "None")
       break;
   }
-
   stateChanges->Notify(gameMap, players);
-  printf("Game was won!\n");
+  printf("Game was won!\n\n\n\n");
+  return this->isWon();
 
 }
 
@@ -70,7 +75,7 @@ void Game::observeGame(){
 
   cout << "in observe" << endl;
   while(true){
- 
+
     for (int i = 0; i < players.size() ; i++){
 
       cout << "Iteration " << i <<endl;
@@ -104,10 +109,11 @@ void Game::observeGame(){
         }
       }
     }
-    if(this->isWon() == true)
+    if(this->isWon() != "None")
       break;
   }
   stateChanges->Notify(gameMap, players);
+  printf("second won\n");
   printf("Game was won!\n");
-  
+
 }
