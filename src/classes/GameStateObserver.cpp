@@ -6,21 +6,6 @@
 
 using namespace std;
 
-string generateBar(double percent){
-  const int ratio = 36;
-  string bar = "";
-  string GREEN = "\x1b[32m";
-  string DEFAULT = "\x1b[0m";
-
-  for(int i = 0; i < ratio * percent ; i++ ){
-    bar += "+";
-  }
-  for(int j = ratio; j > (ratio * percent) + 1; j--){
-    bar += " ";
-  }
-  return GREEN + bar + DEFAULT;
-}
-
 void GameStateObserver::updateState(GameMap* map, vector<Player*> players){
 
   const int LINE_LENGTH = 40;
@@ -48,16 +33,15 @@ void GameStateObserver::updateState(GameMap* map, vector<Player*> players){
     }
   }
 
-  printf("\n\n%s============ GAME STATE ================%s\n", CYAN.c_str(), DEFAULT.c_str());
+  printf("\n\n%s============ BASIC STATE ================%s\n", CYAN.c_str(), DEFAULT.c_str());
   printf("%s|                                       %s\n", CYAN.c_str(), DEFAULT.c_str());
   for (auto &player : players)
   {
     printf("%s|%s %s has %d countries\n", CYAN.c_str(), DEFAULT.c_str(), player->name.c_str(), playerCountries.at(player->name.c_str()));
     printf("%s|%s and %d armies\n", CYAN.c_str(), DEFAULT.c_str(), playerArmies.at(player->name.c_str()));
-    printf("%s|%s %s \n", CYAN.c_str(), DEFAULT.c_str(), generateBar(playerCountries.at(player->name.c_str()) / totalCountries).c_str());
     printf("%s|                                       %s\n", CYAN.c_str(), DEFAULT.c_str());
   }
-  printf("%s========================================%s\n\n", CYAN.c_str(), DEFAULT.c_str());
+  printf("%s========================================%s\n", CYAN.c_str(), DEFAULT.c_str());
 
 }
 

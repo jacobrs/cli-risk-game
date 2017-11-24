@@ -1,5 +1,8 @@
 #include "../headers/GameSubject.h"
 #include "../headers/GameStateObserver.h"
+#include "../headers/HandObserverDecorator.h"
+#include "../headers/CountryObserverDecorator.h"
+#include "../headers/ContinentObserverDecorator.h"
 
 GameSubject::GameSubject(){
     _observers = new list<GameStateObserver*>;
@@ -20,6 +23,14 @@ void GameSubject::Detach(GameStateObserver* o){
 void GameSubject::Notify(GameMap* map, vector<Player*> players){
     list<GameStateObserver*>::iterator i = _observers->begin();
     for(; i != _observers->end(); ++i){
-        (*i)->updateState(map, players);
+        if(dynamic_cast<CountryObserverDecorator*>(*i) != nullptr){
+            (dynamic_cast<CountryObserverDecorator*>(*i))->updateState(map, players);
+        }else if(dynamic_cast<HandObserverDecorator*>(*i) != nullptr){
+            (dynamic_cast<HandObserverDecorator*>(*i))->updateState(map, players);
+        }else if(dynamic_cast<ContinentObserverDecorator*>(*i) != nullptr){
+            (dynamic_cast<ContinentObserverDecorator*>(*i))->updateState(map, players);
+        }else{
+            (*i)->updateState(map, players);
+        }
     }
 }

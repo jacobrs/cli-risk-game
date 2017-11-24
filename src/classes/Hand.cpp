@@ -1,4 +1,5 @@
 #include "../headers/Hand.h"
+#include <string>
 
 Hand::Hand(){
     handSize = 0;
@@ -45,8 +46,11 @@ void Hand::addCard(Card newCardHand){
 
 void Hand::printHand(){
 
-    cout << "\nHand Infantry: " << inHandInf.size() << endl;
-    cout << "\nHand Artillery: " << inHandArt.size()<< endl;
-    cout << "\nHand Cavalry: " << inHandCav.size() << endl;
+    string CYAN = "\x1b[1;36m";
+    string DEFAULT = "\x1b[0m";
+
+    printf("%s| %sHand Infantry: %lu\n", CYAN.c_str(), DEFAULT.c_str(), inHandInf.size());
+    printf("%s| %sHand Artillery: %lu\n", CYAN.c_str(), DEFAULT.c_str(), inHandArt.size());
+    printf("%s| %sHand Cavalry: %lu\n\n", CYAN.c_str(), DEFAULT.c_str(), inHandCav.size());
   
 }
