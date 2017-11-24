@@ -18,14 +18,11 @@ Game::Game(GameMap* map, vector<Player*> initPlayers){
 Game::~Game(){
   delete gameMap;
   gameMap = NULL;
-    printf("d stateChanges");
   delete stateChanges;
   stateChanges = NULL;
-  printf("d stateObserver");
   delete stateObserver;
   stateObserver = NULL;
   for(int i = 0; i < players.size(); i++){
-    printf("d players.at(%d)", i);
     delete players.at(i);
     players.at(i) = NULL;
   }
@@ -68,11 +65,11 @@ string Game::startGame(){
     if(this->isWon() != "None")
       break;
   }
-  printf("notify win");
+  printf("notify win\n");
   stateChanges->Notify(gameMap, players);
   printf("Game was won!\n");
   printf("first won\n");
-  printf("after first won");
+  printf("after first won\n");
   return this->isWon();
 
 }

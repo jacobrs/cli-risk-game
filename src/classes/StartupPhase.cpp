@@ -67,10 +67,10 @@ StartupPhase::StartupPhase(GameMap* map, vector<Player*> players){
                     if (map-> continents[i] -> countries[j]->owner->name == this->listPlayers[k]->name)
                     {
                         map-> continents[i] -> countries[j]->armies ++;
-                        
+
                         pieceCtr --;
                     }
-                        
+
                 }
             }
         }
@@ -87,7 +87,7 @@ void StartupPhase::shufflePlayers(){
 }
 
 void StartupPhase::createPlayer(int nbPlayers){
-        
+
         //creates the different players
         for (int i = 0; i < nbPlayers; i++)
         {
@@ -95,14 +95,18 @@ void StartupPhase::createPlayer(int nbPlayers){
                 string playerColour = "";
                 cout << "Player name: ";
                 cin >> playerName;
- 
+
                 Player* newPlayer = new Player(i, playerName, playerColour);
                 this -> listPlayers.push_back(newPlayer);
         }
 }
 StartupPhase::~StartupPhase(){
+    printf("deleting StartupPhase\n");
     for(int i = 0; i < listPlayers.size(); i++){
-        delete listPlayers[i];
-        listPlayers[i] = NULL;
+        printf("BEFORE delete listPlayers.at(%d)\n", i);
+        delete listPlayers.at(i);
+        printf("AFTER delete listPlayers.at(%d)\n", i);   
+        listPlayers.at(i) = NULL;
+        printf("AFTER NULL listPlayers.at(%d)\n", i);
     }
 }
