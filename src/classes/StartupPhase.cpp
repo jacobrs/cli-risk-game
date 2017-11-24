@@ -101,12 +101,8 @@ void StartupPhase::createPlayer(int nbPlayers){
         }
 }
 StartupPhase::~StartupPhase(){
-    printf("deleting StartupPhase\n");
     for(int i = 0; i < listPlayers.size(); i++){
-        printf("BEFORE delete listPlayers.at(%d)\n", i);
         delete listPlayers.at(i);
-        printf("AFTER delete listPlayers.at(%d)\n", i);   
         listPlayers.at(i) = NULL;
-        printf("AFTER NULL listPlayers.at(%d)\n", i);
     }
 }

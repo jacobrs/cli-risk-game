@@ -52,7 +52,6 @@ Tournament::Tournament(int nbOfMaps, int nbOfStrats, int nbOfGames, int nbOfTurn
 void Tournament::startTournament(){
   vector<string> tournamentStats;
   for(int game = 0; game < nbGames; game++){
-    printf("nbGames: %d, game: %d\n", nbGames, game);
     string statString = "Game " + to_string(game) + ": \n";
     GameStart* newGame = new GameStart(maps.at(game), nbStrats);
     statString += "Map " + to_string(game) + ": " + maps.at(game) + "\n";
@@ -80,26 +79,15 @@ void Tournament::startTournament(){
       }
     }
     StartupPhase* startGame = new StartupPhase(newGame->gameMap, newGame->players);
-    printf("post startupphase\n");
     Game *match = new Game(newGame->gameMap, newGame->players);
-    printf("post game\n");
     statString += "The winner of the game is: " + match->startGame();
-    printf("post startGame()\n");
     tournamentStats.push_back(statString);
-    printf("post push_back(statString)\n");
     delete newGame;
-    printf("delete newGame\n");
-    //delete match;
-    printf("delete match\n");
-    //delete startGame;
-    printf("delete startGame\n");
     match = NULL;
-    printf("match = NULL\n");
     startGame = NULL;
-    printf("startGame = NULL\n");
     newGame = NULL;
-    printf("newGame = NULL\n");
   }
+
   for(int i = 0; i < nbGames; i++){
     cout<<tournamentStats.at(i)<<endl;
   }

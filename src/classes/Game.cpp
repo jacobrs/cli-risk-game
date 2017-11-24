@@ -65,11 +65,8 @@ string Game::startGame(){
     if(this->isWon() != "None")
       break;
   }
-  printf("notify win\n");
   stateChanges->Notify(gameMap, players);
-  printf("Game was won!\n");
-  printf("first won\n");
-  printf("after first won\n");
+  printf("Game was won!\n\n\n\n");
   return this->isWon();
 
 }
